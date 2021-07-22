@@ -6,7 +6,7 @@ For local development only, use it at your own risk.
 1. Create a folder for your project and copy files from git repository
 ```
 cd path/to/your/project/folder
-git clone git@github.com:parasek/lamp-docker.git .
+git clone https://github.com/parasek/lamp-docker.git .
 ```
 
 2. Copy ``.env.dist`` file to ``.env``
@@ -52,7 +52,7 @@ chmod 644 /etc/apache2/ssl/ssl_site.key
 <br/>Right click ``Certificates`` and select ``All Tasks -> Import...``
 <br/>``Next``
 <br/>Select generated ``ssl_site.crt`` (from ``\\wsl$`` path) 
-<br/>``Next``, ``Next``, ``Finish``
+<br/>``Next``, ``Next``, ``Finish``, ``Yes``
 <br/>You can close window without saving
 
 7.  Rename .conf file
