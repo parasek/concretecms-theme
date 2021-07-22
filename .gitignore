@@ -1,0 +1,6 @@
+.idea
+/db
+/docker/server/apache2/ssl/*.crt
+/docker/server/apache2/ssl/*.key
+/docker/server/apache2/ssl/*.csr
+.env

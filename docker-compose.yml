@@ -1,0 +1,66 @@
+version: '3.9'
+
+networks:
+  localserver:
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: ./docker/server/Dockerfile
+    container_name: '${APP_NAME}-server'
+    ports:
+      - '${APP_PORT}:80'
+      - '${APP_PORT_SSL}:443'
+    working_dir: /var/www/html
+    environment:
+      - 'DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASS}@database:3306/${MYSQL_DB}?serverVersion=10.5'
+    volumes:
+      - ./src:/var/www/html
+      - ./docker/server/apache2/sites-available:/etc/apache2/sites-available
+      - ./docker/server/apache2/ssl:/etc/apache2/ssl
+      - ./docker/server/php/php.ini:/usr/local/etc/php/conf.d/extra-php-config.ini
+    depends_on:
+      database:
+        condition: service_healthy
+    networks:
+      - localserver
+
+  database:
+    image: mariadb:10.5.9
+    container_name: '${APP_NAME}-db'
+    hostname: ${MYSQL_HOSTNAME}
+    restart: always
+    ports:
+      - '${DB_PORT}:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASS}'
+      MYSQL_USER: '${MYSQL_USER}'
+      MYSQL_PASSWORD: '${MYSQL_PASS}'
+      MYSQL_DATABASE: '${MYSQL_DB}'
+      TZ: Europe/Warsaw
+    volumes:
+      - ./db/mariadb:/var/lib/mysql
+      - ./docker/db/mariadb/my.cnf:/etc/mysql/conf.d/my.cnf
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD
+      interval: 5s
+      retries: 5
+    networks:
+      - localserver
+
+  pma:
+    image: phpmyadmin/phpmyadmin:5
+    container_name: '${APP_NAME}-phpmyadmin'
+    ports:
+      - '${APP_PMA_PORT}:80'
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: database
+    depends_on:
+      database:
+        condition: service_healthy
+    volumes:
+      - ./docker/phpmyadmin/config.php:/etc/phpmyadmin/config.user.inc.php
+    networks:
+      - localserver
