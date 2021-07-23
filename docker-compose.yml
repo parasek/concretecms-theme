@@ -15,6 +15,7 @@ services:
     working_dir: /var/www/html
     environment:
       - 'DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASS}@database:3306/${MYSQL_DB}?serverVersion=10.5'
+      - TZ=Europe/Warsaw
     volumes:
       - ./src:/var/www/html
       - ./docker/server/apache2/sites-available:/etc/apache2/sites-available
@@ -38,6 +39,7 @@ services:
       MYSQL_USER: '${MYSQL_USER}'
       MYSQL_PASSWORD: '${MYSQL_PASS}'
       MYSQL_DATABASE: '${MYSQL_DB}'
+      TZ: Europe/Warsaw
     volumes:
       - ./db/mariadb:/var/lib/mysql
       - ./docker/db/mariadb/my.cnf:/etc/mysql/conf.d/my.cnf
