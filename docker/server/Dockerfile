@@ -18,10 +18,6 @@ COPY --from=composer:2.0 /usr/bin/composer /usr/local/bin/composer
 RUN curl -fsSL https://deb.nodesource.com/setup_current.x | sudo -E bash -
 RUN sudo apt-get install -y nodejs
 
-# Install yarn
-# https://classic.yarnpkg.com/en/docs/instal
-RUN npm install --global yarn
-
 # Install symfony
 RUN wget https://get.symfony.com/cli/installer -O - | bash
 RUN mv /root/.symfony/bin/symfony /usr/local/bin/symfony
