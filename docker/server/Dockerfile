@@ -18,6 +18,10 @@ COPY --from=composer:2.0 /usr/bin/composer /usr/local/bin/composer
 RUN curl -fsSL https://deb.nodesource.com/setup_current.x | sudo -E bash -
 RUN sudo apt-get install -y nodejs
 
+# Install sass
+RUN npm i sass-loader
+RUN npm i node-sass
+
 # Install symfony
 RUN wget https://get.symfony.com/cli/installer -O - | bash
 RUN mv /root/.symfony/bin/symfony /usr/local/bin/symfony
