@@ -14,7 +14,7 @@ services:
       - '${APP_PORT_SSL}:443'
     working_dir: /var/www/html
     environment:
-      - 'DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASS}@database:3306/${MYSQL_DB}?serverVersion=10.5'
+      - 'DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASS}@database:3306/${MYSQL_DB}'
       - TZ=Europe/Warsaw
     volumes:
       - ./src:/var/www/html
