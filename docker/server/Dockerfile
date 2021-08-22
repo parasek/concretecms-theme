@@ -19,8 +19,8 @@ RUN curl -fsSL https://deb.nodesource.com/setup_current.x | sudo -E bash -
 RUN sudo apt-get install -y nodejs
 
 # Install sass
-RUN npm i sass-loader
-RUN npm i node-sass
+RUN npm i -D sass-loader
+RUN npm i -D node-sass
 
 # Install symfony
 RUN wget https://get.symfony.com/cli/installer -O - | bash
