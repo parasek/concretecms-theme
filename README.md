@@ -26,13 +26,13 @@ cd path/to/your/project/folder
 docker-compose up -d
 ```
 
-4. Enter server container
+4. Enter web container
 ```
-docker-compose exec server bash
+docker-compose exec web bash
 ```
 
-5. Create ssl certificates for localhost (you can run those commands in Docker server container)
-<br/><br/>If you have already generated files in previous project, you can just copy them to ``docker/server/apache2/ssl`` instead generating new ones.
+5. Create ssl certificates for localhost (you can run those commands in Docker web container)
+<br/><br/>If you have already generated files in previous project, you can just copy them to ``docker/web/apache2/ssl`` instead generating new ones.
 ```
 openssl genrsa -out "/etc/apache2/ssl/ssl_site.key" 2048
 openssl rand -out /root/.rnd -hex 256
@@ -57,11 +57,11 @@ chmod 644 /etc/apache2/ssl/ssl_site.key
 
 7.  Rename .conf file
 ```
-docker/server/apache2/sites-available/000-default.conf.example
+docker/web/apache2/sites-available/000-default.conf.example
 ```
 to
 ```
-docker/server/apache2/sites-available/000-default.conf
+docker/web/apache2/sites-available/000-default.conf
 ```
 Edit path in "DocumentRoot" and "Directory" if necessary.
 For example, for Symfony you need to set them to 

@@ -2,11 +2,11 @@ version: '3.9'
 
 services:
 
-  server:
+  web:
     build:
       context: .
-      dockerfile: ./docker/server/Dockerfile
-    container_name: '${APP_NAME}-server'
+      dockerfile: docker/web/Dockerfile
+    container_name: '${APP_NAME}-web'
     ports:
       - '${APP_PORT}:80'
       - '${APP_PORT_SSL}:443'
@@ -16,9 +16,9 @@ services:
       - TZ=Europe/Warsaw
     volumes:
       - ./src:/var/www/html
-      - ./docker/server/apache2/sites-available:/etc/apache2/sites-available
-      - ./docker/server/apache2/ssl:/etc/apache2/ssl
-      - ./docker/server/php/php.ini:/usr/local/etc/php/conf.d/extra-php-config.ini
+      - ./docker/web/apache2/sites-available:/etc/apache2/sites-available
+      - ./docker/web/apache2/ssl:/etc/apache2/ssl
+      - ./docker/web/php/php.ini:/usr/local/etc/php/conf.d/extra-php-config.ini
     depends_on:
       db:
         condition: service_healthy
