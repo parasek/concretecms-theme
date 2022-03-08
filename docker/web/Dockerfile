@@ -13,21 +13,13 @@ WORKDIR /var/www/html
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 RUN install-php-extensions gd pdo_mysql bcmath zip intl opcache
 
-COPY --from=composer:2.0 /usr/bin/composer /usr/local/bin/composer
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
-# Instal node/npm
+# Install node
 # https://github.com/nodesource/distributions/blob/master/README.md
-RUN curl -fsSL https://deb.nodesource.com/setup_current.x | sudo -E bash -
+# Example versions: setup_current.x, setup_lts.x, setup_16.x
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
 RUN sudo apt-get install -y nodejs
 
 # Install sass
-RUN npm i -D sass-loader
-RUN npm i -D node-sass
-
-# Install symfony
-RUN wget https://get.symfony.com/cli/installer -O - | bash
-RUN mv /root/.symfony/bin/symfony /usr/local/bin/symfony
-RUN export PATH="$HOME/.symfony/bin:$PATH"
-RUN git config --global user.email "example@email.com" \
-    && git config --global user.name "Example Username"
-
+RUN npm install --save-dev sass
