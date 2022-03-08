@@ -1,8 +1,5 @@
 version: '3.9'
 
-networks:
-  localserver:
-
 services:
 
   server:
@@ -25,8 +22,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    networks:
-      - localserver
 
   db:
     image: mariadb
@@ -48,8 +43,6 @@ services:
       test: mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD
       interval: 5s
       retries: 5
-    networks:
-      - localserver
 
   pma:
     image: phpmyadmin/phpmyadmin:5
@@ -64,5 +57,3 @@ services:
         condition: service_healthy
     volumes:
       - ./docker/phpmyadmin/config.php:/etc/phpmyadmin/config.user.inc.php
-    networks:
-      - localserver
