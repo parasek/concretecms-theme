@@ -4,6 +4,7 @@ networks:
   localserver:
 
 services:
+
   server:
     build:
       context: .
@@ -22,13 +23,13 @@ services:
       - ./docker/server/apache2/ssl:/etc/apache2/ssl
       - ./docker/server/php/php.ini:/usr/local/etc/php/conf.d/extra-php-config.ini
     depends_on:
-      database:
+      db:
         condition: service_healthy
     networks:
       - localserver
 
-  database:
-    image: mariadb:10.5.9
+  db:
+    image: mariadb
     container_name: '${APP_NAME}-db'
     hostname: ${MYSQL_HOSTNAME}
     restart: always
@@ -57,9 +58,9 @@ services:
       - '${APP_PMA_PORT}:80'
     environment:
       PMA_ARBITRARY: 1
-      PMA_HOST: database
+      PMA_HOST: db
     depends_on:
-      database:
+      db:
         condition: service_healthy
     volumes:
       - ./docker/phpmyadmin/config.php:/etc/phpmyadmin/config.user.inc.php
