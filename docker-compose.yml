@@ -15,7 +15,7 @@ services:
       - 'DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASS}@database:3306/${MYSQL_DB}'
       - TZ=Europe/Warsaw
     volumes:
-      - ./src:/var/www/html
+      - ./:/var/www/html
       - ./docker/web/apache2/sites-available:/etc/apache2/sites-available
       - ./docker/web/apache2/ssl:/etc/apache2/ssl
       - ./docker/web/php/php.ini:/usr/local/etc/php/conf.d/extra-php-config.ini
