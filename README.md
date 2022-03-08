@@ -77,9 +77,9 @@ docker-compose up -d
 
 8. Default urls
 <br/><br/>https url: https://localhost:8100
-<br/>phpmyadmin: http://localhost:8200
+<br/>phpMyAdmin: http://localhost:8200
 <br/>http url: http://localhost:8300
-<br/><br/>Login credentials for phpmyadmin
+<br/><br/>Login credentials for phpMyAdmin
 <br/>Server: mariadb
 <br/>Username: root
 <br/>Password: root

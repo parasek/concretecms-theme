@@ -46,7 +46,7 @@ services:
 
   pma:
     image: phpmyadmin/phpmyadmin:5
-    container_name: '${APP_NAME}-phpmyadmin'
+    container_name: '${APP_NAME}-pma'
     ports:
       - '${APP_PMA_PORT}:80'
     environment:
@@ -56,4 +56,4 @@ services:
       db:
         condition: service_healthy
     volumes:
-      - ./docker/phpmyadmin/config.php:/etc/phpmyadmin/config.user.inc.php
+      - ./docker/pma/config.php:/etc/phpmyadmin/config.user.inc.php
