@@ -1,6 +1,13 @@
-.idea
+# Editor settings
+/.idea
+/.vscode
+
+# Folders
 /db
-/docker/web/apache2/ssl/*.crt
-/docker/web/apache2/ssl/*.key
-/docker/web/apache2/ssl/*.csr
-.env
+/backups
+
+# Files
+*.env
+*.crt
+*.key
+*.csr
