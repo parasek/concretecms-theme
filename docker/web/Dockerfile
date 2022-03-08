@@ -1,4 +1,6 @@
-FROM php:8.0-apache
+ARG APP_PHP_VERSION
+
+FROM php:${APP_PHP_VERSION}-apache
 
 RUN a2enmod rewrite
 

@@ -6,6 +6,8 @@ services:
     build:
       context: .
       dockerfile: docker/web/Dockerfile
+      args:
+        - 'APP_PHP_VERSION=${APP_PHP_VERSION}'
     container_name: '${APP_NAME}-web'
     ports:
       - '${APP_PORT}:80'
