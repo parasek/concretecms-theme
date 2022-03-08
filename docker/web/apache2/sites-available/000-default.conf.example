@@ -10,7 +10,7 @@
 <VirtualHost *:443>
     ServerName localhost
     ServerAlias *.localhost
-    DocumentRoot /var/www/html/
+    DocumentRoot /var/www/html/public/
     Options Indexes FollowSymLinks
 
     SSLEngine on
