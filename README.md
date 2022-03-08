@@ -1,8 +1,8 @@
-## Concrete5 LAMP server (using Docker / WSL2)
+# Concrete5 LAMP server (using Docker / WSL2)
 
 Apache2, PHP, MariaDB, phpMyAdmin, Composer, Node, Sass, Gulp, Concrete5
 
-### Requirements
+## Requirements
 
 - WSL2 installed and enabled
 - Docker Desktop for Windows installed
@@ -10,7 +10,7 @@ Apache2, PHP, MariaDB, phpMyAdmin, Composer, Node, Sass, Gulp, Concrete5
 for example in: ```\\wsl$\Ubuntu\home\parasek\dev```
 which, under Linux, is accessible through ```~/dev``` path
 
-### Installation
+## Installation
 
 1. Open Windows Terminal, create folder for your project in Linux home directory and download files from git repository.
 
@@ -58,7 +58,7 @@ follow instructions (skip otherwise) in:
    docker/server/apache2/ssl/ssl_site.key
    ```
 
-8. Start docker container.
+8. Start docker containers.
 
     ```
     docker-compose up -d
@@ -82,8 +82,8 @@ follow instructions (skip otherwise) in:
     // From Linux terminal
     docker-compose up -d // Start server containers
     docker-compose down // Stop and remove server containers
-    docker-compose build // Rebuild containers (after changing php version)
-    docker-compose exec web bash  // Enter web container (where you will be able to run webpack/gulp etc.)
+    docker-compose build // Rebuild containers (for example after changing php version)
+    docker-compose exec web bash // Enter web container (where you will be able to run webpack/gulp tasks etc.)
     docker exec -ti local-web bash // Alternative way to enter web container (from anywhere)
     ```
 
@@ -100,9 +100,9 @@ follow instructions (skip otherwise) in:
     npm run dev // @TODO webpack commands
     ```
 
-### <a name="first-installation"></a>First installation
+## <a name="first-installation"></a>First installation
 
-1. Start Docker container
+1. Start Docker containers
 
    ```
    cd ~/dev/project_name
@@ -145,6 +145,7 @@ follow instructions (skip otherwise) in:
    - ``Next``, ``Next``, ``Finish``, ``Yes``
    - You can close window without saving
 
+
    ```
    IMPORTANT!
    Copy/save generated files somewhere on your computer.  
@@ -154,7 +155,7 @@ follow instructions (skip otherwise) in:
    - docker/server/apache2/ssl/ssl_site.key
    ```
 
-### <a name="multiple-docker-servers"></a>Multiple Docker Servers
+## <a name="multiple-docker-servers"></a>Multiple Docker Servers
 
 1. If you want to run multiple docker servers at the same time, you have to set unique name/ports in .env file, for example:
 
