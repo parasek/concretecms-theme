@@ -128,11 +128,12 @@ follow instructions (skip otherwise) in:
    openssl x509 -req -days 7300 -extfile <(printf "subjectAltName=DNS:localhost,DNS:*.localhost") -in "/etc/apache2/ssl/ssl_site.csr" -signkey "/etc/apache2/ssl/ssl_site.key" -out "/etc/apache2/ssl/ssl_site.crt"
    chmod 644 /etc/apache2/ssl/ssl_site.key
    exit
+   docker-compose down
    ```
 
 5. Add generated ``ssl_site.crt`` to Trusted Certificates On Windows 10:
    - Press Windows button and run ``cmd``
-   - In cmd.exe window type ``mmc`` and press enter to open Microsoft Management Console
+   - In cmd.exe window type ``mmc`` and press enter to open Microsoft Management Console, allow it to make changes
    - Select ``File -> Add/Remove Snap-in``
    - Select ``Certificates`` in a left window and click ``Add``
    - Click ``Finish``
