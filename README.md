@@ -154,7 +154,7 @@ follow instructions (skip otherwise) in:
    - docker/server/apache2/ssl/ssl_site.key
    ```
 
-   ⬅ [Go back to installation](#first-installation-link)
+   ⬅ [Go back to Installation](#first-installation-link)
 
 ## <a name="multiple-docker-servers"></a>Multiple Docker Servers
 
@@ -174,4 +174,4 @@ follow instructions (skip otherwise) in:
    > phpMyAdmin: [http://localhost:8201](http://localhost:8201)  
    > http url: [http://localhost:8301](http://localhost:8301)  
 
-⬅ [Go back to installation](#multiple-docker-servers-link)
+   ⬅ [Go back to Installation](#multiple-docker-servers-link)
