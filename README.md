@@ -43,10 +43,10 @@ follow instructions (skip otherwise) in:
 
    > 🔗 [Multiple Docker Servers](#multiple-docker-servers)
 
-6. Rename example apache2 .conf file
+6. Copy ``000-default.conf.example`` file to ``000-default.conf``
 
     ```
-    mv docker/web/apache2/sites-available/000-default.conf.example docker/web/apache2/sites-available/000-default.conf
+    cp docker/web/apache2/sites-available/000-default.conf.example docker/web/apache2/sites-available/000-default.conf
     ```
    
 7. Manually copy saved ssl certificates, that you generated earlier (check 🔗 [First Installation](#first-installation) section) to:
