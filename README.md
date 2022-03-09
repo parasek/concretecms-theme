@@ -49,7 +49,7 @@ follow instructions (skip otherwise) in:
     cp docker/web/apache2/sites-available/000-default.conf.example docker/web/apache2/sites-available/000-default.conf
     ```
    
-7. Manually copy saved ssl certificates, that you generated earlier (check 🔗 [First Installation](#first-installation) section) to:
+7. Manually copy saved ssl certificates, that you generated earlier (skip if you did 🔗 [First Installation](#first-installation) during this setup) to:
 
    ```
    docker/server/apache2/ssl/ssl_site.crt
@@ -75,7 +75,19 @@ follow instructions (skip otherwise) in:
    > Password: root  
    > Database: default
 
-10. Popular commands
+10. How to change PHP version?
+
+   Open .env and change php version (for example: 5.6, 7.4, 8.0 etc.)
+   ```
+   APP_PHP_VERSION=8.0
+   ```
+   Rebuild web container
+   ```
+   docker-compose build
+   docker-compose up -d
+   ```
+
+11. Popular commands
 
    ```
    // From Linux terminal
