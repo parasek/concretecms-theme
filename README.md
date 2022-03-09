@@ -119,17 +119,18 @@ follow instructions (skip otherwise) in:
    ```
 
 3. Inside web container create ssl certificates for localhost domain
+   (in Terminal run every command one by one)
 
    ```
    openssl genrsa -out "/etc/apache2/ssl/ssl_site.key" 2048
    openssl rand -out /root/.rnd -hex 256
    openssl req -new -key "/etc/apache2/ssl/ssl_site.key" -out "/etc/apache2/ssl/ssl_site.csr" -subj "/CN=localhost/O=LocalServer/C=PL"
-   openssl x509 -req -days 3650 -extfile <(printf "subjectAltName=DNS:localhost,DNS:*.localhost") -in "/etc/apache2/ssl/ssl_site.csr" -signkey "/etc/apache2/ssl/ssl_site.key" -out "/etc/apache2/ssl/ssl_site.crt"
+   openssl x509 -req -days 7300 -extfile <(printf "subjectAltName=DNS:localhost,DNS:*.localhost") -in "/etc/apache2/ssl/ssl_site.csr" -signkey "/etc/apache2/ssl/ssl_site.key" -out "/etc/apache2/ssl/ssl_site.crt"
    chmod 644 /etc/apache2/ssl/ssl_site.key
    exit
    ```
 
-4. Add generated ``ssl_site.crt`` to Trusted Certificates On Windows 10:
+5. Add generated ``ssl_site.crt`` to Trusted Certificates On Windows 10:
    - Press Windows button and run ``cmd``
    - In cmd.exe window type ``mmc`` and press enter to open Microsoft Management Console
    - Select ``File -> Add/Remove Snap-in``
