@@ -137,7 +137,7 @@ follow instructions (skip otherwise) in:
    - ``Next``
    - Select generated ``ssl_site.crt`` (from ``\\wsl$\Ubuntu\home\parasek\dev\project_name\docker\web\apache2\ssl`` path)
    - ``Next``, ``Next``, ``Finish``, ``Yes``
-   - You can close window without saving   
+   - You can close window without saving<br/><br/>
 
 
    ```
