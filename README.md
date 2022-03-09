@@ -44,13 +44,7 @@ follow instructions (skip otherwise) in:
    > 🔗 [Multiple Docker Servers](#multiple-docker-servers)
 
 
-6. Rename example apache2 .conf file
-
-    ```
-    mv docker/web/apache2/sites-available/000-default.conf.example docker/web/apache2/sites-available/000-default.conf
-    ```
-
-7. Copy saved ssl certificates, that you generated earlier (check 🔗 [First Installation](#first-installation) section) to:
+6. Manually copy saved ssl certificates, that you generated earlier (check 🔗 [First Installation](#first-installation) section) to:
 
    ```
    docker/server/apache2/ssl/ssl_site.crt
@@ -58,13 +52,13 @@ follow instructions (skip otherwise) in:
    docker/server/apache2/ssl/ssl_site.key
    ```
 
-8. Start docker containers.
+7. Start docker containers.
 
     ```
     docker-compose up -d
     ```
 
-9. Default urls and login credentials
+8. Default urls and login credentials
 
    > https url: [https://localhost:8100](https://localhost:8100)  
    > phpMyAdmin: [http://localhost:8200](http://localhost:8200)  
@@ -76,29 +70,29 @@ follow instructions (skip otherwise) in:
    > Password: root  
    > Database: default
 
-10. Popular commands
+9. Popular commands
 
-    ```
-    // From Linux terminal
-    docker-compose up -d // Start server containers
-    docker-compose down // Stop and remove server containers
-    docker-compose build // Rebuild containers (for example after changing php version)
-    docker-compose exec web bash // Enter web container (where you will be able to run webpack/gulp tasks etc.)
-    docker exec -ti local-web bash // Alternative way to enter web container (from anywhere)
-    ```
+   ```
+   // From Linux terminal
+   docker-compose up -d // Start server containers
+   docker-compose down // Stop and remove server containers
+   docker-compose build // Rebuild containers (for example after changing php version)
+   docker-compose exec web bash // Enter web container (where you will be able to run webpack/gulp tasks etc.)
+   docker exec -ti local-web bash // Alternative way to enter web container (from anywhere)
+   ```
 
-    ```
-    // Inside web container
-    exit // Exit container
+   ```
+   // Inside web container
+   exit // Exit container
     
-    composer install // Install packages listed in composer.json
+   composer install // Install packages listed in composer.json
     
-    npm install // Install packages listed in package.json
+   npm install // Install packages listed in package.json
     
-    gulp watch // @TODO gulp commands
+   gulp watch // @TODO gulp commands
     
-    npm run dev // @TODO webpack commands
-    ```
+   npm run dev // @TODO webpack commands
+   ```
 
 ## <a name="first-installation"></a>First installation
 
@@ -143,7 +137,7 @@ follow instructions (skip otherwise) in:
    - ``Next``
    - Select generated ``ssl_site.crt`` (from ``\\wsl$\Ubuntu\home\parasek\dev\project_name\docker\web\apache2\ssl`` path)
    - ``Next``, ``Next``, ``Finish``, ``Yes``
-   - You can close window without saving
+   - You can close window without saving   
 
 
    ```
