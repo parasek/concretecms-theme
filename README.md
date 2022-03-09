@@ -43,8 +43,13 @@ follow instructions (skip otherwise) in:
 
    > 🔗 [Multiple Docker Servers](#multiple-docker-servers)
 
+6. Rename example apache2 .conf file
 
-6. Manually copy saved ssl certificates, that you generated earlier (check 🔗 [First Installation](#first-installation) section) to:
+    ```
+    mv docker/web/apache2/sites-available/000-default.conf.example docker/web/apache2/sites-available/000-default.conf
+    ```
+   
+7. Manually copy saved ssl certificates, that you generated earlier (check 🔗 [First Installation](#first-installation) section) to:
 
    ```
    docker/server/apache2/ssl/ssl_site.crt
@@ -52,13 +57,13 @@ follow instructions (skip otherwise) in:
    docker/server/apache2/ssl/ssl_site.key
    ```
 
-7. Start docker containers.
+8. Start docker containers.
 
     ```
     docker-compose up -d
     ```
 
-8. Default urls and login credentials
+9. Default urls and login credentials
 
    > https url: [https://localhost:8100](https://localhost:8100)  
    > phpMyAdmin: [http://localhost:8200](http://localhost:8200)  
@@ -70,7 +75,7 @@ follow instructions (skip otherwise) in:
    > Password: root  
    > Database: default
 
-9. Popular commands
+10. Popular commands
 
    ```
    // From Linux terminal
