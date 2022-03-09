@@ -111,6 +111,37 @@ follow instructions (skip otherwise) in:
     npm run dev // @TODO webpack commands
     ```
 
+## Install concrete5 - without composer
+
+1. Download the latest version from 
+https://www.concretecms.org/download  
+and unzip it in public directory.  
+You can use Linux commands below or do some/all operations 
+under Windows in ``\\wsl$\Ubuntu\home\parasek\dev\project_name`` folder).
+
+   ```
+   docker-compose exec web bash
+   rm public/index.php
+   cd public
+   
+   // Replace "concrete-cms-9.0.2" with correct name
+   // Temporarily include hidden files (.htaccess etc.) in mv command using "shopt"
+   unzip concrete-cms-9.0.2.zip
+   shopt -s dotglob
+   mv concrete-cms-9.0.2/* .
+   shopt -u dotglob
+   rmdir concrete-cms-9.0.2
+   rm concrete-cms-9.0.2.zip
+   ```
+2. Visit https://localhost:8100 in browser and install concrete5.  
+MySQL credentials are the same as mentioned earlier for phpMyAdmin.
+
+3. When moving site to server, you just want to upload whole
+public folder + export/import database. 
+
+4. This way you can setup server for older version of concrete5 
+or applications that don't use composer.
+
 ## <a name="first-installation"></a>First installation
 
 1. Start Docker containers
