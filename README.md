@@ -89,27 +89,27 @@ follow instructions (skip otherwise) in:
 
 11. Popular commands
 
-   ```
-   // From Linux terminal
-   docker-compose up -d // Start server containers
-   docker-compose down // Stop and remove server containers
-   docker-compose build // Rebuild containers (for example after changing php version)
-   docker-compose exec web bash // Enter web container (where you will be able to run webpack/gulp tasks etc.)
-   docker exec -ti local-web bash // Alternative way to enter web container (from anywhere)
-   ```
+    ```
+    // From Linux terminal
+    docker-compose up -d // Start server containers
+    docker-compose down // Stop and remove server containers
+    docker-compose build // Rebuild containers (for example after changing php version)
+    docker-compose exec web bash // Enter web container (where you will be able to run webpack/gulp tasks etc.)
+    docker exec -ti local-web bash // Alternative way to enter web container (from anywhere)
+    ```
 
-   ```
-   // Inside web container
-   exit // Exit container
+    ```
+    // Inside web container
+    exit // Exit container
     
-   composer install // Install packages listed in composer.json
+    composer install // Install packages listed in composer.json
     
-   npm install // Install packages listed in package.json
+    npm install // Install packages listed in package.json
     
-   gulp watch // @TODO gulp commands
+    gulp watch // @TODO gulp commands
     
-   npm run dev // @TODO webpack commands
-   ```
+    npm run dev // @TODO webpack commands
+    ```
 
 ## <a name="first-installation"></a>First installation
 
