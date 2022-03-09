@@ -77,15 +77,15 @@ follow instructions (skip otherwise) in:
 
 10. How to change PHP version?
 
-   Open .env and change php version (for example: 5.6, 7.4, 8.0 etc.)
-   ```
-   APP_PHP_VERSION=8.0
-   ```
-   Rebuild web container
-   ```
-   docker-compose build
-   docker-compose up -d
-   ```
+    Open .env and change php version (for example: 5.6, 7.4, 8.0 etc.)
+    ```
+    APP_PHP_VERSION=8.0
+    ```
+    Rebuild web container
+    ```
+    docker-compose build
+    docker-compose up -d
+    ```
 
 11. Popular commands
 
