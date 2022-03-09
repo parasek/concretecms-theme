@@ -33,12 +33,12 @@ which, under Linux, is accessible through ```~/dev``` path
    cp .env.dist .env
    ```
 
-4. If you are installing this docker server for the first time, 
+4. <a name="first-installation-link"></a>If you are installing this docker server for the first time, 
 follow instructions (skip otherwise) in:
 
    > 🔗 [First Installation](#first-installation)
 
-5. If you want to run multiple docker servers at the same time, 
+5. <a name="multiple-docker-servers-link"></a>If you want to run multiple docker servers at the same time, 
 follow instructions (skip otherwise) in:
 
    > 🔗 [Multiple Docker Servers](#multiple-docker-servers)
@@ -154,6 +154,8 @@ follow instructions (skip otherwise) in:
    - docker/server/apache2/ssl/ssl_site.key
    ```
 
+   ⬅ [Go back to installation](#first-installation-link)
+
 ## <a name="multiple-docker-servers"></a>Multiple Docker Servers
 
 1. If you want to run multiple docker servers at the same time, you have to set unique name/ports in .env file, for example:
@@ -171,3 +173,5 @@ follow instructions (skip otherwise) in:
    > https url: [https://localhost:8101](https://localhost:8101)  
    > phpMyAdmin: [http://localhost:8201](http://localhost:8201)  
    > http url: [http://localhost:8301](http://localhost:8301)  
+
+⬅ [Go back to installation](#multiple-docker-servers-link)
