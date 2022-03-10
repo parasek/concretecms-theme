@@ -34,8 +34,6 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
       - MYSQL_DATABASE=${DB_DATABASE}
-      - MYSQL_USER=${DB_USER_USERNAME}
-      - MYSQL_PASSWORD=${DB_USER_PASSWORD}
       - TZ=${APP_TZ}
     volumes:
       - ./db/mariadb:/var/lib/mysql
