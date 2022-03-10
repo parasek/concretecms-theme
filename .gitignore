@@ -1,12 +1,30 @@
-# Editor settings
+# Ignore composer stuff
+/vendor
+
+# Ignore concrete5 stuff
+/public/concrete
+/public/application/files
+
+# Ignore build files
+/public/application/css/main.css
+/public/application/js/main.js
+
+# Ignore developer stuff
 /.idea
 /.vscode
+/node_modules
+/.env
+/public/mix-manifest.json
+/phpunit.xml
+/build
+/.phpunit.*
+/public/hot
 
-# Folders
+# Ignore custom folders
 /db
 /backups
 
-# Files
+# Ignore files
 *.env
 *.crt
 *.key

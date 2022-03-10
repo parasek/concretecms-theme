@@ -27,21 +27,21 @@ services:
   db:
     image: mariadb
     container_name: ${APP_NAME}-db
-    hostname: ${MYSQL_HOSTNAME}
+    hostname: ${DB_HOSTNAME}
     restart: always
     ports:
       - ${APP_DB_PORT}:3306
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASS}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASS}
-      - MYSQL_DATABASE=${MYSQL_DB}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USER_USERNAME}
+      - MYSQL_PASSWORD=${DB_USER_PASSWORD}
       - TZ=${APP_TZ}
     volumes:
       - ./db/mariadb:/var/lib/mysql
       - ./docker/db/mariadb/my.cnf:/etc/mysql/conf.d/my.cnf
     healthcheck:
-      test: mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD
+      test: mysqladmin ping -h 127.0.0.1 -u root --password=$$DB_PASSWORD
       interval: 5s
       retries: 5
 

@@ -1,3 +1,3 @@
 <?php
 
-echo 'Welcome';
+require 'concrete/dispatcher.php';
