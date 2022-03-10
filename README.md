@@ -12,44 +12,49 @@ which, under Linux, is accessible through ```~/dev``` path
 
 ## Installation
 
-1. Open Windows Terminal, create folder for your project in Linux home directory and download files from git repository.
+1. Open Windows Terminal, create and enter folder in Linux home directory.
 
     ```
     cd ~/dev
     mkdir project_name
     cd project_name
+    ```
+   
+2. Download files from GitHub
+
+    ```
     git clone https://github.com/parasek/lamp-docker.git .
     ```
-
-2. Remove ``.git`` folder
+   
+3. Remove ``.git`` folder
 
    ```
    sudo rm -r .git
    ```
 
-3. Copy ``.env.dist`` file to ``.env``
+4. Copy ``.env.dist`` file to ``.env``
 
    ```
    cp .env.dist .env
    ```
 
-4. <a name="first-installation-link"></a>If you are installing this docker server for the first time, 
+5. <a name="first-installation-link"></a>If you are installing this docker server for the first time, 
 follow instructions (skip otherwise) in:
 
    > 🔗 [First Installation](#first-installation)
 
-5. <a name="multiple-docker-servers-link"></a>If you want to run multiple docker servers at the same time, 
+6. <a name="multiple-docker-servers-link"></a>If you want to run multiple docker servers at the same time, 
 follow instructions (skip otherwise) in:
 
    > 🔗 [Multiple Docker Servers](#multiple-docker-servers)
 
-6. Copy ``000-default.conf.example`` file to ``000-default.conf``
+7. Copy ``000-default.conf.example`` file to ``000-default.conf``
 
     ```
     cp docker/web/apache2/sites-available/000-default.conf.example docker/web/apache2/sites-available/000-default.conf
     ```
    
-7. Manually copy saved ssl certificates, that you generated earlier (skip if you did 🔗 [First Installation](#first-installation) during this setup) to:
+8. Manually copy saved ssl certificates, that you generated earlier (skip if you did 🔗 [First Installation](#first-installation) during this setup) to:
 
    ```
    docker/server/apache2/ssl/ssl_site.crt
@@ -57,40 +62,84 @@ follow instructions (skip otherwise) in:
    docker/server/apache2/ssl/ssl_site.key
    ```
 
-8. Start docker containers.
+9. Start docker containers.
 
     ```
     docker-compose up -d
     ```
+   
+10. Install concrete5 using composer
 
-9. Default urls and login credentials
+    Enter web container
+    ```
+    docker-compose exec web bash
+    ```
 
-   > https url: [https://localhost:8100](https://localhost:8100)  
-   > phpMyAdmin: [http://localhost:8200](http://localhost:8200)  
-   > http url: [http://localhost:8300](http://localhost:8300)
+    Install Composer dependencies
+    ```
+    composer install -o
+    ```
 
-   > Login credentials for phpMyAdmin/MySQL:  
-   > Server: mariadb  
-   > Username: root  
-   > Password: root  
-   > Database: default
+    Temporarily change name of prod.database.php (installation won't start otherwise)
+    ```
+    mv public/application/config/prod.database.php public/application/config/temp.database.php
+    ```
 
-10. How to change PHP version?
+    Install concrete5  
+    Instead single command, you can start installation in interactive mode ``./vendor/bin/concrete5 c5:install -i``
+    ```
+    php public/index.php c5:install --allow-as-root -n --db-server=mariadb --db-username=root --db-password=root --db-database=default --site="Sitename" --language=pl_PL --admin-email=example@email.com --admin-password="admin_password" --site-locale=pl_PL --starting-point=atomik_full --timezone=Europe/Warsaw
+    ```
 
-    Open .env and change php version (for example: 5.6, 7.4, 8.0 etc.)
+    Revert name change of prod.database.php
+    ```
+    mv public/application/config/temp.database.php public/application/config/prod.database.php
+    ```
+
+    Remove original database.php (concrete5 will use prod.database.php)
+    ```
+    rm public/application/config/database.php
+    ```
+
+    Change required permission
+    ```
+    chmod -R 755 public/application/config public/application/files public/packages public/updates
+    ```
+
+11. Default urls and login credentials
+
+    > https url: [https://localhost:8100](https://localhost:8100)  
+    > phpMyAdmin: [http://localhost:8200](http://localhost:8200)  
+    > http url: [http://localhost:8300](http://localhost:8300)
+
+    > Login credentials for phpMyAdmin/MySQL:  
+    > Server: mariadb  
+    > Username: root  
+    > Password: root  
+    > Database: default
+
+## How to change PHP version?
+
+1. Open .env and change php version (for example: 5.6, 7.4, 8.0 etc.)
+
     ```
     APP_PHP_VERSION=8.0
     ```
     Rebuild web container
+
     ```
     docker-compose build
+    ```
+
+    ```
     docker-compose up -d
     ```
 
-11. Popular commands
+## Popular commands
+
+1. From Linux terminal  
 
     ```
-    // From Linux terminal
     docker-compose up -d // Start server containers
     docker-compose down // Stop and remove server containers
     docker-compose build // Rebuild containers (for example after changing php version)
@@ -98,11 +147,15 @@ follow instructions (skip otherwise) in:
     docker exec -ti local-web bash // Alternative way to enter web container (from anywhere)
     ```
 
+2. Inside web container
+
     ```
-    // Inside web container
     exit // Exit container
+   
+    php public/index.php c5:config -g set concrete.maintenance_mode true // Enter maintenance mode
+    php public/index.php c5:update // Update concrete5
     
-    composer install // Install packages listed in composer.json
+    composer i -o // Install packages listed in composer.json (with optimized flag)
     
     npm install // Install packages listed in package.json
     
@@ -111,7 +164,7 @@ follow instructions (skip otherwise) in:
     npm run dev // @TODO webpack commands
     ```
 
-## Install concrete5 - without composer
+## Install concrete5 without composer
 
 1. Download the latest version from 
 https://www.concretecms.org/download  
@@ -121,7 +174,8 @@ under Windows in ``\\wsl$\Ubuntu\home\parasek\dev\project_name`` folder).
 
    ```
    docker-compose exec web bash
-   rm public/index.php
+   rm -R public
+   mkdir public
    cd public
    
    // Replace "concrete-cms-9.0.2" with correct name
@@ -133,14 +187,15 @@ under Windows in ``\\wsl$\Ubuntu\home\parasek\dev\project_name`` folder).
    rmdir concrete-cms-9.0.2
    rm concrete-cms-9.0.2.zip
    ```
+   
 2. Visit https://localhost:8100 in browser and install concrete5.  
 MySQL credentials are the same as mentioned earlier for phpMyAdmin.
 
 3. When moving site to server, you just want to upload whole
 public folder + export/import database. 
 
-4. This way you can setup server for older version of concrete5 
-or applications that don't use composer.
+4. This way you can set up server for older version of concrete5 
+or applications that don't require composer.
 
 ## <a name="first-installation"></a>First installation
 
