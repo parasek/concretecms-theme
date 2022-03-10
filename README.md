@@ -1,4 +1,4 @@
-# Concrete5 Docker server + basic theme
+# Concrete5 Docker LAMP server + basic theme
 
 A fully featured Concrete5 solution comprising framework skeleton, Docker server and basic theme.
 
