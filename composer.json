@@ -1,6 +1,6 @@
 {
   "name": "parasek/concrete5",
-  "description": "Concrete5 docker server with ",
+  "description": "A fully featured concrete5 solution comprising composer skeleton, docker server and basic theme.",
   "type": "project",
   "homepage": "https://github.com/parasek/concrete5",
   "license": "MIT",
