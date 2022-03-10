@@ -1,6 +1,8 @@
-# Concrete5 LAMP server (using Docker / WSL2)
+# Concrete5 LAMP server + basic theme (using Composer / Docker / WSL2)
 
-Apache2, PHP, MariaDB, phpMyAdmin, Composer, Node, Sass, Gulp, Concrete5
+A fully featured concrete5 solution comprising composer skeleton, docker server and basic theme.
+
+Concrete5, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, Node, Sass, Gulp
 
 ## Requirements
 
@@ -8,7 +10,7 @@ Apache2, PHP, MariaDB, phpMyAdmin, Composer, Node, Sass, Gulp, Concrete5
 - Docker Desktop for Windows installed
 - Your project files should be located somewhere in WSL2 subsystem, 
 for example in: ```\\wsl$\Ubuntu\home\parasek\dev```
-which, under Linux, is accessible through ```~/dev``` path
+which, under Linux, is accessible by ```~/dev``` path
 
 ## Installation
 
@@ -86,27 +88,35 @@ follow instructions (skip otherwise) in:
     ```
 
     Install concrete5  
-    Instead single command, you can start installation in interactive mode ``./vendor/bin/concrete5 c5:install -i``
+    Remember to change those fields before you start installation:  
+    --site - Site name  
+    --language - Dashboard interface language  
+    --site-locale - Main/first language of site  
+    --timezone - Timezone, enter the same as APP_TZ in .env file  
+    --admin-email - Main account email  
+    --admin-password - Main account password   
+
+    If you prefer the other way, you can start installation in interactive mode ``./vendor/bin/concrete5 c5:install -i``
     ```
-    php public/index.php c5:install --allow-as-root -n --db-server=mariadb --db-username=root --db-password=root --db-database=default --site="Sitename" --language=pl_PL --admin-email=example@email.com --admin-password="admin_password" --site-locale=pl_PL --starting-point=atomik_full --timezone=Europe/Warsaw
+    php public/index.php c5:install --allow-as-root -n --db-server=mariadb --db-username=root --db-password=root --db-database=default --starting-point=atomik_full --site="Sitename" --language=en_US --site-locale=en_US --timezone=Europe/Warsaw --admin-email=example@email.com --admin-password="admin_password"
     ```
 
-    Revert name change of prod.database.php
+    Revert name change of prod.database.php (from now concrete5 will be using prod.database.php)
     ```
     mv public/application/config/temp.database.php public/application/config/prod.database.php
     ```
 
-    Remove original database.php (concrete5 will use prod.database.php)
+    Remove original database.php
     ```
     rm public/application/config/database.php
     ```
 
-    Change required permission
+    Change required permissions (though 777 is fine for a local server, for live servers you should be more restrictive)
     ```
-    chmod -R 755 public/application/config public/application/files public/packages public/updates
+    chmod -R 777 public/application/config public/application/files public/packages public/updates
     ```
 
-11. Default urls and login credentials
+11. Default links and login credentials
 
     > https url: [https://localhost:8100](https://localhost:8100)  
     > phpMyAdmin: [http://localhost:8200](http://localhost:8200)  
@@ -166,18 +176,21 @@ follow instructions (skip otherwise) in:
 
 ## Install concrete5 without composer
 
-1. Download the latest version from 
-https://www.concretecms.org/download  
-and unzip it in public directory.  
-You can use Linux commands below or do some/all operations 
-under Windows in ``\\wsl$\Ubuntu\home\parasek\dev\project_name`` folder).
+1. Clear public folder.
 
    ```
    docker-compose exec web bash
    rm -R public
    mkdir public
    cd public
-   
+   ```
+
+2. Download the latest version from https://www.concretecms.org/download  
+and unzip it in public directory.  
+You can use Linux commands below or do some/all operations 
+under Windows in ``\\wsl$\Ubuntu\home\parasek\dev\project_name`` folder.
+
+   ```
    // Replace "concrete-cms-9.0.2" with correct name
    // Temporarily include hidden files (.htaccess etc.) in mv command using "shopt"
    unzip concrete-cms-9.0.2.zip
@@ -188,13 +201,13 @@ under Windows in ``\\wsl$\Ubuntu\home\parasek\dev\project_name`` folder).
    rm concrete-cms-9.0.2.zip
    ```
    
-2. Visit https://localhost:8100 in browser and install concrete5.  
+3. Visit https://localhost:8100 in browser and install concrete5.  
 MySQL credentials are the same as mentioned earlier for phpMyAdmin.
 
-3. When moving site to server, you just want to upload whole
+4. When moving site to server, you just want to upload whole
 public folder + export/import database. 
 
-4. This way you can set up server for older version of concrete5 
+5. This way you can set up server for older version of concrete5 
 or applications that don't require composer.
 
 ## <a name="first-installation"></a>First installation
@@ -258,7 +271,7 @@ or applications that don't require composer.
 
 ## <a name="multiple-docker-servers"></a>Multiple Docker Servers
 
-1. If you want to run multiple docker servers at the same time, you have to set unique name/ports in .env file, for example:
+1. If you want to run multiple Docker servers at the same time, you have to set unique name/ports in .env file, for example:
 
     ```
     APP_NAME=othername
