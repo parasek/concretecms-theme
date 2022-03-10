@@ -1,8 +1,8 @@
-# Concrete5 LAMP server + basic theme (using Composer / Docker / WSL2)
+# Concrete5 Docker server + basic theme
 
-A fully featured concrete5 solution comprising composer skeleton, docker server and basic theme.
+A fully featured Concrete5 solution comprising framework skeleton, Docker server and basic theme.
 
-Concrete5, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, Node, Sass, Gulp
+Concrete5, WSL2, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sass, Gulp
 
 ## Requirements
 
@@ -14,7 +14,7 @@ which, under Linux, is accessible by ```~/dev``` path
 
 ## Installation
 
-1. Open Windows Terminal, create and enter folder in Linux home directory.
+1. Open Windows Terminal, create and enter project folder in Linux home directory.
 
     ```
     cd ~/dev
@@ -22,41 +22,41 @@ which, under Linux, is accessible by ```~/dev``` path
     cd project_name
     ```
    
-2. Download files from GitHub
+2. Download files from GitHub.
 
     ```
     git clone https://github.com/parasek/lamp-docker.git .
     ```
    
-3. Remove ``.git`` folder
+3. Remove ``.git`` folder.
 
    ```
    sudo rm -r .git
    ```
 
-4. Copy ``.env.dist`` file to ``.env``
+4. Copy ``.env.dist`` file to ``.env``.
 
    ```
    cp .env.dist .env
    ```
 
-5. <a name="first-installation-link"></a>If you are installing this docker server for the first time, 
+5. <a name="first-installation-link"></a>If you are installing this Docker server for the first time, 
 follow instructions (skip otherwise) in:
 
    > 🔗 [First Installation](#first-installation)
 
-6. <a name="multiple-docker-servers-link"></a>If you want to run multiple docker servers at the same time, 
+6. <a name="multiple-docker-servers-link"></a>If you want to run multiple Docker servers at the same time, 
 follow instructions (skip otherwise) in:
 
    > 🔗 [Multiple Docker Servers](#multiple-docker-servers)
 
-7. Copy ``000-default.conf.example`` file to ``000-default.conf``
+7. Copy ``000-default.conf.example`` file to ``000-default.conf``.
 
     ```
     cp docker/web/apache2/sites-available/000-default.conf.example docker/web/apache2/sites-available/000-default.conf
     ```
    
-8. Manually copy saved ssl certificates, that you generated earlier (skip if you did 🔗 [First Installation](#first-installation) during this setup) to:
+8. Manually copy saved ssl certificates, that you generated earlier (skip this step if you did 🔗 [First Installation](#first-installation) during this setup) to:
 
    ```
    docker/server/apache2/ssl/ssl_site.crt
@@ -64,13 +64,13 @@ follow instructions (skip otherwise) in:
    docker/server/apache2/ssl/ssl_site.key
    ```
 
-9. Start docker containers.
+9. Start Docker containers.
 
     ```
     docker-compose up -d
     ```
    
-10. Install concrete5 using composer
+10. Install Concrete5 using Composer.
 
     Enter web container
     ```
@@ -87,8 +87,8 @@ follow instructions (skip otherwise) in:
     mv public/application/config/prod.database.php public/application/config/temp.database.php
     ```
 
-    Install concrete5  
-    Remember to change those fields before you start installation:  
+    Install Concrete5  
+    Remember to change fields below before you start installation:  
     --site - Site name  
     --language - Dashboard interface language  
     --site-locale - Main/first language of site  
@@ -98,10 +98,10 @@ follow instructions (skip otherwise) in:
 
     If you prefer the other way, you can start installation in interactive mode ``./vendor/bin/concrete5 c5:install -i``
     ```
-    php public/index.php c5:install --allow-as-root -n --db-server=mariadb --db-username=root --db-password=root --db-database=default --starting-point=atomik_full --site="Sitename" --language=en_US --site-locale=en_US --timezone=Europe/Warsaw --admin-email=example@email.com --admin-password="admin_password"
+    php public/index.php c5:install --allow-as-root -n --db-server=mariadb --db-username=root --db-password=root --db-database=default --starting-point=atomik_full --site="Sitename" --language=en_GB --site-locale=en_GB --timezone=Europe/London --admin-email=example@email.com --admin-password="admin_password"
     ```
 
-    Revert name change of prod.database.php (from now concrete5 will be using prod.database.php)
+    Revert name change of prod.database.php (from now Concrete5 will be using prod.database.php)
     ```
     mv public/application/config/temp.database.php public/application/config/prod.database.php
     ```
@@ -116,7 +116,7 @@ follow instructions (skip otherwise) in:
     chmod -R 777 public/application/config public/application/files public/packages public/updates
     ```
 
-11. Default links and login credentials
+11. Default links and login credentials:
 
     > https url: [https://localhost:8100](https://localhost:8100)  
     > phpMyAdmin: [http://localhost:8200](http://localhost:8200)  
@@ -130,7 +130,7 @@ follow instructions (skip otherwise) in:
 
 ## How to change PHP version?
 
-1. Open .env and change php version (for example: 5.6, 7.4, 8.0 etc.)
+1. Open .env and change php version (for example: 5.6, 7.4, 8.0 etc.).
 
     ```
     APP_PHP_VERSION=8.0
@@ -147,7 +147,7 @@ follow instructions (skip otherwise) in:
 
 ## Popular commands
 
-1. From Linux terminal  
+1. In Linux Terminal:  
 
     ```
     docker-compose up -d // Start server containers
@@ -157,13 +157,13 @@ follow instructions (skip otherwise) in:
     docker exec -ti local-web bash // Alternative way to enter web container (from anywhere)
     ```
 
-2. Inside web container
+2. Inside web container:  
 
     ```
     exit // Exit container
    
     php public/index.php c5:config -g set concrete.maintenance_mode true // Enter maintenance mode
-    php public/index.php c5:update // Update concrete5
+    php public/index.php c5:update // Update Concrete5
     
     composer i -o // Install packages listed in composer.json (with optimized flag)
     
@@ -174,7 +174,7 @@ follow instructions (skip otherwise) in:
     npm run dev // @TODO webpack commands
     ```
 
-## Install concrete5 without composer
+## Install Concrete5 without Composer
 
 1. Clear public folder.
 
@@ -185,13 +185,14 @@ follow instructions (skip otherwise) in:
    cd public
    ```
 
-2. Download the latest version from https://www.concretecms.org/download  
+2. Download the latest version from  
+https://www.concretecms.org/download  
 and unzip it in public directory.  
 You can use Linux commands below or do some/all operations 
 under Windows in ``\\wsl$\Ubuntu\home\parasek\dev\project_name`` folder.
 
    ```
-   // Replace "concrete-cms-9.0.2" with correct name
+   // Replace "concrete-cms-9.0.2" with current version name
    // Temporarily include hidden files (.htaccess etc.) in mv command using "shopt"
    unzip concrete-cms-9.0.2.zip
    shopt -s dotglob
@@ -201,28 +202,28 @@ under Windows in ``\\wsl$\Ubuntu\home\parasek\dev\project_name`` folder.
    rm concrete-cms-9.0.2.zip
    ```
    
-3. Visit https://localhost:8100 in browser and install concrete5.  
+3. Visit https://localhost:8100 in browser and install Concrete5.  
 MySQL credentials are the same as mentioned earlier for phpMyAdmin.
 
-4. When moving site to server, you just want to upload whole
+4. When moving site to live server, you just want to upload whole
 public folder + export/import database. 
 
-5. This way you can set up server for older version of concrete5 
-or applications that don't require composer.
+5. This way you can set up server for older version of Concrete5 
+or applications that don't require Composer.
 
 ## <a name="first-installation"></a>First installation
 
-1. Start Docker containers
+1. Start Docker containers.
 
    ```
    cd ~/dev/project_name
    docker-compose up -d
    ```
 
-2. Enter web container
+2. Enter web container.
 
    ```
-   // From inside ~/dev/project_name (same level as docker-compose.yml)
+   // From ~/dev/project_name folder (at the same level as docker-compose.yml)
    docker-compose exec web bash 
    
    // From any folder
@@ -230,7 +231,7 @@ or applications that don't require composer.
    ```
 
 3. Inside web container create ssl certificates for localhost domain
-   (in Terminal run every command one by one)
+   (in Terminal run every command one by one).
 
    ```
    openssl genrsa -out "/etc/apache2/ssl/ssl_site.key" 2048
