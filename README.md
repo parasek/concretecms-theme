@@ -63,14 +63,16 @@ follow instructions (skip otherwise) in:
    docker/server/apache2/ssl/ssl_site.csr
    docker/server/apache2/ssl/ssl_site.key
    ```
+9. If you want/have to, you can change php version and timezone in ``.env`` file.   
+Thanks to ^ symbol in composer.json ``"concrete5/core": "^9.0.1",`` will fetch the latest version of Concrete5.9 branch.
 
-9. Start Docker containers.
+10. Start Docker containers.
 
-    ```
-    docker-compose up -d
-    ```
+     ```
+     docker-compose up -d
+     ```
    
-10. Install Concrete5 using Composer.
+11. Install Concrete5 using Composer.
 
     Enter web container
     ```
@@ -113,10 +115,12 @@ follow instructions (skip otherwise) in:
 
     Change required permissions (though 777 is fine for a local server, for live servers you should be more restrictive)
     ```
-    chmod -R 777 public/application/config public/application/files public/packages public/updates
+    chmod -R 777 public/application/config public/application/files public/packages
     ```
+    
+12. This probably good time to ``git init`` and make initial commit if you are using GIT.
 
-11. Default links and login credentials:
+13. Default links and login credentials:
 
     > https url: [https://localhost:8100](https://localhost:8100)  
     > phpMyAdmin: [http://localhost:8200](http://localhost:8200)  
