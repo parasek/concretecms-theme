@@ -63,6 +63,7 @@ follow instructions (skip otherwise) in:
    docker/server/apache2/ssl/ssl_site.csr
    docker/server/apache2/ssl/ssl_site.key
    ```
+   
 9. If you want/have to, you can change php version and timezone in ``.env`` file.   
 Thanks to ^ symbol in composer.json ``"concrete5/core": "^9.0.1",`` will fetch the latest version of Concrete5.9 branch.
 
@@ -132,7 +133,38 @@ Thanks to ^ symbol in composer.json ``"concrete5/core": "^9.0.1",`` will fetch t
     > Password: root  
     > Database: default
 
-## How to change PHP version?
+## How to update Concrete5
+
+1. Enter web container and run composer update:
+
+    ```
+    docker-compose exec web bash
+    ```
+   
+    ```
+    composer update
+    ```
+
+## How to install Concrete5.8
+
+1. Before installing Composer dependencies, replace ``composer.json`` with ``misc/concrete5.8/composer.json``
+
+    ```
+    docker-compose exec web bash
+    ```
+
+    ```
+    cp misc/concrete5.8/composer.json composer.json
+    ```
+
+2. Remove ``composer.lock``
+    ```
+    rm composer.lock
+    ```
+
+3. Proceed with installation as normal.
+
+## How to change PHP version
 
 1. Open .env and change php version (for example: 5.6, 7.4, 8.0 etc.).
 
