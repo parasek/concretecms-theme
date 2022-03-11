@@ -25,7 +25,7 @@ which, under Linux, is accessible by ```~/dev``` path
 2. Download files from GitHub.
 
     ```
-    git clone https://github.com/parasek/lamp-docker.git .
+    git clone https://github.com/parasek/concrete5.git .
     ```
    
 3. Remove ``.git`` folder.
