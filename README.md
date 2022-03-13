@@ -100,7 +100,7 @@ follow instructions (skip otherwise) in:
 
     If you prefer the other way, you can start installation in interactive mode ``./vendor/bin/concrete5 c5:install -i``
     ```
-    php public/index.php c5:install --allow-as-root -n --db-server=mariadb --db-username=root --db-password=root --db-database=default --starting-point=atomik_full --site="Sitename" --language=en_GB --site-locale=en_GB --timezone=Europe/Warsaw --admin-email=example@email.com --admin-password="admin_password"
+    php public/index.php c5:install --allow-as-root -n --db-server=mariadb --db-username=root --db-password=root --db-database=default --starting-point=atomik_full --site="Sitename" --language=en_US --site-locale=en_GB --timezone=Europe/Warsaw --admin-email=example@email.com --admin-password="password"
     ```
 
     Revert name change of live.database.php (from now Concrete5 will be using live.database.php)
@@ -161,7 +161,7 @@ follow instructions (skip otherwise) in:
     rm composer.lock
     ```
 
-3. Proceed with installation as normal.
+3. Proceed with installation as normal (remember to downgrade php version first).
 
 ## How to change PHP version
 
