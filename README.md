@@ -113,7 +113,7 @@ follow instructions (skip otherwise) in:
     rm public/application/config/database.php
     ```
 
-    Change required permissions (though 777 is fine for a local server, for live servers you should be more restrictive)
+    Change required permissions (though 777 is fine for a local server, on live servers you should be more restrictive - 755 for folders and 644 for files)
     ```
     chmod -R 777 public/application/config public/application/files public/packages
     ```
@@ -278,7 +278,7 @@ or applications that don't require Composer.
    docker-compose down
    ```
 
-5. Add generated ``ssl_site.crt`` to Trusted Certificates On Windows 10:
+5. Add generated ``ssl_site.crt`` to Trusted Certificates on Windows 10:
    - Press Windows button and run ``cmd``
    - In cmd.exe window type ``mmc`` and press enter to open Microsoft Management Console, allow it to make changes
    - Select ``File -> Add/Remove Snap-in``
