@@ -1,8 +1,8 @@
-# Concrete5 Docker LAMP server + basic theme
+# Concrete5 boilerplate theme
 
-A fully featured Concrete5 solution comprising framework skeleton, Docker server and basic theme.
+Concrete5 boilerplate theme consisting of Docker server, Concrete5 skeleton and custom theme.
 
-Concrete5, WSL2, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sass, Gulp
+Stack: WSL2, Concrete5, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sass, Gulp, Webpack
 
 ## Requirements
 
@@ -25,7 +25,7 @@ which, under Linux, is accessible by ```~/dev``` path
 2. Download files from GitHub.
 
     ```
-    git clone https://github.com/parasek/concrete5.git .
+    git clone https://github.com/parasek/c5-theme.git .
     ```
    
 3. Remove ``.git`` folder.
@@ -59,13 +59,12 @@ follow instructions (skip otherwise) in:
 8. Manually copy saved ssl certificates, that you generated earlier (skip this step if you did 🔗 [First Installation](#first-installation) during this setup) to:
 
    ```
-   docker/server/apache2/ssl/ssl_site.crt
-   docker/server/apache2/ssl/ssl_site.csr
-   docker/server/apache2/ssl/ssl_site.key
+   docker/web/apache2/ssl/ssl_site.crt
+   docker/web/apache2/ssl/ssl_site.csr
+   docker/web/apache2/ssl/ssl_site.key
    ```
    
-9. If you want/have to, you can change php version and timezone in ``.env`` file.   
-Thanks to ^ symbol in composer.json ``"concrete5/core": "^9.0.1",`` will fetch the latest version of Concrete5.9 branch.
+9. If you want/have to, you can change php version and timezone in ``.env`` file.
 
 10. Start Docker containers.
 
@@ -85,9 +84,9 @@ Thanks to ^ symbol in composer.json ``"concrete5/core": "^9.0.1",`` will fetch t
     composer install -o
     ```
 
-    Temporarily change name of prod.database.php (installation won't start otherwise)
+    Temporarily change name of live.database.php (installation won't start otherwise)
     ```
-    mv public/application/config/prod.database.php public/application/config/temp.database.php
+    mv public/application/config/live.database.php public/application/config/temp.database.php
     ```
 
     Install Concrete5  
@@ -101,12 +100,12 @@ Thanks to ^ symbol in composer.json ``"concrete5/core": "^9.0.1",`` will fetch t
 
     If you prefer the other way, you can start installation in interactive mode ``./vendor/bin/concrete5 c5:install -i``
     ```
-    php public/index.php c5:install --allow-as-root -n --db-server=mariadb --db-username=root --db-password=root --db-database=default --starting-point=atomik_full --site="Sitename" --language=en_GB --site-locale=en_GB --timezone=Europe/London --admin-email=example@email.com --admin-password="admin_password"
+    php public/index.php c5:install --allow-as-root -n --db-server=mariadb --db-username=root --db-password=root --db-database=default --starting-point=atomik_full --site="Sitename" --language=en_GB --site-locale=en_GB --timezone=Europe/Warsaw --admin-email=example@email.com --admin-password="admin_password"
     ```
 
-    Revert name change of prod.database.php (from now Concrete5 will be using prod.database.php)
+    Revert name change of live.database.php (from now Concrete5 will be using live.database.php)
     ```
-    mv public/application/config/temp.database.php public/application/config/prod.database.php
+    mv public/application/config/temp.database.php public/application/config/live.database.php
     ```
 
     Remove original database.php
