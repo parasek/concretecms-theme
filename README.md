@@ -298,9 +298,9 @@ or applications that don't require Composer.
    IMPORTANT!
    Copy/save generated files somewhere on your computer.  
    You will be using them everytime you create new project.
-   - docker/server/apache2/ssl/ssl_site.crt
-   - docker/server/apache2/ssl/ssl_site.csr
-   - docker/server/apache2/ssl/ssl_site.key
+   - docker/web/apache2/ssl/ssl_site.crt
+   - docker/web/apache2/ssl/ssl_site.csr
+   - docker/web/apache2/ssl/ssl_site.key
    ```
 
    ⬅ [Go back to Installation](#first-installation-link)
