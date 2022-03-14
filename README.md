@@ -64,7 +64,12 @@ follow instructions (skip otherwise) in:
    docker/web/apache2/ssl/ssl_site.key
    ```
    
-9. If you want/have to, you can change php version and timezone in ``.env`` file.
+9. Set php version and timezone in ``.env`` file.
+
+     ```
+     APP_PHP_VERSION=8.0
+     APP_TZ=Europe/Warsaw
+     ```
 
 10. Start Docker containers.
 
@@ -98,9 +103,14 @@ follow instructions (skip otherwise) in:
     --admin-email - Main account email  
     --admin-password - Main account password   
 
-    If you prefer the other way, you can start installation in interactive mode ``./vendor/bin/concrete5 c5:install -i``
     ```
     php public/index.php c5:install --allow-as-root -n --db-server=mariadb --db-username=root --db-password=root --db-database=default --starting-point=atomik_full --site="Sitename" --language=en_US --site-locale=en_GB --timezone=Europe/Warsaw --admin-email=example@email.com --admin-password="password"
+    ```
+
+    Alternatively you can start installation in interactive mode    
+
+    ```
+    ./vendor/bin/concrete5 c5:install -i
     ```
 
     Revert name change of live.database.php (from now Concrete5 will be using live.database.php)
