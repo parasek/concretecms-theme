@@ -1,4 +1,4 @@
-# Concrete5 boilerplate theme
+# Concrete5 boilerplate theme - WIP
 
 Concrete5 boilerplate theme consisting of Docker server, Concrete5 skeleton and custom theme.
 
@@ -98,13 +98,13 @@ follow instructions (skip otherwise) in:
     Remember to change fields below before you start installation:  
     --site - Site name  
     --language - Dashboard interface language  
-    --site-locale - Main/first language of site  
+    --site-locale - Main/first installed language on site  
     --timezone - Timezone, enter the same as APP_TZ in .env file  
     --admin-email - Main account email  
     --admin-password - Main account password   
 
     ```
-    php public/index.php c5:install --allow-as-root -n --db-server=mariadb --db-username=root --db-password=root --db-database=default --starting-point=atomik_full --site="Sitename" --language=en_US --site-locale=en_GB --timezone=Europe/Warsaw --admin-email=example@email.com --admin-password="password"
+    php public/index.php c5:install --allow-as-root -n --db-server=mariadb --db-username=root --db-password=root --db-database=default --starting-point=theme --site="Sitename" --language=en_US --site-locale=en_GB --timezone=Europe/Warsaw --admin-email=example@email.com --admin-password="password"
     ```
 
     Alternatively you can start installation in interactive mode    
@@ -180,7 +180,8 @@ follow instructions (skip otherwise) in:
     ```
     APP_PHP_VERSION=8.0
     ```
-    Rebuild web container
+   
+2. Rebuild web container
 
     ```
     docker-compose build
@@ -188,6 +189,12 @@ follow instructions (skip otherwise) in:
 
     ```
     docker-compose up -d
+    ```
+   
+3. Changing between 7.x and 8.x may require updating composer.lock in web container.
+
+    ```
+    composer update
     ```
 
 ## Popular commands
