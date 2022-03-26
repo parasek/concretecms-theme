@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<concrete5-cif version="1.0">
+
+    <themes>
+        <theme handle="theme" package="" activated="1"/>
+    </themes>
+
+    <pagetemplates>
+        <pagetemplate handle="home" name="Home" icon="full.png" package="" internal=""/>
+        <pagetemplate handle="page" name="Page" icon="full.png" package="" internal=""/>
+        <pagetemplate handle="contact" name="Contact" icon="full.png" package="" internal=""/>
+    </pagetemplates>
+
+    <pagetypes>
+        <pagetype name="Page" handle="page" package="" launch-in-composer="1" is-frequently-added="1">
+            <pagetemplates type="custom" default="page">
+                <pagetemplate handle="page"/>
+            </pagetemplates>
+            <target handle="all" package="" form-factor=""/>
+            <composer>
+                <formlayout>
+                    <set name="Basics" description="">
+                        <control custom-template="" required="1" custom-label="" description="" type="core_page_property" handle="name"/>
+                        <control custom-template="" custom-label="" description="" type="core_page_property" handle="description"/>
+                        <control custom-template="" custom-label="" description="" type="core_page_property" handle="publish_target"/>
+                    </set>
+                </formlayout>
+                <output>
+                    <pagetemplate handle="page">
+                        <page name="" path="" public-date="2022-03-15 16:16:17" filename="" pagetype="page" template="page" user="admin" description="" package="" root="true"/>
+                    </pagetemplate>
+                </output>
+            </composer>
+        </pagetype>
+        <pagetype name="Home" handle="home" package="" launch-in-composer="1">
+            <pagetemplates type="custom" default="home">
+                <pagetemplate handle="home"/>
+            </pagetemplates>
+            <target handle="all" package="" form-factor=""/>
+            <composer>
+                <formlayout>
+                    <set name="Basics" description="">
+                        <control custom-template="" required="1" custom-label="" description="" type="core_page_property" handle="name"/>
+                        <control custom-template="" custom-label="" description="" type="core_page_property" handle="description"/>
+                        <control custom-template="" custom-label="" description="" type="core_page_property" handle="publish_target"/>
+                    </set>
+                </formlayout>
+                <output>
+                    <pagetemplate handle="home">
+                        <page name="" path="" public-date="2022-03-15 16:01:53" filename="" pagetype="home" template="home" user="admin" description="" package="" root="true"/>
+                    </pagetemplate>
+                </output>
+            </composer>
+        </pagetype>
+        <pagetype name="Contact" handle="contact" package="" launch-in-composer="1">
+            <pagetemplates type="custom" default="contact">
+                <pagetemplate handle="contact"/>
+            </pagetemplates>
+            <target handle="all" package="" form-factor=""/>
+            <composer>
+                <formlayout>
+                    <set name="Basics" description="">
+                        <control custom-template="" required="1" custom-label="" description="" type="core_page_property" handle="name"/>
+                        <control custom-template="" custom-label="" description="" type="core_page_property" handle="description"/>
+                        <control custom-template="" custom-label="" description="" type="core_page_property" handle="publish_target"/>
+                    </set>
+                </formlayout>
+                <output>
+                    <pagetemplate handle="contact">
+                        <page name="" path="" public-date="2022-03-15 16:18:37" filename="" pagetype="contact" template="contact" user="admin" description="" package="" root="true"/>
+                    </pagetemplate>
+                </output>
+            </composer>
+        </pagetype>
+    </pagetypes>
+
+    <pages>
+        <page name="Home" path="" public-date="2021-08-20 15:36:55" filename="" pagetype="home" template="home"
+              user="admin" description="" package="" root="true">
+            <attributes>
+                <attributekey handle="exclude_nav">
+                    <value>1</value>
+                </attributekey>
+            </attributes>
+        </page>
+        <page name="Contact" path="/contact" public-date="2021-08-18 16:20:35" filename="" pagetype="contact"
+              template="contact" user="admin" description="" package="">
+        </page>
+        <page name="Privacy policy" path="/privacy-policy" public-date="2021-08-18 16:20:35" filename="" pagetype="page"
+              template="page" user="admin" description="" package="">
+            <attributes>
+                <attributekey handle="exclude_nav">
+                    <value>1</value>
+                </attributekey>
+            </attributes>
+        </page>
+        <page name="Sitemap" path="/sitemap" public-date="2021-08-18 16:20:35" filename="" pagetype="page"
+              template="page" user="admin" description="" package="">
+            <attributes>
+                <attributekey handle="exclude_nav">
+                    <value>1</value>
+                </attributekey>
+            </attributes>
+        </page>
+    </pages>
+
+    <attributekeys>
+        <attributekey handle="thumbnail" name="Thumbnail" package="" searchable="1" indexed="1" type="image_file"
+                      category="collection"/>
+        <attributekey handle="exclude_subpages_from_nav" name="Exclude Sub-Pages From Nav" package="" searchable="1"
+                      indexed="1" type="boolean" category="collection">
+            <type checked="0"/>
+        </attributekey>
+    </attributekeys>
+
+</concrete5-cif>
