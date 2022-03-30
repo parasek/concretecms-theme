@@ -1,4 +1,4 @@
-let mix = require('laravel-mix')
+const mix = require('laravel-mix');
 
 /*
  |--------------------------------------------------------------------------
@@ -19,7 +19,7 @@ mix
     .js('resources/js/main.js', 'public/application/js/main.js')
 
     // Less CSS Compilation
-    .sass('resources/css/main.scss', 'public/application/css/main.css')
+    .sass('resources/css/main.scss', 'public/application/css/main.css');
 
 // Full API
 // mix.js(src, output);

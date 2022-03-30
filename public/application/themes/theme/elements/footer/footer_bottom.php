@@ -1,13 +1,14 @@
-    <?php $view->inc('elements/footer/structured_data.php'); ?>
+<?php $view->inc('elements/footer/structured_data.php'); ?>
 
-    <?php $view->inc('elements/footer/svg_sprites.php'); ?>
+<?php $view->inc('elements/footer/svg_sprites.php'); ?>
 
-    <?php View::element('footer_required'); ?>
+<?php View::element('footer_required'); ?>
 
-    <?php $manifestPath = 'application/themes/theme/dist/manifest.json'; ?>
-    <?php if (file_exists($manifestPath)): ?>
-        <script src="<?php echo json_decode(file_get_contents($manifestPath))->{'app.min.js'}; ?>"></script>
-    <?php endif; ?>
+<?php $manifestPath = 'application/themes/theme/dist/manifest.json'; ?>
+<?php if (file_exists($manifestPath)): ?>
+    <script
+        src="/application/themes/theme/dist/js/<?php echo json_decode(file_get_contents($manifestPath))->{'app.min.js'}; ?>"></script>
+<?php endif; ?>
 
 </body>
 </html>

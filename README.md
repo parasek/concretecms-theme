@@ -6,11 +6,10 @@ Stack: WSL2, Concrete5, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sass,
 
 ## Requirements
 
-- WSL2 installed and enabled
-- Docker Desktop for Windows installed
-- Your project files should be located somewhere in WSL2 subsystem, 
-for example in: ```\\wsl$\Ubuntu\home\parasek\dev```
-which, under Linux, is accessible by ```~/dev``` path
+-   WSL2 installed and enabled
+-   Docker Desktop for Windows installed
+-   Your project files should be located somewhere in WSL2 subsystem, for example in: `\\wsl$\Ubuntu\home\parasek\dev`
+    which, under Linux, is accessible by `~/dev` path
 
 ## Installation
 
@@ -21,125 +20,133 @@ which, under Linux, is accessible by ```~/dev``` path
     mkdir project_name
     cd project_name
     ```
-   
+
 2. Download files from GitHub.
 
     ```
     git clone https://github.com/parasek/c5-theme.git .
     ```
-   
-3. Remove ``.git`` folder.
 
-   ```
-   sudo rm -r .git
-   ```
+3. Remove `.git` folder.
 
-4. Copy ``.env.dist`` file to ``.env``.
+    ```
+    sudo rm -r .git
+    ```
 
-   ```
-   cp .env.dist .env
-   ```
+4. Copy `.env.dist` file to `.env`.
 
-5. <a name="first-installation-link"></a>If you are installing this Docker server for the first time, 
-follow instructions (skip otherwise) in:
+    ```
+    cp .env.dist .env
+    ```
+
+5. <a name="first-installation-link"></a>If you are installing this Docker server for the first time, follow
+   instructions (skip otherwise) in:
 
    > 🔗 [First Installation](#first-installation)
 
-6. <a name="multiple-docker-servers-link"></a>If you want to run multiple Docker servers at the same time, 
-follow instructions (skip otherwise) in:
+6. <a name="multiple-docker-servers-link"></a>If you want to run multiple Docker servers at the same time, follow
+   instructions (skip otherwise) in:
 
    > 🔗 [Multiple Docker Servers](#multiple-docker-servers)
 
-7. Copy ``000-default.conf.example`` file to ``000-default.conf``.
+7. Copy `000-default.conf.example` file to `000-default.conf`.
 
     ```
     cp docker/web/apache2/sites-available/000-default.conf.example docker/web/apache2/sites-available/000-default.conf
     ```
-   
-8. Manually copy saved ssl certificates, that you generated earlier (skip this step if you did 🔗 [First Installation](#first-installation) during this setup) to:
 
-   ```
-   docker/web/apache2/ssl/ssl_site.crt
-   docker/web/apache2/ssl/ssl_site.csr
-   docker/web/apache2/ssl/ssl_site.key
-   ```
-   
-9. Set php version and timezone in ``.env`` file.
+8. Manually copy saved ssl certificates, that you generated earlier (skip this step if you did
+   🔗 [First Installation](#first-installation) during this setup) to:
 
-     ```
-     APP_PHP_VERSION=8.0
-     APP_TZ=Europe/Warsaw
-     ```
+    ```
+    docker/web/apache2/ssl/ssl_site.crt
+    docker/web/apache2/ssl/ssl_site.csr
+    docker/web/apache2/ssl/ssl_site.key
+    ```
+
+9. Set php version and timezone in `.env` file.
+
+    ```
+    APP_PHP_VERSION=8.0
+    APP_TZ=Europe/Warsaw
+    ```
 
 10. Start Docker containers.
 
-     ```
-     docker-compose up -d
-     ```
-   
+    ```
+    docker-compose up -d
+    ```
+
 11. Install Concrete5 using Composer.
 
     Enter web container
+
     ```
     docker-compose exec web bash
     ```
 
     Install Composer dependencies
+
     ```
     composer install -o
     ```
 
     Temporarily change name of live.database.php (installation won't start otherwise)
+
     ```
     mv public/application/config/live.database.php public/application/config/temp.database.php
     ```
 
-    Install Concrete5  
-    Remember to change fields below before you start installation:  
-    --site - Site name  
-    --language - Dashboard interface language  
-    --site-locale - Main/first installed language on site  
-    --timezone - Timezone, enter the same as APP_TZ in .env file  
-    --admin-email - Main account email  
-    --admin-password - Main account password   
+    Install Concrete5
+    Remember to change fields below before you start installation:
+    --site - Site name
+    --language - Dashboard interface language
+    --site-locale - Main/first installed language on site
+    --timezone - Timezone, enter the same as APP_TZ in .env file
+    --admin-email - Main account email
+    --admin-password - Main account password
 
     ```
     php public/index.php c5:install --allow-as-root -n --db-server=mariadb --db-username=root --db-password=root --db-database=default --starting-point=theme --site="Sitename" --language=en_US --site-locale=en_GB --timezone=Europe/Warsaw --admin-email=example@email.com --admin-password="password"
     ```
 
-    Alternatively you can start installation in interactive mode    
+    Alternatively you can start installation in interactive mode
 
     ```
     ./vendor/bin/concrete5 c5:install -i
     ```
 
     Revert name change of live.database.php (from now Concrete5 will be using live.database.php)
+
     ```
     mv public/application/config/temp.database.php public/application/config/live.database.php
     ```
 
     Remove original database.php
+
     ```
     rm public/application/config/database.php
     ```
 
-    Change required permissions (though 777 is fine for a local server, on live servers you should be more restrictive - 755 for folders and 644 for files)
+    Change required permissions (though 777 is fine for a local server, on live servers you should be more restrictive -
+    755 for folders and 644 for files)
+
     ```
     chmod -R 777 public/application/config public/application/files public/packages
     ```
-    
-12. This probably good time to ``git init`` and make initial commit if you are using GIT.
+
+12. This probably good time to `git init` and make initial commit if you are using GIT.
 
 13. Default links and login credentials:
 
-    > https url: [https://localhost:8100](https://localhost:8100)  
-    > phpMyAdmin: [http://localhost:8200](http://localhost:8200)  
+    > https url: [https://localhost:8100](https://localhost:8100)
+    > phpMyAdmin: [http://localhost:8200](http://localhost:8200)
     > http url: [http://localhost:8300](http://localhost:8300)
 
-    > Login credentials for phpMyAdmin/MySQL:  
-    > Server: mariadb  
-    > Username: root  
-    > Password: root  
+    > Login credentials for phpMyAdmin/MySQL:
+    > Server: mariadb
+    > Username: root
+    > Password: root
     > Database: default
 
 ## How to update Concrete5
@@ -149,14 +156,14 @@ follow instructions (skip otherwise) in:
     ```
     docker-compose exec web bash
     ```
-   
+
     ```
     composer update
     ```
 
 ## How to install Concrete5.8
 
-1. Before installing Composer dependencies, replace ``composer.json`` with ``misc/concrete5.8/composer.json``
+1. Before installing Composer dependencies, replace `composer.json` with `misc/concrete5.8/composer.json`
 
     ```
     docker-compose exec web bash
@@ -166,7 +173,8 @@ follow instructions (skip otherwise) in:
     cp misc/concrete5.8/composer.json composer.json
     ```
 
-2. Remove ``composer.lock``
+2. Remove `composer.lock`
+
     ```
     rm composer.lock
     ```
@@ -180,7 +188,7 @@ follow instructions (skip otherwise) in:
     ```
     APP_PHP_VERSION=8.0
     ```
-   
+
 2. Rebuild web container
 
     ```
@@ -190,8 +198,8 @@ follow instructions (skip otherwise) in:
     ```
     docker-compose up -d
     ```
-   
-3. Changing between 7.x and 8.x may require updating composer.lock in web container.
+
+3. Changing between 7.x and 8.x may require updating `composer.lock` in web container.
 
     ```
     composer update
@@ -199,7 +207,7 @@ follow instructions (skip otherwise) in:
 
 ## Popular commands
 
-1. In Linux Terminal:  
+1. In Linux Terminal:
 
     ```
     docker-compose up -d // Start server containers
@@ -209,20 +217,20 @@ follow instructions (skip otherwise) in:
     docker exec -ti local-web bash // Alternative way to enter web container (from anywhere)
     ```
 
-2. Inside web container:  
+2. Inside web container:
 
     ```
     exit // Exit container
-   
+
     php public/index.php c5:config -g set concrete.maintenance_mode true // Enter maintenance mode
     php public/index.php c5:update // Update Concrete5
-    
+
     composer i -o // Install packages listed in composer.json (with optimized flag)
-    
+
     npm install // Install packages listed in package.json
-    
+
     gulp watch // @TODO gulp commands
-    
+
     npm run dev // @TODO webpack commands
     ```
 
@@ -230,114 +238,113 @@ follow instructions (skip otherwise) in:
 
 1. Clear public folder.
 
-   ```
-   docker-compose exec web bash
-   rm -R public
-   mkdir public
-   cd public
-   ```
+    ```
+    docker-compose exec web bash
+    rm -R public
+    mkdir public
+    cd public
+    ```
 
-2. Download the latest version from  
-https://www.concretecms.org/download  
-and unzip it in public directory.  
-You can use Linux commands below or do some/all operations 
-under Windows in ``\\wsl$\Ubuntu\home\parasek\dev\project_name`` folder.
+2. Download the latest version from
+   https://www.concretecms.org/download
+   and unzip it in public directory.
+   You can use Linux commands below or do some/all operations under Windows
+   in `\\wsl$\Ubuntu\home\parasek\dev\project_name` folder.
 
-   ```
-   // Replace "concrete-cms-9.0.2" with current version name
-   // Temporarily include hidden files (.htaccess etc.) in mv command using "shopt"
-   unzip concrete-cms-9.0.2.zip
-   shopt -s dotglob
-   mv concrete-cms-9.0.2/* .
-   shopt -u dotglob
-   rmdir concrete-cms-9.0.2
-   rm concrete-cms-9.0.2.zip
-   ```
-   
-3. Visit https://localhost:8100 in browser and install Concrete5.  
-MySQL credentials are the same as mentioned earlier for phpMyAdmin.
+    ```
+    // Replace "concrete-cms-9.0.2" with current version name
+    // Temporarily include hidden files (.htaccess etc.) in mv command using "shopt"
+    unzip concrete-cms-9.0.2.zip
+    shopt -s dotglob
+    mv concrete-cms-9.0.2/* .
+    shopt -u dotglob
+    rmdir concrete-cms-9.0.2
+    rm concrete-cms-9.0.2.zip
+    ```
 
-4. When moving site to live server, you just want to upload whole
-public folder + export/import database. 
+3. Visit https://localhost:8100 in browser and install Concrete5.
+   MySQL credentials are the same as mentioned earlier for phpMyAdmin.
 
-5. This way you can set up server for older version of Concrete5 
-or applications that don't require Composer.
+4. When moving site to live server, you just want to upload whole public folder + export/import database.
+
+5. This way you can set up server for older version of Concrete5 or applications that don't require Composer.
 
 ## <a name="first-installation"></a>First installation
 
 1. Start Docker containers.
 
-   ```
-   cd ~/dev/project_name
-   docker-compose up -d
-   ```
+    ```
+    cd ~/dev/project_name
+    docker-compose up -d
+    ```
 
 2. Enter web container.
 
-   ```
-   // From ~/dev/project_name folder (at the same level as docker-compose.yml)
-   docker-compose exec web bash 
-   
-   // From any folder
-   docker exec -ti local-web bash
-   ```
+    ```
+    // From ~/dev/project_name folder (at the same level as docker-compose.yml)
+    docker-compose exec web bash
+
+    // From any folder
+    docker exec -ti local-web bash
+    ```
 
 3. Inside web container create ssl certificates for localhost domain
    (in Terminal run every command one by one).
 
-   ```
-   openssl genrsa -out "/etc/apache2/ssl/ssl_site.key" 2048
-   openssl rand -out /root/.rnd -hex 256
-   openssl req -new -key "/etc/apache2/ssl/ssl_site.key" -out "/etc/apache2/ssl/ssl_site.csr" -subj "/CN=localhost/O=LocalServer/C=PL"
-   openssl x509 -req -days 7300 -extfile <(printf "subjectAltName=DNS:localhost,DNS:*.localhost") -in "/etc/apache2/ssl/ssl_site.csr" -signkey "/etc/apache2/ssl/ssl_site.key" -out "/etc/apache2/ssl/ssl_site.crt"
-   chmod 644 /etc/apache2/ssl/ssl_site.key
-   exit
-   docker-compose down
-   ```
+    ```
+    openssl genrsa -out "/etc/apache2/ssl/ssl_site.key" 2048
+    openssl rand -out /root/.rnd -hex 256
+    openssl req -new -key "/etc/apache2/ssl/ssl_site.key" -out "/etc/apache2/ssl/ssl_site.csr" -subj "/CN=localhost/O=LocalServer/C=PL"
+    openssl x509 -req -days 7300 -extfile <(printf "subjectAltName=DNS:localhost,DNS:*.localhost") -in "/etc/apache2/ssl/ssl_site.csr" -signkey "/etc/apache2/ssl/ssl_site.key" -out "/etc/apache2/ssl/ssl_site.crt"
+    chmod 644 /etc/apache2/ssl/ssl_site.key
+    exit
+    docker-compose down
+    ```
 
-5. Add generated ``ssl_site.crt`` to Trusted Certificates on Windows 10:
-   - Press Windows button and run ``cmd``
-   - In cmd.exe window type ``mmc`` and press enter to open Microsoft Management Console, allow it to make changes
-   - Select ``File -> Add/Remove Snap-in``
-   - Select ``Certificates`` in a left window and click ``Add``
-   - Click ``Finish``
-   - Click ``OK``
-   - Expand tree on the left and go
-   to ``Console Root/Certificates - Current User/Trusted Root Certification Authorities/Certificates``
-   - Right click ``Certificates`` and select ``All Tasks -> Import...``
-   - ``Next``
-   - Select generated ``ssl_site.crt`` (from ``\\wsl$\Ubuntu\home\parasek\dev\project_name\docker\web\apache2\ssl`` path)
-   - ``Next``, ``Next``, ``Finish``, ``Yes``
-   - You can close window without saving<br/><br/>
+4. Add generated `ssl_site.crt` to Trusted Certificates on Windows 10:
 
+    - Press Windows button and run `cmd`
+    - In cmd.exe window type `mmc` and press enter to open Microsoft Management Console, allow it to make changes
+    - Select `File -> Add/Remove Snap-in`
+    - Select `Certificates` in a left window and click `Add`
+    - Click `Finish`
+    - Click `OK`
+    - Expand tree on the left and go
+      to `Console Root/Certificates - Current User/Trusted Root Certification Authorities/Certificates`
+    - Right click `Certificates` and select `All Tasks -> Import...`
+    - `Next`
+    - Select generated `ssl_site.crt` (from `\\wsl$\Ubuntu\home\parasek\dev\project_name\docker\web\apache2\ssl` path)
+    - `Next`, `Next`, `Finish`, `Yes`
+    - You can close window without saving<br/><br/>
 
-   ```
-   IMPORTANT!
-   Copy/save generated files somewhere on your computer.  
-   You will be using them everytime you create new project.
-   - docker/web/apache2/ssl/ssl_site.crt
-   - docker/web/apache2/ssl/ssl_site.csr
-   - docker/web/apache2/ssl/ssl_site.key
-   ```
+    ```
+    IMPORTANT!
+    Copy/save generated files somewhere on your computer.
+    You will be using them everytime you create new project.
+    - docker/web/apache2/ssl/ssl_site.crt
+    - docker/web/apache2/ssl/ssl_site.csr
+    - docker/web/apache2/ssl/ssl_site.key
+    ```
 
-   ⬅ [Go back to Installation](#first-installation-link)
+⬅ [Go back to Installation](#first-installation-link)
 
 ## <a name="multiple-docker-servers"></a>Multiple Docker Servers
 
-1. If you want to run multiple Docker servers at the same time, you have to set unique name/ports in .env file, for example:
+1. If you want to run multiple Docker servers at the same time, you have to set unique name/ports in .env file, for
+   example:
 
     ```
     APP_NAME=othername
     APP_PORT_SSL=8101
     APP_PMA_PORT=8201
     APP_PORT=8301
-    APP_DB_PORT=33071
+    APP_DB_PORT=3307
     ```
 
    Your site will be accessible through:
 
-   > https url: [https://localhost:8101](https://localhost:8101)  
-   > phpMyAdmin: [http://localhost:8201](http://localhost:8201)  
-   > http url: [http://localhost:8301](http://localhost:8301)  
+   > https url: [https://localhost:8101](https://localhost:8101)
+   > phpMyAdmin: [http://localhost:8201](http://localhost:8201)
+   > http url: [http://localhost:8301](http://localhost:8301)
 
    ⬅ [Go back to Installation](#multiple-docker-servers-link)

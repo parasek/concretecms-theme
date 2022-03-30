@@ -21,7 +21,8 @@
 
     <?php $manifestPath = 'application/themes/theme/dist/manifest.json'; ?>
     <?php if (file_exists($manifestPath)): ?>
-        <link rel="stylesheet" href="<?php echo json_decode(file_get_contents($manifestPath))->{'app.min.css'}; ?>"/>
+        <link rel="stylesheet"
+              href="/application/themes/theme/dist/css/<?php echo json_decode(file_get_contents($manifestPath))->{'app.min.css'}; ?>"/>
     <?php endif; ?>
 
     <?php $view->inc('elements/header/favicons.php'); ?>
