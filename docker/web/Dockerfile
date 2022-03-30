@@ -21,5 +21,6 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
 RUN sudo apt-get install -y nodejs
 
-# Install sass
-RUN npm install --save-dev sass
+# Install gulp globally
+# You will be able to run "gulp watch" etc. in web container.
+RUN npm install -g gulp
