@@ -4,6 +4,7 @@
 # Ignore concrete5 stuff
 /public/concrete
 /public/application/files
+/public/updates
 
 # Ignore build files
 /public/application/css/main.css
