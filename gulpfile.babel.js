@@ -78,9 +78,16 @@ function scss() {
 
     return gulp
         .src(scssSourceFile)
-        .pipe(plumber())
+        .pipe(
+            plumber({
+                errorHandler(error) {
+                    console.log(error);
+                    this.emit('end');
+                },
+            })
+        )
         .pipe(gulpif(environment !== 'production', sourcemaps.init()))
-        .pipe(sass({ precision: 6, includePaths: ['./node_modules'] }))
+        .pipe(sass.sync({ precision: 6, includePaths: ['./node_modules'] }))
         .pipe(concat('app.min.css'))
         .pipe(autoprefixer())
         .pipe(gulpif(environment === 'production', csso()))
@@ -106,7 +113,14 @@ function js() {
 
     return gulp
         .src(jsSourceFile)
-        .pipe(plumber())
+        .pipe(
+            plumber({
+                errorHandler(error) {
+                    console.log(error);
+                    this.emit('end');
+                },
+            })
+        )
         .pipe(named())
         .pipe(
             webpack({
