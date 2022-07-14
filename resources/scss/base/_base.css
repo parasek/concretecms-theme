@@ -1,0 +1,4 @@
+.ccm-page .side-space {
+    padding-right: var(--side-space);
+    padding-left: var(--side-space);
+}

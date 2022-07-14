@@ -1,0 +1,34 @@
+// Custom grid breakpoints
+// Added ps (Phone Small), pm (Phone medium), pl (Phone large), xxxl
+$grid-breakpoints: (
+    xs: 0,
+    ps: 360px,
+    pm: 414px,
+    pl: 480px,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+    xxl: 1440px,
+    xxxl: 1860px,
+);
+
+// Maximum width of .container
+$container-max-widths: (
+    xxl: 1440px,
+);
+
+// Theme colors
+$primary: #0d6efd;
+$secondary: #6610f2;
+
+// Buttons
+$btn-border-width: 2px;
+$btn-focus-width: 0;
+$btn-focus-box-shadow: 0;
+
+// Links
+$link-color: $primary;
+$link-decoration: none;
+$link-hover-color: $primary;
+$link-hover-decoration: underline;

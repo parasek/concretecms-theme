@@ -1,0 +1,30 @@
+// Based on https://css-tricks.com/snippets/css/fluid-typography/
+// Adapted to work with bootstrap breakpoints
+
+@mixin fluid($min-value, $max-value, $property: 'font-size', $min-vw: ps, $max-vw: xxxl) {
+    $u-1: unit(map-get($grid-breakpoints, $min-vw));
+    $u-2: unit(map-get($grid-breakpoints, $max-vw));
+    $u-3: unit($min-value);
+    $u-4: unit($max-value);
+
+    @if $u-1 == $u-2 and $u-1 == $u-3 and $u-1 == $u-4 {
+        & {
+            #{$property}: rem-calc($min-value);
+
+            @media screen and (min-width: map-get($grid-breakpoints, $min-vw)) {
+                #{$property}: calc(
+                    #{rem-calc($min-value)} + #{strip-unit($max-value - $min-value)} *
+                        (
+                            (100vw - #{map-get($grid-breakpoints, $min-vw)}) / #{strip-unit(
+                                    map-get($grid-breakpoints, $max-vw) - map-get($grid-breakpoints, $min-vw)
+                                )}
+                        )
+                );
+            }
+
+            @media screen and (min-width: map-get($grid-breakpoints, $max-vw)) {
+                #{$property}: rem-calc($max-value);
+            }
+        }
+    }
+}

@@ -1,0 +1,35 @@
+// Abstracts (Utilities)
+@import 'abstracts/variables';
+@import 'abstracts/functions';
+@import 'abstracts/mixins';
+@import 'abstracts/placeholders';
+
+// Vendors
+//@import 'bootstrap/scss/bootstrap';
+
+// Vendors extensions
+@import 'vendors_extensions/bootstrap/bootstrap';
+
+// Base
+@import 'base/root';
+@import 'base/base';
+@import 'base/typography';
+@import 'base/animations';
+
+// Elements (Partials)
+@import 'elements/header';
+@import 'elements/main';
+@import 'elements/sidebar';
+@import 'elements/footer';
+
+// Components and Concrete CMS blocks
+@import 'components/buttons';
+@import 'components/blocks/autonav';
+
+// Page templates
+@import 'templates/page';
+@import 'templates/home';
+
+// Specific overrides and fixes
+@import 'overrides/page-overrides';
+@import 'overrides/dashboard-ui-fixes';

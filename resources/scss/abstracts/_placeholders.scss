@@ -1,0 +1,13 @@
+%link-decoration {
+    text-decoration: none;
+    display: inline;
+    padding-bottom: 0;
+    transition: 0.3s linear;
+    background: linear-gradient(to bottom, var(--link-decoration-color) 0%, var(--link-decoration-color) 98%) no-repeat left 100%;
+    background-size: 0 1px;
+
+    &:hover {
+        --link-decoration-color: var(--link-decoration-hover-color);
+        background-size: 100% 1px;
+    }
+}

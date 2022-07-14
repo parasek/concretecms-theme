@@ -1,3 +1,6 @@
 <?php defined('C5_EXECUTE') or die('Access Denied.'); ?>
 
-<div>elements/breadcrumbs.php</div>
+<div class="container side-space">
+    <div>Start / Offer / Page name</div>
+</div>
+

@@ -1,0 +1,7 @@
+@use 'sass:math';
+
+:root {
+    --side-space: #{math.div($grid-gutter-width, 2)};
+    --link-decoration-color: #{$link-color};
+    --link-decoration-hover-color: #{$link-hover-color};
+}

@@ -2,28 +2,20 @@
 
 <?php $view->inc('elements/header.php'); ?>
 
+<?php $view->inc('elements/breadcrumbs.php'); ?>
+
+<?php $view->inc('elements/heading.php'); ?>
+
 <main>
 
     <div class="container side-space">
 
-        <div class="container-inner">
+        <?php $view->inc('elements/inner_content.php'); ?>
 
-            <div class="main-content">
-
-                <?php $view->inc('elements/breadcrumbs.php'); ?>
-
-                <?php $view->inc('elements/heading.php'); ?>
-
-                <?php $view->inc('elements/inner_content.php'); ?>
-
-                <?php
-                $a = new Area('Main');
-                $a->display();
-                ?>
-
-            </div>
-
-        </div>
+        <?php
+        $a = new Area('Main');
+        $a->display();
+        ?>
 
     </div>
 
