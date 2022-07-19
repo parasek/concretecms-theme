@@ -4,11 +4,12 @@
 @import 'abstracts/mixins';
 @import 'abstracts/placeholders';
 
-// Vendors
+// Vendor
+// Comment @import in "Vendor extensions" if you are going to use this full Bootstrap CSS.
 //@import 'bootstrap/scss/bootstrap';
 
-// Vendors extensions
-@import 'vendors_extensions/bootstrap/bootstrap';
+// Vendor extensions
+@import 'vendor_extensions/bootstrap/bootstrap';
 
 // Base
 @import 'base/root';
