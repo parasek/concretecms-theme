@@ -1,8 +1,8 @@
-# Concrete5 boilerplate theme - WIP
+# Concrete CMS boilerplate theme - Work in progress
 
-Concrete5 boilerplate theme consisting of Docker server, Concrete5 skeleton and custom theme.
+Concrete CMS boilerplate theme consisting of Docker server, Concrete CMS skeleton and custom theme.
 
-Stack: WSL2, Concrete5, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sass, Gulp, Webpack
+Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sass, Gulp
 
 ## Requirements
 
@@ -77,7 +77,7 @@ Stack: WSL2, Concrete5, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sass,
     docker-compose up -d
     ```
 
-11. Install Concrete5 using Composer.
+11. Install Concrete CMS using Composer.
 
     Enter web container
 
@@ -97,7 +97,7 @@ Stack: WSL2, Concrete5, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sass,
     mv public/application/config/live.database.php public/application/config/temp.database.php
     ```
 
-    Install Concrete5
+    Install Concrete CMS
     Remember to change fields below before you start installation:
     --site - Site name
     --language - Dashboard interface language
@@ -116,7 +116,7 @@ Stack: WSL2, Concrete5, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sass,
     ./vendor/bin/concrete5 c5:install -i
     ```
 
-    Revert name change of live.database.php (from now Concrete5 will be using live.database.php)
+    Revert name change of live.database.php (from now Concrete will be using live.database.php)
 
     ```
     mv public/application/config/temp.database.php public/application/config/live.database.php
@@ -149,7 +149,7 @@ Stack: WSL2, Concrete5, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sass,
     > Password: root
     > Database: default
 
-## How to update Concrete5
+## How to update Concrete CMS
 
 1. Enter web container and run composer update:
 
@@ -161,7 +161,7 @@ Stack: WSL2, Concrete5, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sass,
     composer update
     ```
 
-## How to install Concrete5.8
+## How to install Concrete CMS version 8
 
 1. Before installing Composer dependencies, replace `composer.json` with `misc/concrete5.8/composer.json`
 
@@ -223,7 +223,7 @@ Stack: WSL2, Concrete5, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sass,
     exit // Exit container
 
     php public/index.php c5:config -g set concrete.maintenance_mode true // Enter maintenance mode
-    php public/index.php c5:update // Update Concrete5
+    php public/index.php c5:update // Update Concrete CMS
 
     composer i -o // Install packages listed in composer.json (with optimized flag)
 
@@ -234,7 +234,7 @@ Stack: WSL2, Concrete5, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sass,
     npm run dev // @TODO webpack commands
     ```
 
-## Install Concrete5 without Composer
+## Install Concrete CMS without Composer
 
 1. Clear public folder.
 
@@ -262,12 +262,12 @@ Stack: WSL2, Concrete5, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sass,
     rm concrete-cms-9.0.2.zip
     ```
 
-3. Visit https://localhost:8100 in browser and install Concrete5.
+3. Visit https://localhost:8100 in browser and install Concrete CMS.
    MySQL credentials are the same as mentioned earlier for phpMyAdmin.
 
 4. When moving site to live server, you just want to upload whole public folder + export/import database.
 
-5. This way you can set up server for older version of Concrete5 or applications that don't require Composer.
+5. This way you can set up server for older version of Concrete CMS or applications that don't require Composer.
 
 ## <a name="first-installation"></a>First installation
 

@@ -1,6 +1,6 @@
 {
     "name": "parasek/concretecms-theme",
-    "description": "A fully featured concrete5 solution comprising framework skeleton, Docker server and basic theme.",
+    "description": "A fully featured Concrete CMS solution comprising framework skeleton, Docker server and basic theme.",
     "type": "project",
     "homepage": "https://github.com/parasek/concretecms-theme",
     "license": "MIT",

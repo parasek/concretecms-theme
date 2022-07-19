@@ -16,7 +16,7 @@ class PageTheme extends Theme implements ThemeProviderInterface
 
     public function getThemeDescription(): string
     {
-        return t('Custom Concrete5 theme.');
+        return t('Custom Concrete CMS theme.');
     }
 
     public function getThemeSupportedFeatures(): array

@@ -17,7 +17,7 @@ class Controller extends StartingPointPackage
 
     public function getPackageDescription(): string
     {
-        return t('Custom Concrete5 theme.');
+        return t('Custom Concrete CMS theme.');
     }
 
 }
