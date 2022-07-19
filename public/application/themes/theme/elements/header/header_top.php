@@ -1,4 +1,12 @@
-<?php defined('C5_EXECUTE') or die('Access Denied.'); ?>
+<?php defined('C5_EXECUTE') or die('Access Denied.');
+
+use Concrete\Core\Localization\Localization;
+use Concrete\Core\Page\Page;
+use Concrete\Core\View\View;
+
+/** @var Page $c */
+/** @var View $view */
+?>
 <!doctype html>
 
 <html class="<?php echo h($htmlClasses ?? ''); ?>" lang="<?php echo h(Localization::activeLanguage()); ?>">
