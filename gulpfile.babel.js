@@ -11,12 +11,15 @@ import gulpif from 'gulp-if';
 import touch from 'gulp-touch-fd';
 import named from 'vinyl-named';
 import emptyDir from 'empty-dir';
+import fs from 'fs';
+import request from 'request';
 
 import dartSass from 'sass';
 import gulpSass from 'gulp-sass';
 import csso from 'gulp-csso';
 import concat from 'gulp-concat';
 import autoprefixer from 'gulp-autoprefixer';
+import penthouse from 'penthouse';
 
 import webpack from 'webpack-stream';
 
@@ -37,6 +40,9 @@ const path = {
     scss: {
         src: `${srcPath}/scss`,
         dist: `${distPath}/css`,
+    },
+    critical_css: {
+        dist: `${distPath}/css/critical`,
     },
     js: {
         src: `${srcPath}/js`,
@@ -233,6 +239,57 @@ function translation() {
         .pipe(gulp.dest(`${path.translation.dist}`));
 }
 
+// Work in progress. Currently, this task doesn't work with localhost urls.
+// You can modify criticalCss() method in public/application/controllers/devops.php
+// to decide which pages should have critical CSS enabled.
+function critical(cb) {
+    (async () => {
+        await del(`${path.critical_css.dist}`);
+    })();
+
+    const jsonUrl = yargs.argv.url;
+    const manifest = JSON.parse(fs.readFileSync(`${path.dist}/manifest.json`));
+
+    if (jsonUrl === undefined || !jsonUrl.length) {
+        log.warn(chalk.red(`🦞 Provide URL for JSON that contains a list of page ids/urls. 🦞`));
+        log.warn(chalk.red(`🦞 Example: gulp critical --url=https://yoursite.com/devops/critical-css 🦞`));
+        log.warn(chalk.red(`🦞 You can modify criticalCss() method in public/application/controllers/devops.php 🦞`));
+        cb();
+        return;
+    }
+
+    request(jsonUrl, function (error, response, body) {
+        if (response) {
+            if (response.statusCode === 200) {
+                const { pages } = JSON.parse(body);
+                Object.keys(pages).forEach((key) => {
+                    const page = pages[key];
+                    penthouse({
+                        url: page.url,
+                        css: `${path.scss.dist}/${manifest['app.min.css']}`,
+                        keepLargerMediaQueries: true,
+                        width: 400,
+                        height: 700,
+                    }).then((criticalCss) => {
+                        if (!fs.existsSync(`${path.critical_css.dist}`)) {
+                            fs.mkdirSync(`${path.critical_css.dist}`);
+                        }
+                        fs.writeFileSync(`${path.critical_css.dist}/${page.id}-critical.css`, criticalCss);
+                        log(`Generated critical CSS for page: ${page.url} (${page.id})`);
+                    });
+                });
+            } else {
+                log.warn(chalk.red(`Error code: ${response.statusCode}`));
+                log.warn(chalk.red(`Error message: ${error}`));
+            }
+        } else {
+            log.warn(chalk.red(`Error message: Provide proper url.`));
+        }
+    });
+
+    cb();
+}
+
 function watch() {
     gulp.watch(`${path.scss.src}/**/*.*`, { usePolling: true }, gulp.parallel('scss'));
     gulp.watch(`${path.js.src}/**/*.*`, { usePolling: true }, gulp.parallel('js'));
@@ -253,3 +310,5 @@ exports.images = images;
 exports.svg = svg;
 exports.favicons = favicons;
 exports.translation = translation;
+
+exports.critical = critical;

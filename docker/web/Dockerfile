@@ -24,3 +24,7 @@ RUN sudo apt-get install -y nodejs
 # Install gulp globally
 # You will be able to run "gulp watch" etc. in web container.
 RUN npm install -g gulp
+
+# Install libraries required for generating critical CSS (Penthouse/Puppeteer)
+# https://github.com/puppeteer/puppeteer/issues/404#issuecomment-323555784
+RUN apt-get install -y libpangocairo-1.0-0 libx11-xcb1 libxcomposite1 libxcursor1 libxdamage1 libxi6 libxtst6 libnss3 libcups2 libxss1 libxrandr2 libasound2 libatk1.0-0 libgtk-3-0

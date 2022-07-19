@@ -71,3 +71,8 @@
  * Comment line below to use default values
  */
 error_reporting(E_ALL);
+
+// Register custom urls
+$this->app->make('Concrete\Core\Routing\RouterInterface')->registerMultiple([
+    'devops/critical-css' => ['Application\Controller\Devops::criticalCss'],
+]);

@@ -111,6 +111,9 @@
                       indexed="1" type="boolean" category="collection">
             <type checked="0"/>
         </attributekey>
+        <attributekey handle="disable_critical_css" name="Disable Critical CSS" package="" searchable="1" indexed="1" type="boolean" category="collection">
+            <type checked="" checkbox-label=""/>
+        </attributekey>
     </attributekeys>
 
 </concrete5-cif>
