@@ -1,9 +1,11 @@
 # Ignore composer stuff
 /vendor
 
-# Ignore concrete5 stuff
+# Ignore Concrete stuff
 /public/concrete
 /public/application/files
+/public/application/config/generated_overrides
+/public/application/config/doctrine
 /public/updates
 
 # Ignore build files
