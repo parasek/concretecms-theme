@@ -15,15 +15,15 @@ RUN install-php-extensions gd pdo_mysql bcmath zip intl opcache
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
-# Install node
+# Install Node.js
 # https://github.com/nodesource/distributions/blob/master/README.md
 # Example versions: setup_current.x, setup_lts.x, setup_16.x
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-RUN sudo apt-get install -y nodejs
+RUN apt-get install -y nodejs
 
-# Install gulp globally
-# You will be able to run "gulp watch" etc. in web container.
-RUN npm install -g gulp
+# Install Gulp globally
+# You will be able to run Gulp tasks in docker container.
+RUN npm install --location=global gulp
 
 # Install libraries required for generating critical CSS (Penthouse/Puppeteer)
 # https://github.com/puppeteer/puppeteer/issues/404#issuecomment-323555784
