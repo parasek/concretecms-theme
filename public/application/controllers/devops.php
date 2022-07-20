@@ -39,9 +39,19 @@ class Devops extends Controller
             ];
         }
 
+        // Array of css selectors to keep in critical css, even if not appearing in critical viewport.
+        // Strings or regex (f.e. ['.keepMeEvenIfNotSeenInDom', /^\.button/])
+        $forceInclude = [];
+
         $response = [
             'code' => 200,
             'status' => 'success',
+            'options' => [
+                'width' => 400,
+                'height' => 700,
+                'keepLargerMediaQueries' => true,
+                'forceInclude' => $forceInclude,
+            ],
             'pages' => $output,
         ];
 

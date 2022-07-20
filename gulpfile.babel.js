@@ -239,7 +239,31 @@ function translation() {
         .pipe(gulp.dest(`${path.translation.dist}`));
 }
 
-// Work in progress. Currently, this task doesn't work with localhost urls.
+function startNewCriticalCssJob(pages, options) {
+    const page = pages.pop(); // NOTE: mutates urls array
+    if (!page) {
+        return Promise.resolve();
+    }
+    const manifest = JSON.parse(fs.readFileSync(`${path.dist}/manifest.json`));
+    return penthouse({
+        url: page.url,
+        css: `${path.scss.dist}/${manifest['app.min.css']}`,
+        forceInclude: options.forceInclude,
+        width: options.width,
+        height: options.height,
+        keepLargerMediaQueries: options.keepLargerMediaQueries,
+    }).then((criticalCss) => {
+        if (!fs.existsSync(`${path.critical_css.dist}`)) {
+            fs.mkdirSync(`${path.critical_css.dist}`);
+        }
+        fs.writeFileSync(`${path.critical_css.dist}/${page.id}-critical.css`, criticalCss);
+        log(`Generated critical CSS for page: ${page.url} (${page.id})`);
+        return startNewCriticalCssJob(pages, options);
+    });
+}
+
+// Experimental / Work in progress.
+// Currently, this task doesn't work with localhost urls.
 // You can modify criticalCss() method in public/application/controllers/devops.php
 // to decide which pages should have critical CSS enabled.
 function critical(cb) {
@@ -248,11 +272,11 @@ function critical(cb) {
     })();
 
     const jsonUrl = yargs.argv.url;
-    const manifest = JSON.parse(fs.readFileSync(`${path.dist}/manifest.json`));
 
     if (jsonUrl === undefined || !jsonUrl.length) {
         log.warn(chalk.red(`🦞 Provide URL for JSON that contains a list of page ids/urls. 🦞`));
         log.warn(chalk.red(`🦞 Example: gulp critical --url=https://yoursite.com/devops/critical-css 🦞`));
+        log.warn(chalk.red(`🦞 Currently, this task doesn't work with localhost urls 🦞`));
         log.warn(chalk.red(`🦞 You can modify criticalCss() method in public/application/controllers/devops.php 🦞`));
         cb();
         return;
@@ -261,22 +285,17 @@ function critical(cb) {
     request(jsonUrl, function (error, response, body) {
         if (response) {
             if (response.statusCode === 200) {
-                const { pages } = JSON.parse(body);
-                Object.keys(pages).forEach((key) => {
-                    const page = pages[key];
-                    penthouse({
-                        url: page.url,
-                        css: `${path.scss.dist}/${manifest['app.min.css']}`,
-                        keepLargerMediaQueries: true,
-                        width: 400,
-                        height: 700,
-                    }).then((criticalCss) => {
-                        if (!fs.existsSync(`${path.critical_css.dist}`)) {
-                            fs.mkdirSync(`${path.critical_css.dist}`);
-                        }
-                        fs.writeFileSync(`${path.critical_css.dist}/${page.id}-critical.css`, criticalCss);
-                        log(`Generated critical CSS for page: ${page.url} (${page.id})`);
-                    });
+                log.warn(chalk.green('Asynchronous critical task has started. Please wait...'));
+                const { pages, options } = JSON.parse(body);
+                // How many jobs do we want to handle in parallel?
+                Promise.all([
+                    startNewCriticalCssJob(pages, options),
+                    startNewCriticalCssJob(pages, options),
+                    startNewCriticalCssJob(pages, options),
+                    startNewCriticalCssJob(pages, options),
+                    startNewCriticalCssJob(pages, options),
+                ]).then(() => {
+                    log.warn(chalk.green('Asynchronous critical task has finished.'));
                 });
             } else {
                 log.warn(chalk.red(`Error code: ${response.statusCode}`));
