@@ -20,6 +20,8 @@ import csso from 'gulp-csso';
 import concat from 'gulp-concat';
 import autoprefixer from 'gulp-autoprefixer';
 import penthouse from 'penthouse';
+import PurgeCss from 'purgecss';
+import { minify } from 'csso';
 
 import webpack from 'webpack-stream';
 
@@ -43,6 +45,9 @@ const path = {
     },
     critical_css: {
         dist: `${distPath}/css/critical`,
+    },
+    purged_css: {
+        dist: `${distPath}/css/purged`,
     },
     js: {
         src: `${srcPath}/js`,
@@ -71,10 +76,11 @@ const jsSourceFile = `${path.js.src}/main.js`;
 let environment;
 if (yargs.argv.prod !== undefined) {
     environment = 'production';
-    log.warn(chalk.green('🚀 Environment set to production (asset minification enabled, source maps disabled). 🚀'));
+    log(chalk.green('🚀 Environment set to production (asset minification enabled, source maps disabled). 🚀'));
 } else {
     environment = 'development';
-    log.warn(chalk.yellow('⚡ Environment set to development (asset minification disabled, source maps enabled). Use --prod argument on live server. ⚡'));
+    log(chalk.yellow('⚡ Environment set to development (asset minification disabled, source maps enabled). ⚡'));
+    log(chalk.yellow('⚡ Use --prod argument on live server. ⚡'));
 }
 
 function scss() {
@@ -87,7 +93,7 @@ function scss() {
         .pipe(
             plumber({
                 errorHandler(error) {
-                    console.log(error);
+                    log.error(chalk.red(error));
                     this.emit('end');
                 },
             })
@@ -122,7 +128,7 @@ function js() {
         .pipe(
             plumber({
                 errorHandler(error) {
-                    console.log(error);
+                    log.error(chalk.red(error));
                     this.emit('end');
                 },
             })
@@ -245,10 +251,17 @@ function startNewCriticalCssJob(pages, options) {
         return Promise.resolve();
     }
     const manifest = JSON.parse(fs.readFileSync(`${path.dist}/manifest.json`));
+
+    const forceIncludeList = [];
+    // eslint-disable-next-line no-restricted-syntax
+    for (const regularExpression of options.forceInclude) {
+        forceIncludeList.push(new RegExp(regularExpression.replaceAll('/', '')));
+    }
+
     return penthouse({
         url: page.url,
         css: `${path.scss.dist}/${manifest['app.min.css']}`,
-        forceInclude: options.forceInclude,
+        forceInclude: forceIncludeList,
         width: options.width,
         height: options.height,
         keepLargerMediaQueries: options.keepLargerMediaQueries,
@@ -256,7 +269,9 @@ function startNewCriticalCssJob(pages, options) {
         if (!fs.existsSync(`${path.critical_css.dist}`)) {
             fs.mkdirSync(`${path.critical_css.dist}`);
         }
-        fs.writeFileSync(`${path.critical_css.dist}/${page.id}-critical.css`, criticalCss);
+        // Remove charset string from the beginning, since it will cause errors in purge task
+        const modifiedCriticalCss = criticalCss.replace('@charset "UTF-8";', '');
+        fs.writeFileSync(`${path.critical_css.dist}/${page.id}-critical.html`, modifiedCriticalCss);
         log(`Generated critical CSS for page: ${page.url} (${page.id})`);
         return startNewCriticalCssJob(pages, options);
     });
@@ -266,16 +281,25 @@ function startNewCriticalCssJob(pages, options) {
 // Currently, this task doesn't work with localhost urls.
 // You can modify criticalCss() method in public/application/controllers/devops.php
 // to decide which pages should have critical CSS enabled.
+// Running "scss" task will remove all critical CSS files.
 function critical(cb) {
     (async () => {
-        await del(`${path.critical_css.dist}`);
+        await del(`${path.critical_css.dist}/**`);
     })();
 
     const jsonUrl = yargs.argv.url;
+    const { clear } = yargs.argv;
+
+    if (clear !== undefined) {
+        log(chalk.green('All critical CSS files has been removed.'));
+        cb();
+        return;
+    }
 
     if (jsonUrl === undefined || !jsonUrl.length) {
-        log.warn(chalk.red(`🦞 Provide URL for JSON that contains a list of page ids/urls. 🦞`));
+        log.warn(chalk.red(`🦞 Provide URL for JSON that contains a list of pages. 🦞`));
         log.warn(chalk.red(`🦞 Example: gulp critical --url=https://yoursite.com/devops/critical-css 🦞`));
+        log.warn(chalk.red(`🦞 To remove all critical CSS files: gulp critical --clear 🦞`));
         log.warn(chalk.red(`🦞 Currently, this task doesn't work with localhost urls 🦞`));
         log.warn(chalk.red(`🦞 You can modify criticalCss() method in public/application/controllers/devops.php 🦞`));
         cb();
@@ -285,7 +309,7 @@ function critical(cb) {
     request(jsonUrl, function (error, response, body) {
         if (response) {
             if (response.statusCode === 200) {
-                log.warn(chalk.green('Asynchronous critical task has started. Please wait...'));
+                log(chalk.green('Critical CSS task has started. Please wait...'));
                 const { pages, options } = JSON.parse(body);
                 // How many jobs do we want to handle in parallel?
                 Promise.all([
@@ -295,14 +319,128 @@ function critical(cb) {
                     startNewCriticalCssJob(pages, options),
                     startNewCriticalCssJob(pages, options),
                 ]).then(() => {
-                    log.warn(chalk.green('Asynchronous critical task has finished.'));
+                    log(chalk.yellow(`Generated files have been saved in: ${path.critical_css.dist}`));
+                    log(chalk.yellow(`Modify criticalCss() method in ./public/application/controllers/devops.php to single out pages for critical CSS.`));
+                    log(chalk.green('Critical CSS task has ended.'));
                 });
             } else {
-                log.warn(chalk.red(`Error code: ${response.statusCode}`));
-                log.warn(chalk.red(`Error message: ${error}`));
+                log.error(chalk.red(`Error code: ${response.statusCode}`));
+                log.error(chalk.red(`Error message: ${error}`));
             }
         } else {
-            log.warn(chalk.red(`Error message: Provide proper url.`));
+            log.error(chalk.red(`Error message: Provide proper url.`));
+        }
+    });
+
+    cb();
+}
+
+// Experimental / Work in progress.
+// Currently, this task doesn't work with localhost urls.
+// You can modify purgeCss() method in public/application/controllers/devops.php
+// to decide which pages should have purged CSS.
+// Running "scss" task will remove all purge CSS files.
+// Keep in mind that purging CSS on every page will prevent from caching common css by browsers.
+async function purge(cb) {
+    await (async () => {
+        await del(`${path.purged_css.dist}/**`);
+    })();
+
+    const jsonUrl = yargs.argv.url;
+    const { clear } = yargs.argv;
+
+    if (clear !== undefined) {
+        log(chalk.green('All purged CSS files has been removed.'));
+        cb();
+        return;
+    }
+
+    if (jsonUrl === undefined || !jsonUrl.length) {
+        log.warn(chalk.red(`🦞 Provide URL for JSON that contains a list of pages. 🦞`));
+        log.warn(chalk.red(`🦞 Example: gulp purge --url=https://yoursite.com/devops/purge-css 🦞`));
+        log.warn(chalk.red(`🦞 To remove all purged CSS files: gulp purge --clear 🦞`));
+        log.warn(chalk.red(`🦞 Currently, this task doesn't work with localhost urls 🦞`));
+        log.warn(chalk.red(`🦞 You can modify purgeCss() method in public/application/controllers/devops.php 🦞`));
+        cb();
+        return;
+    }
+
+    request(jsonUrl, async function (error, response, body) {
+        if (response) {
+            if (response.statusCode === 200) {
+                log(chalk.green('"This Entire City Must Be Purged". Purge CSS task has started.'));
+                const { pages } = JSON.parse(body);
+
+                const manifest = JSON.parse(fs.readFileSync(`${path.dist}/manifest.json`));
+
+                if (!fs.existsSync(`${path.purged_css.dist}`)) {
+                    fs.mkdirSync(`${path.purged_css.dist}`);
+                }
+
+                // eslint-disable-next-line no-restricted-syntax
+                for (const page of pages) {
+                    request(page.url).pipe(fs.createWriteStream(`${path.purged_css.dist}/${page.id}.html`));
+
+                    // Dirty fix for async call - we wait 2 seconds till html is saved on disk.
+                    // Refactor this whole task in future.
+                    // eslint-disable-next-line no-await-in-loop,no-promise-executor-return
+                    await new Promise((r) => setTimeout(r, 2000));
+
+                    const standardSafeList = [];
+                    const deepSafeList = [];
+                    const greedySafeList = [];
+                    const keyframesSafeList = [];
+                    const variablesSafeList = [];
+                    // eslint-disable-next-line no-restricted-syntax
+                    for (const regularExpression of page.options.safelist.greedy) {
+                        standardSafeList.push(new RegExp(regularExpression.replaceAll('/', '')));
+                    }
+                    // eslint-disable-next-line no-restricted-syntax
+                    for (const regularExpression of page.options.safelist.greedy) {
+                        deepSafeList.push(new RegExp(regularExpression.replaceAll('/', '')));
+                    }
+                    // eslint-disable-next-line no-restricted-syntax
+                    for (const regularExpression of page.options.safelist.greedy) {
+                        greedySafeList.push(new RegExp(regularExpression.replaceAll('/', '')));
+                    }
+                    // eslint-disable-next-line no-restricted-syntax
+                    for (const regularExpression of page.options.safelist.greedy) {
+                        keyframesSafeList.push(new RegExp(regularExpression.replaceAll('/', '')));
+                    }
+                    // eslint-disable-next-line no-restricted-syntax
+                    for (const regularExpression of page.options.safelist.greedy) {
+                        variablesSafeList.push(new RegExp(regularExpression.replaceAll('/', '')));
+                    }
+
+                    // eslint-disable-next-line no-await-in-loop
+                    const purgeCSSResults = await new PurgeCss().purge({
+                        content: [`${path.purged_css.dist}/${page.id}.html`],
+                        css: [`${path.scss.dist}/${manifest['app.min.css']}`],
+                        safelist: {
+                            standard: standardSafeList,
+                            deep: deepSafeList,
+                            greedy: greedySafeList,
+                            keyframes: keyframesSafeList,
+                            variables: variablesSafeList,
+                        },
+                    });
+                    const minifiedCss = minify(purgeCSSResults[0].css).css;
+
+                    fs.writeFileSync(`${path.purged_css.dist}/${page.id}-${manifest['app.min.css']}-purged.css`, minifiedCss);
+                    fs.rmSync(`${path.purged_css.dist}/${page.id}.html`);
+
+                    log(`Generated purged CSS for page: ${page.url} (${page.id})`);
+                }
+
+                log(chalk.yellow(`Generated files have been saved in: ${path.purged_css.dist}`));
+                log(chalk.yellow(`Modify purgeCss() method in ./public/application/controllers/devops.php to single out pages for purge.`));
+                log(chalk.green('"This Entire City Must Be Purged". Purge CSS task has ended.'));
+            } else {
+                log.error(chalk.red(`Error code: ${response.statusCode}`));
+                log.error(chalk.red(`Error message: ${error}`));
+            }
+        } else {
+            log.error(chalk.red(`Error message: Provide proper url.`));
         }
     });
 
@@ -331,3 +469,4 @@ exports.favicons = favicons;
 exports.translation = translation;
 
 exports.critical = critical;
+exports.purge = purge;

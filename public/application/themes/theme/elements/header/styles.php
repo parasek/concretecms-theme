@@ -15,14 +15,19 @@ use Concrete\Core\Page\Page;
       href="<?php echo h($fontURL); ?>"
 >
 
-<?php // Load default CSS/critical CSS depending on which files were generated ?>
+<?php // Load default CSS/purged CSS/critical CSS depending on which files were generated ?>
 <?php
+$cssPath = false;
 $distPath = 'application/themes/theme/dist';
 $manifestPath = $distPath . '/manifest.json';
-$criticalCssPath = $distPath . '/css/critical/' . $c->getCollectionID() . '-critical.css';
-
-$cssPath = false;
+$criticalCssPath = $distPath . '/css/critical/' . $c->getCollectionID() . '-critical.html';
+$purgedCssPath = false;
 if (file_exists($manifestPath)) {
+    $purgedCssPath = $distPath . '/css/purged/' . $c->getCollectionID() . '-' . json_decode(file_get_contents($manifestPath))->{'app.min.css'} . '-purged.css';
+}
+if ($purgedCssPath and file_exists($purgedCssPath)) {
+    $cssPath = $purgedCssPath;
+} elseif (file_exists($manifestPath)) {
     $cssPath = $distPath . '/css/' . json_decode(file_get_contents($manifestPath))->{'app.min.css'};
 }
 ?>
