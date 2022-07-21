@@ -9,7 +9,7 @@ use Concrete\Core\View\View;
 ?>
 <!doctype html>
 
-<html class="<?php echo h($htmlClasses ?? ''); ?>" lang="<?php echo h(Localization::activeLanguage()); ?>">
+<html class="<?php echo h(\Application\PageInfoService::getInstance()->getHtmlClasses()); ?>" lang="<?php echo h(Localization::activeLanguage()); ?>">
 
 <head>
     <?php

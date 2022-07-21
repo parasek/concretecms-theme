@@ -2,11 +2,21 @@
 
 <?php $view->inc('elements/header/header_top.php'); ?>
 
-<header class="header is-fixed">
+<header id="header" class="header is-fixed">
 
-    <div class="container side-space">
+    <div class="header-container container side-space">
 
         <div class="logo-area">
+            <div class="logo">
+                <a href="<?php echo h(BASE_URL); ?>" class="logo-link">
+                    <img src="<?php echo $this->getThemePath(); ?>/dist/images/logo.svg"
+                         alt="Site logo"
+                         width="210"
+                         height="59"
+                         class="logo-image"
+                    />
+                </a>
+            </div>
             <?php
             $a = new GlobalArea('Logo');
             $a->display();

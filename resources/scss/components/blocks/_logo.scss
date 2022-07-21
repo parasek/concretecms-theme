@@ -1,0 +1,17 @@
+.logo {
+    width: 150px;
+    margin: 10px 0;
+    transition: $default-transition-timing;
+
+    @include media-breakpoint-up(md) {
+        width: 210px;
+        margin: 20px 0;
+    }
+}
+
+.logo-link {
+    display: block;
+}
+
+.logo-image {
+}

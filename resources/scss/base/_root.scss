@@ -4,4 +4,9 @@
     --side-space: #{math.div($grid-gutter-width, 2)};
     --link-decoration-color: #{$link-color};
     --link-decoration-hover-color: #{$link-hover-color};
+    --fixed-header-spacer-height: 63px;
+
+    @include media-breakpoint-up(md) {
+        --fixed-header-spacer-height: 100px;
+    }
 }

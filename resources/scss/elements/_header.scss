@@ -1,0 +1,23 @@
+.header.is-fixed {
+    background: #fff;
+    border-bottom: 1px solid $border-color;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+}
+
+.ccm-page .header-container {
+    display: flex;
+}
+
+.fixed-header-spacer {
+    height: var(--fixed-header-spacer-height);
+}
+
+.scrolled .logo {
+    @include media-breakpoint-up(md) {
+        width: 150px;
+        margin: 10px 0;
+    }
+}

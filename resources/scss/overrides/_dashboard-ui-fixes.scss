@@ -1,0 +1,8 @@
+// Move header when user is logged in
+.toolbar-visible .ccm-page {
+    margin-top: 48px;
+}
+
+.toolbar-visible .header.is-fixed {
+    top: 48px;
+}

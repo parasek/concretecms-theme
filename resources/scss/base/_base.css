@@ -2,3 +2,9 @@
     padding-right: var(--side-space);
     padding-left: var(--side-space);
 }
+
+.ccm-page img {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+}

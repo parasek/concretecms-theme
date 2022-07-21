@@ -22,7 +22,7 @@ class PageTheme extends Theme implements ThemeProviderInterface
     public function getThemeSupportedFeatures(): array
     {
         return [
-//            Features::IMAGERY, // temporary, work on it later
+            Features::IMAGERY, // temporary, work on it later
         ];
     }
 
