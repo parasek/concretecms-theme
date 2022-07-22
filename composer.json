@@ -10,7 +10,7 @@
             "Application\\": "./public/application/src"
         },
         "files": [
-            "public/application/src/helpers.php"
+            "./public/application/src/helpers.php"
         ]
     },
     "autoload-dev": {
