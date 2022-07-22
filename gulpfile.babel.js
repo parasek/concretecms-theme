@@ -1,3 +1,4 @@
+/* eslint-disable import/no-import-module-exports */
 import gulp from 'gulp';
 import rev from 'gulp-rev';
 import sourcemaps from 'gulp-sourcemaps';
@@ -12,7 +13,7 @@ import touch from 'gulp-touch-fd';
 import named from 'vinyl-named';
 import emptyDir from 'empty-dir';
 import fs from 'fs';
-import request from 'request';
+import axios from 'axios';
 
 import dartSass from 'sass';
 import gulpSass from 'gulp-sass';
@@ -224,7 +225,7 @@ function favicons() {
         await del(`${path.favicons.dist}/**`);
     })();
 
-    const isEmpty = emptyDir.sync(`${path.favicons.src}`, function (filepath) {
+    const isEmpty = emptyDir.sync(`${path.favicons.src}`, (filepath) => {
         return /(Thumbs\.db|\.DS_Store|\.gitkeep)$/i.test(filepath);
     });
     if (isEmpty) {
@@ -244,13 +245,32 @@ function translation() {
         .pipe(gulpPo2Mo())
         .pipe(gulp.dest(`${path.translation.dist}`));
 }
+function handleAxiosError(error) {
+    log.error(chalk.red(error));
+    if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        log.error(chalk.red(error.response.data));
+        log.error(chalk.red(error.response.status));
+        log.error(chalk.red(error.response.headers));
+    } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        log.error(chalk.red(error.request));
+    } else {
+        // Something happened in setting up the request that triggered an Error
+        log.error(chalk.red('Error', error.message));
+    }
+    log.error(chalk.red(error.config));
+}
 
 function startNewCriticalCssJob(pages, options) {
     const page = pages.pop(); // NOTE: mutates urls array
     if (!page) {
         return Promise.resolve();
     }
-    const manifest = JSON.parse(fs.readFileSync(`${path.dist}/manifest.json`));
+    const manifest = JSON.parse(fs.readFileSync(`${path.dist}/manifest.json`, 'utf-8'));
 
     const forceIncludeList = [];
     // eslint-disable-next-line no-restricted-syntax
@@ -279,9 +299,9 @@ function startNewCriticalCssJob(pages, options) {
 
 // Experimental / Work in progress.
 // Currently, this task doesn't work with localhost urls.
-// You can modify criticalCss() method in public/application/controllers/devops.php
+// You can modify criticalCss() method in public/application/controllers/workspace.php
 // to decide which pages should have critical CSS enabled.
-// Running "scss" task will remove all critical CSS files.
+// Running "gulp critical --clear" or "gulp scss" task will remove all critical CSS files.
 function critical(cb) {
     (async () => {
         await del(`${path.critical_css.dist}/**`);
@@ -298,49 +318,44 @@ function critical(cb) {
 
     if (jsonUrl === undefined || !jsonUrl.length) {
         log.warn(chalk.red(`🦞 Provide URL for JSON that contains a list of pages. 🦞`));
-        log.warn(chalk.red(`🦞 Example: gulp critical --url=https://yoursite.com/devops/critical-css 🦞`));
+        log.warn(chalk.red(`🦞 Example: gulp critical --url=https://yoursite.com/workspace/critical 🦞`));
         log.warn(chalk.red(`🦞 To remove all critical CSS files: gulp critical --clear 🦞`));
         log.warn(chalk.red(`🦞 Currently, this task doesn't work with localhost urls 🦞`));
-        log.warn(chalk.red(`🦞 You can modify criticalCss() method in public/application/controllers/devops.php 🦞`));
+        log.warn(chalk.red(`🦞 You can modify criticalCss() method in public/application/controllers/workspace.php 🦞`));
         cb();
         return;
     }
 
-    request(jsonUrl, function (error, response, body) {
-        if (response) {
-            if (response.statusCode === 200) {
-                log(chalk.green('Critical CSS task has started. Please wait...'));
-                const { pages, options } = JSON.parse(body);
-                // How many jobs do we want to handle in parallel?
-                Promise.all([
-                    startNewCriticalCssJob(pages, options),
-                    startNewCriticalCssJob(pages, options),
-                    startNewCriticalCssJob(pages, options),
-                    startNewCriticalCssJob(pages, options),
-                    startNewCriticalCssJob(pages, options),
-                ]).then(() => {
-                    log(chalk.yellow(`Generated files have been saved in: ${path.critical_css.dist}`));
-                    log(chalk.yellow(`Modify criticalCss() method in ./public/application/controllers/devops.php to single out pages for critical CSS.`));
-                    log(chalk.green('Critical CSS task has ended.'));
-                });
-            } else {
-                log.error(chalk.red(`Error code: ${response.statusCode}`));
-                log.error(chalk.red(`Error message: ${error}`));
-            }
-        } else {
-            log.error(chalk.red(`Error message: Provide proper url.`));
-        }
-    });
+    axios
+        .get(jsonUrl)
+        .then(async (response) => {
+            log(chalk.green('Critical CSS task has started. Please wait...'));
+            const { pages, options } = response.data;
+            // How many jobs do we want to handle in parallel?
+            Promise.all([
+                startNewCriticalCssJob(pages, options),
+                startNewCriticalCssJob(pages, options),
+                startNewCriticalCssJob(pages, options),
+                startNewCriticalCssJob(pages, options),
+                startNewCriticalCssJob(pages, options),
+            ]).then(() => {
+                log(chalk.yellow(`Generated files have been saved in: ${path.critical_css.dist}`));
+                log(chalk.yellow(`Modify criticalCss() method in ./public/application/controllers/workspace.php to single out pages for critical CSS.`));
+                log(chalk.green('Critical CSS task has ended.'));
+            });
+        })
+        .catch((error) => handleAxiosError(error));
 
     cb();
 }
 
 // Experimental / Work in progress.
 // Currently, this task doesn't work with localhost urls.
-// You can modify purgeCss() method in public/application/controllers/devops.php
+// You can modify purgeCss() method in public/application/controllers/workspace.php
 // to decide which pages should have purged CSS.
-// Running "scss" task will remove all purge CSS files.
-// Keep in mind that purging CSS on every page will prevent from caching common css by browsers.
+// Running "gulp critical --clear" or "gulp scss" task will remove all purged CSS files.
+// Keep in mind that purging CSS on every page will prevent from caching common CSS,
+// since browser will download different file every time.
 async function purge(cb) {
     await (async () => {
         await del(`${path.purged_css.dist}/**`);
@@ -357,34 +372,30 @@ async function purge(cb) {
 
     if (jsonUrl === undefined || !jsonUrl.length) {
         log.warn(chalk.red(`🦞 Provide URL for JSON that contains a list of pages. 🦞`));
-        log.warn(chalk.red(`🦞 Example: gulp purge --url=https://yoursite.com/devops/purge-css 🦞`));
+        log.warn(chalk.red(`🦞 Example: gulp purge --url=https://yoursite.com/workspace/purge 🦞`));
         log.warn(chalk.red(`🦞 To remove all purged CSS files: gulp purge --clear 🦞`));
         log.warn(chalk.red(`🦞 Currently, this task doesn't work with localhost urls 🦞`));
-        log.warn(chalk.red(`🦞 You can modify purgeCss() method in public/application/controllers/devops.php 🦞`));
+        log.warn(chalk.red(`🦞 You can modify purgeCss() method in public/application/controllers/workspace.php 🦞`));
         cb();
         return;
     }
 
-    request(jsonUrl, async function (error, response, body) {
-        if (response) {
-            if (response.statusCode === 200) {
-                log(chalk.green('"This Entire City Must Be Purged". Purge CSS task has started.'));
-                const { pages } = JSON.parse(body);
+    axios
+        .get(jsonUrl)
+        .then(async (response) => {
+            log(chalk.green('"This Entire City Must Be Purged". Purge CSS task has started.'));
+            const { pages } = response.data;
 
-                const manifest = JSON.parse(fs.readFileSync(`${path.dist}/manifest.json`));
+            const manifest = JSON.parse(fs.readFileSync(`${path.dist}/manifest.json`, 'utf-8'));
 
-                if (!fs.existsSync(`${path.purged_css.dist}`)) {
-                    fs.mkdirSync(`${path.purged_css.dist}`);
-                }
+            if (!fs.existsSync(`${path.purged_css.dist}`)) {
+                fs.mkdirSync(`${path.purged_css.dist}`);
+            }
 
-                // eslint-disable-next-line no-restricted-syntax
-                for (const page of pages) {
-                    request(page.url).pipe(fs.createWriteStream(`${path.purged_css.dist}/${page.id}.html`));
-
-                    // Dirty fix for async call - we wait 2 seconds till html is saved on disk.
-                    // Refactor this whole task in future.
-                    // eslint-disable-next-line no-await-in-loop,no-promise-executor-return
-                    await new Promise((r) => setTimeout(r, 2000));
+            // eslint-disable-next-line no-restricted-syntax
+            for await (const page of pages) {
+                await axios.get(page.url).then(async (pageResponse) => {
+                    fs.writeFileSync(`${path.purged_css.dist}/${page.id}.html`, pageResponse.data);
 
                     const standardSafeList = [];
                     const deepSafeList = [];
@@ -412,7 +423,6 @@ async function purge(cb) {
                         variablesSafeList.push(new RegExp(regularExpression.replaceAll('/', '')));
                     }
 
-                    // eslint-disable-next-line no-await-in-loop
                     const purgeCSSResults = await new PurgeCss().purge({
                         content: [`${path.purged_css.dist}/${page.id}.html`],
                         css: [`${path.scss.dist}/${manifest['app.min.css']}`],
@@ -430,19 +440,15 @@ async function purge(cb) {
                     fs.rmSync(`${path.purged_css.dist}/${page.id}.html`);
 
                     log(`Generated purged CSS for page: ${page.url} (${page.id})`);
-                }
-
-                log(chalk.yellow(`Generated files have been saved in: ${path.purged_css.dist}`));
-                log(chalk.yellow(`Modify purgeCss() method in ./public/application/controllers/devops.php to single out pages for purge.`));
-                log(chalk.green('"This Entire City Must Be Purged". Purge CSS task has ended.'));
-            } else {
-                log.error(chalk.red(`Error code: ${response.statusCode}`));
-                log.error(chalk.red(`Error message: ${error}`));
+                });
             }
-        } else {
-            log.error(chalk.red(`Error message: Provide proper url.`));
-        }
-    });
+        })
+        .then(() => {
+            log(chalk.yellow(`Generated files have been saved in: ${path.purged_css.dist}`));
+            log(chalk.yellow(`Modify purgeCss() method in ./public/application/controllers/workspace.php to single out pages for purge.`));
+            log(chalk.green('"This Entire City Must Be Purged". Purge CSS task has ended.'));
+        })
+        .catch((error) => handleAxiosError(error));
 
     cb();
 }

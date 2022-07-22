@@ -9,12 +9,12 @@ use Concrete\Core\Page\PageList;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class Devops extends Controller
+class Workspace extends Controller
 {
     /**
      * Creates a list of pages and returns them as JSON.
      * This list is used in Gulp task that generates critical CSS:
-     * gulp critical --url=https://yoursite.com/devops/critical-css
+     * gulp critical --url=https://yoursite.com/workspace/critical
      * gulp critical --clear
      *
      * You can modify this method/filter Page List as you wish
@@ -62,7 +62,7 @@ class Devops extends Controller
     /**
      * Creates a list of pages and returns them as JSON.
      * This list is used in Gulp task that generates purged CSS:
-     * gulp purge --url=https://yoursite.com/devops/purge-css
+     * gulp purge --url=https://yoursite.com/workspace/purge
      * gulp purge --clear
      *
      * You can modify this method as you wish

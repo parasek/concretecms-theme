@@ -77,6 +77,6 @@ $strictLoader->register();
 
 // Register custom urls
 $this->app->make('Concrete\Core\Routing\RouterInterface')->registerMultiple([
-    'devops/critical-css' => ['Application\Controller\Devops::criticalCss'],
-    'devops/purge-css' => ['Application\Controller\Devops::purgeCss'],
+    'workspace/critical' => ['Application\Controller\Workspace::criticalCss'],
+    'workspace/purge' => ['Application\Controller\Workspace::purgeCss'],
 ]);
