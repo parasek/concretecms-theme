@@ -25,6 +25,7 @@ import PurgeCss from 'purgecss';
 import { minify } from 'csso';
 
 import webpack from 'webpack-stream';
+import browserSyncModule from 'browser-sync';
 
 import imagemin from 'gulp-imagemin';
 import mozjpeg from 'imagemin-mozjpeg';
@@ -34,6 +35,7 @@ import svgsprite from 'gulp-svg-sprite';
 import gulpPo2Mo from 'gulp-po2mo';
 
 const sass = gulpSass(dartSass);
+const browserSync = browserSyncModule.create();
 
 const srcPath = './resources';
 const distPath = './public/application/themes/theme/dist';
@@ -116,7 +118,8 @@ function scss() {
             })
         )
         .pipe(gulp.dest(path.dist))
-        .pipe(touch());
+        .pipe(touch())
+        .pipe(browserSync.stream());
 }
 
 function js() {
@@ -166,7 +169,8 @@ function js() {
             })
         )
         .pipe(gulp.dest(`${path.dist}`))
-        .pipe(touch());
+        .pipe(touch())
+        .pipe(browserSync.stream());
 }
 
 function images() {
@@ -245,6 +249,7 @@ function translation() {
         .pipe(gulpPo2Mo())
         .pipe(gulp.dest(`${path.translation.dist}`));
 }
+
 function handleAxiosError(error) {
     log.error(chalk.red(error));
     if (error.response) {
@@ -460,6 +465,58 @@ function watch() {
     gulp.watch(`${path.svg.src}/**/*.*`, { usePolling: true }, gulp.parallel('svg'));
     gulp.watch(`${path.favicons.src}/**/*.*`, { usePolling: true }, gulp.parallel('favicons'));
     gulp.watch(`${path.translation.src}/*.po`, { usePolling: true }, gulp.parallel('translation'));
+
+    // Experimental/work in progress.
+    // Right off the bat, it works with https://localhost:8100 url.
+    // If you have changed port, then you should change it here and in:
+    // "public/application/themes/theme/elements/footer/browser_sync.php"
+    // Command: gulp watch --bs
+    if (yargs.argv.bs !== undefined) {
+        log(chalk.green('Browser sync is enabled (experimental/work in progress).'));
+
+        browserSync.init({
+            proxy: 'https://localhost:8100',
+            open: false,
+            injectChanges: true,
+            https: {
+                key: 'docker/web/apache2/ssl/ssl_site.key',
+                cert: 'docker/web/apache2/ssl/ssl_site.crt',
+            },
+        });
+
+        // This is a preliminary list of files that we can watch (besides scss/js files in resources)
+        // These are mostly .php templates and additional css/js files.
+        gulp.watch(
+            [
+                // Watch files inside "themes" folder
+                `./public/application/themes/**/*.php`,
+                // Watch files inside "blocks" folder
+                `./public/application/blocks/*/view.php`,
+                `./public/application/blocks/*/view.css`,
+                `./public/application/blocks/*/view.js`,
+                `./public/application/blocks/*/css/*.*`,
+                `./public/application/blocks/*/js/*.*`,
+                `./public/application/blocks/templates/*.*`,
+                // Watch files inside "single_pages" folder
+                `./public/application/single_pages/**/*.php`,
+                // Watch files inside "packages" folder
+                `./public/packages/*/blocks/*/view.php`,
+                `./public/packages/*/blocks/*/view.css`,
+                `./public/packages/*/blocks/*/view.js`,
+                `./public/packages/*/blocks/*/css/*.*`,
+                `./public/packages/*/blocks/*/js/*.*`,
+                `./public/packages/*/blocks/templates/*.*`,
+                `./public/packages/*/single_pages/**/*.php`,
+            ],
+            { usePolling: true },
+            function additionalFilesHasBeenModified(cb) {
+                browserSync.reload();
+                return cb();
+            }
+        );
+    } else {
+        log(chalk.yellow('⚡ Browser sync is disabled. Use --bs argument to enable it. ⚡'));
+    }
 }
 
 exports.default = watch;
