@@ -1,4 +1,7 @@
-<?php defined('C5_EXECUTE') or die('Access Denied.'); ?>
+<?php defined('C5_EXECUTE') or die('Access Denied.');
+
+/** @var Concrete\Core\View\View $view */
+?>
 
 <footer class="footer">
     <div class="container side-space">

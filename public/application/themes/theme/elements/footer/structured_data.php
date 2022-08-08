@@ -1,3 +1,5 @@
+<?php defined('C5_EXECUTE') or die('Access Denied.'); ?>
+
 <script type="application/ld+json">
     {
         "@context": "https://schema.org",

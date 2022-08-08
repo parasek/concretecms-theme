@@ -1,6 +1,7 @@
-<?php defined('C5_EXECUTE') or die('Access Denied.'); ?>
+<?php defined('C5_EXECUTE') or die('Access Denied.');
 
-<?php
+use Concrete\Core\View\View;
+
 View::element('system_errors', [
     'format' => 'block',
     'error' => $error ?? null,
@@ -9,4 +10,3 @@ View::element('system_errors', [
 ]);
 
 echo $innerContent ?? null;
-?>

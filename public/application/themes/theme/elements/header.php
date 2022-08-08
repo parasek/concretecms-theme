@@ -1,4 +1,10 @@
-<?php defined('C5_EXECUTE') or die('Access Denied.'); ?>
+<?php defined('C5_EXECUTE') or die('Access Denied.');
+
+use Concrete\Core\Area\GlobalArea;
+
+/** @var Concrete\Core\View\View $this */
+/** @var Concrete\Core\View\View $view */
+?>
 
 <?php $view->inc('elements/header/header_top.php'); ?>
 

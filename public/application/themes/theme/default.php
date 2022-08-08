@@ -1,4 +1,9 @@
-<?php defined('C5_EXECUTE') or die('Access Denied.'); ?>
+<?php defined('C5_EXECUTE') or die('Access Denied.');
+
+use Concrete\Core\Area\Area;
+
+/** @var Concrete\Core\View\View $view */
+?>
 
 <?php $view->inc('elements/header.php'); ?>
 

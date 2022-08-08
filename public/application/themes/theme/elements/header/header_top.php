@@ -1,5 +1,6 @@
 <?php defined('C5_EXECUTE') or die('Access Denied.');
 
+use Application\PageInfoService;
 use Concrete\Core\Localization\Localization;
 use Concrete\Core\Page\Page;
 use Concrete\Core\View\View;
@@ -9,7 +10,7 @@ use Concrete\Core\View\View;
 ?>
 <!doctype html>
 
-<html class="<?php echo h(\Application\PageInfoService::getInstance()->getHtmlClasses()); ?>" lang="<?php echo h(Localization::activeLanguage()); ?>">
+<html class="<?php echo h(PageInfoService::getInstance()->getHtmlClasses()); ?>" lang="<?php echo h(Localization::activeLanguage()); ?>">
 
 <head>
     <?php

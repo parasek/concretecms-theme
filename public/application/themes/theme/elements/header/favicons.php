@@ -1,3 +1,5 @@
+<?php defined('C5_EXECUTE') or die('Access Denied.'); ?>
+
 <?php // Use https://realfavicongenerator.net ?>
 <link rel="apple-touch-icon" sizes="180x180" href="/application/themes/theme/dist/favicons/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/application/themes/theme/dist/favicons/favicon-32x32.png">

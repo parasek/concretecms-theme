@@ -1,4 +1,9 @@
-<?php defined('C5_EXECUTE') or die('Access Denied.'); ?>
+<?php defined('C5_EXECUTE') or die('Access Denied.');
+
+use Concrete\Core\View\View;
+
+/** @var View $view */
+?>
 
 <?php $view->inc('elements/footer/structured_data.php'); ?>
 
