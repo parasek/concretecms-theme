@@ -15,6 +15,12 @@ RUN install-php-extensions gd pdo_mysql bcmath zip intl opcache
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
+# Install Xdebug
+# Based on: https://matthewsetter.com/setup-step-debugging-php-xdebug3-docker/
+# Remebember to install browser extension like "Xdebug helper" for Chrome.
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
+
 # Install Node.js
 # https://github.com/nodesource/distributions/blob/master/README.md
 # Example versions: setup_current.x, setup_lts.x, setup_16.x
