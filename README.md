@@ -67,7 +67,7 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
 9. Set php version and timezone in `.env` file.
 
     ```
-    APP_PHP_VERSION=8.0
+    APP_PHP_VERSION=8.1
     APP_TZ=Europe/Warsaw
     ```
 
