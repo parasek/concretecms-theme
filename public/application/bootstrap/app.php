@@ -68,7 +68,7 @@
 // Default Concrete value: E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED (22519)
 // Calculator: https://maximivanov.github.io/php-error-reporting-calculator/
 // Comment line below to go back to default values
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
 
 // Autoload custom classes from "public/application/src" directory
 $strictLoader = new \Concrete\Core\Foundation\Psr4ClassLoader();
