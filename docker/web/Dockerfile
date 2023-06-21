@@ -23,13 +23,13 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 # Install Node.js
 # https://github.com/nodesource/distributions/blob/master/README.md
-# Example versions: setup_current.x, setup_lts.x, setup_16.x
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+# Example versions: setup_current.x, setup_lts.x, setup_18.x
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 RUN apt-get install -y nodejs
 
 # Install Gulp globally
 # You will be able to run Gulp tasks in docker container.
-RUN npm install --location=global gulp
+RUN npm install --global gulp-cli
 
 # Install libraries required for generating critical CSS (Penthouse/Puppeteer)
 # https://github.com/puppeteer/puppeteer/issues/404#issuecomment-323555784
