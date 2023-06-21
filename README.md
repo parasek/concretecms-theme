@@ -67,14 +67,14 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
 9. Set php version and timezone in `.env` file.
 
     ```
-    APP_PHP_VERSION=8.1
+    APP_PHP_VERSION=8.2
     APP_TZ=Europe/Warsaw
     ```
 
 10. Start Docker containers.
 
     ```
-    docker-compose up -d
+    docker compose up -d
     ```
 
 11. Install Concrete CMS using Composer.
@@ -82,7 +82,7 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
     Enter web container
 
     ```
-    docker-compose exec web bash
+    docker compose exec web bash
     ```
 
     Install Composer dependencies
@@ -110,44 +110,53 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
     php public/index.php c5:install --allow-as-root -n --db-server=mariadb --db-username=root --db-password=root --db-database=default --starting-point=theme --site="Sitename" --language=en_US --site-locale=en_GB --timezone=Europe/Warsaw --admin-email=example@email.com --admin-password="password"
     ```
 
-    Alternatively you can start installation in interactive mode
-
-    ```
-    ./vendor/bin/concrete5 c5:install -i
-    ```
-
     Revert name change of live.database.php (from now Concrete will be using live.database.php)
 
     ```
     mv public/application/config/temp.database.php public/application/config/live.database.php
     ```
 
-    Remove original database.php
+    Remove original database.php file
 
     ```
     rm public/application/config/database.php
     ```
 
-    Change required permissions (though 777 is fine for a local server, on live servers you should be more restrictive -
-    755 for folders and 644 for files)
+    Change required permissions (setting 777 is fine for localhost only)
 
     ```
     chmod -R 777 public/application/config public/application/files public/packages
     ```
 
-12. This probably good time to `git init` and make initial commit if you are using GIT.
+12. Install NPM
 
-13. Default links and login credentials:
+    ```
+    npm i
+    ```
 
-    > https url: [https://localhost:8100](https://localhost:8100)
-    > phpMyAdmin: [http://localhost:8200](http://localhost:8200)
-    > http url: [http://localhost:8300](http://localhost:8300)
+13. Generate css, js and other assets using Gulp tasks
 
-    > Login credentials for phpMyAdmin/MySQL:
-    > Server: mariadb
-    > Username: root
-    > Password: root
-    > Database: default
+    ```
+    gulp build --prod
+    ```
+    
+14. This probably good time to initialize git and make first commit if you are using GIT.
+
+    ```
+    git init
+    ```
+
+15. Default links and login credentials:
+
+    > https url: [https://localhost:8100](https://localhost:8100) \
+    > phpMyAdmin: [http://localhost:8200](http://localhost:8200) \
+    > http url: [http://localhost:8300](http://localhost:8300) \
+
+    > Login credentials for phpMyAdmin/MySQL: \
+    > Server: mariadb \
+    > Username: root \
+    > Password: root \
+    > Database: default \
 
 ## How to update Concrete CMS
 
@@ -166,7 +175,7 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
 1. Before installing Composer dependencies, replace `composer.json` with `misc/concrete5.8/composer.json`
 
     ```
-    docker-compose exec web bash
+    docker compose exec web bash
     ```
 
     ```
@@ -186,34 +195,28 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
 1. Open .env and change php version (for example: 5.6, 7.4, 8.0 etc.).
 
     ```
-    APP_PHP_VERSION=8.0
+    APP_PHP_VERSION=8.2
     ```
 
 2. Rebuild web container
 
     ```
-    docker-compose build
+    docker compose build
     ```
 
     ```
-    docker-compose up -d
+    docker compose up -d
     ```
 
-3. Changing between 7.x and 8.x may require updating `composer.lock` in web container.
-
-    ```
-    composer update
-    ```
-
-## Popular commands
+## Most used commands
 
 1. In Linux Terminal:
 
     ```
-    docker-compose up -d // Start server containers
-    docker-compose down // Stop and remove server containers
-    docker-compose build // Rebuild containers (for example after changing php version)
-    docker-compose exec web bash // Enter web container (where you will be able to run webpack/gulp tasks etc.)
+    docker compose up -d // Start server containers
+    docker compose down // Stop and remove server containers
+    docker compose build // Rebuild containers (for example after changing php version)
+    docker compose exec web bash // Enter web container (where you will be able to run webpack/gulp tasks etc.)
     docker exec -ti local-web bash // Alternative way to enter web container (from anywhere)
     ```
 
@@ -239,7 +242,7 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
 1. Clear public folder.
 
     ```
-    docker-compose exec web bash
+    docker compose exec web bash
     rm -R public
     mkdir public
     cd public
@@ -275,14 +278,14 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
 
     ```
     cd ~/dev/project_name
-    docker-compose up -d
+    docker compose up -d
     ```
 
 2. Enter web container.
 
     ```
-    // From ~/dev/project_name folder (at the same level as docker-compose.yml)
-    docker-compose exec web bash
+    // From ~/dev/project_name folder (at the same level as docker compose.yml)
+    docker compose exec web bash
 
     // From any folder
     docker exec -ti local-web bash
@@ -298,7 +301,7 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
     openssl x509 -req -days 7300 -extfile <(printf "subjectAltName=DNS:localhost,DNS:*.localhost") -in "/etc/apache2/ssl/ssl_site.csr" -signkey "/etc/apache2/ssl/ssl_site.key" -out "/etc/apache2/ssl/ssl_site.crt"
     chmod 644 /etc/apache2/ssl/ssl_site.key
     exit
-    docker-compose down
+    docker compose down
     ```
 
 4. Add generated `ssl_site.crt` to Trusted Certificates on Windows 10:
