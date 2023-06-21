@@ -358,7 +358,7 @@ function critical(cb) {
 // Currently, this task doesn't work with localhost urls.
 // You can modify purgeCss() method in public/application/controllers/workspace.php
 // to decide which pages should have purged CSS.
-// Running "gulp critical --clear" or "gulp scss" task will remove all purged CSS files.
+// Running "gulp purge --clear" or "gulp scss" task will remove all purged CSS files.
 // Keep in mind that purging CSS on every page will prevent from caching common CSS,
 // since browser will download different file every time.
 async function purge(cb) {

@@ -99,12 +99,12 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
 
     Install Concrete CMS \
     Remember to change fields below before you start installation: \
-    --site - Site name \
-    --language - Dashboard interface language \
-    --site-locale - Main/first installed language on site \
-    --timezone - Timezone, enter the same as APP_TZ in .env file \
-    --admin-email - Main account email \
-    --admin-password - Main account password
+    --site: Site name \
+    --language: Dashboard interface language \
+    --site-locale: Main/first installed language on site \
+    --timezone: Timezone, enter the same as APP_TZ in .env file \
+    --admin-email: Admin account email \
+    --admin-password: Admin account password
 
     ```
     php public/index.php c5:install --allow-as-root -n --db-server=mariadb --db-username=root --db-password=root --db-database=default --starting-point=theme --site="Sitename" --language=en_US --site-locale=en_GB --timezone=Europe/Warsaw --admin-email=example@email.com --admin-password="password"
@@ -170,29 +170,9 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
     composer update
     ```
 
-## How to install Concrete CMS version 8
-
-1. Before installing Composer dependencies, replace `composer.json` with `misc/concrete5.8/composer.json`
-
-    ```
-    docker compose exec web bash
-    ```
-
-    ```
-    cp misc/concrete5.8/composer.json composer.json
-    ```
-
-2. Remove `composer.lock`
-
-    ```
-    rm composer.lock
-    ```
-
-3. Proceed with installation as normal (remember to downgrade php version first).
-
 ## How to change PHP version
 
-1. Open .env and change php version (for example: 5.6, 7.4, 8.0 etc.).
+1. Open .env and change php version (for example: 5.6, 7.4, 8.2 etc.).
 
     ```
     APP_PHP_VERSION=8.2
@@ -231,8 +211,32 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
     composer i -o // Install packages listed in composer.json (with optimized flag)
 
     npm install // Install packages listed in package.json
+   
+    # GULP tasks
+    Check "./resources" folder, where most sources files are being stored.
 
-    gulp watch // @TODO gulp commands
+    gulp // Watch for changes in specified folders and perform related tasks.
+    gulp watch // Same as above.
+    gulp build // Conduct basic build tasks (scss, js, images, svg, favicons, translation).
+    gulp build --prod // Same as above for live site (so with minification, without maps etc.).
+   
+    gulp scss // Build main css file.
+    gulp js // Build main js file.
+    gulp images // Compress images, minify svg files and copy them to "dist" folder.
+    gulp svg // Build sprites from svg files, which then are loaded in "svg_sprites.php". 
+    gulp favicons // Copy favicons to "dist" folder.
+    gulp translation // Generate .mo files from .po files in ./public/application/languages/site.
+
+    
+    // Deletes unused CSS by visiting "live" urls. Read more in gupfile.babel.js.
+    gulp purge --url=https://yoursite.com/workspace/purge
+    // Clear all purged CSS files (main CSS file will be used)
+    gulp purge --clear
+   
+    // Generates critical CSS by visiting "live" urls. Read more in gupfile.babel.js.
+    gulp critical --url=https://yoursite.com/workspace/critical
+    // Clear all critical CSS files
+    gulp critical --clear
 
     npm run dev // @TODO webpack commands
     ```
