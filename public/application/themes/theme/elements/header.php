@@ -23,10 +23,6 @@ use Concrete\Core\Area\GlobalArea;
                     />
                 </a>
             </div>
-            <?php
-            $a = new GlobalArea('Logo');
-            $a->display();
-            ?>
         </div>
 
         <div class="desktop-nav-area">

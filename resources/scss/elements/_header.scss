@@ -15,6 +15,10 @@
     height: var(--fixed-header-spacer-height);
 }
 
+.desktop-nav-area {
+    margin-left: auto;
+}
+
 .scrolled .logo {
     @include media-breakpoint-up(md) {
         width: 150px;

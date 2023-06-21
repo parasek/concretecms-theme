@@ -6,3 +6,8 @@
 .toolbar-visible .header.is-fixed {
     top: 48px;
 }
+
+// Fix hover underline (dropdown menu on area click)
+.ccm-ui a:hover {
+    text-decoration: none;
+}
