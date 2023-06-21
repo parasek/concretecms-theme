@@ -203,16 +203,17 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
 2. Inside web container:
 
     ```
-    exit // Exit container
+    exit // Exit container.
 
-    php public/index.php c5:config -g set concrete.maintenance_mode true // Enter maintenance mode
-    php public/index.php c5:update // Update Concrete CMS
+    php public/index.php c5:config -g set concrete.maintenance_mode true // Enter maintenance mode.
+    php public/index.php c5:update // Update Concrete CMS.
 
-    composer i -o // Install packages listed in composer.json (with optimized flag)
+    composer i -o // Install php packages listed in composer.json (with optimized flag).
 
-    npm install // Install packages listed in package.json
+    npm i // Install packages listed in package.json.
+    npm update // Update packages listed in package.json.
    
-    # GULP tasks
+    ##### GULP tasks #####
     Check "./resources" folder, where most sources files are being stored.
 
     gulp // Watch for changes in specified folders and perform related tasks.
@@ -223,22 +224,32 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
     gulp scss // Build main css file.
     gulp js // Build main js file.
     gulp images // Compress images, minify svg files and copy them to "dist" folder.
-    gulp svg // Build sprites from svg files, which then are loaded in "svg_sprites.php". 
+    gulp svg // Build sprites from single svg files, which then are loaded in "svg_sprites.php". 
     gulp favicons // Copy favicons to "dist" folder.
     gulp translation // Generate .mo files from .po files in ./public/application/languages/site.
 
-    
-    // Deletes unused CSS by visiting "live" urls. Read more in gupfile.babel.js.
+    // Generate purged CSS files by visiting "live" urls. Read more in gupfile.babel.js.
     gulp purge --url=https://yoursite.com/workspace/purge
     // Clear all purged CSS files (main CSS file will be used)
     gulp purge --clear
    
-    // Generates critical CSS by visiting "live" urls. Read more in gupfile.babel.js.
+    // Generate critical CSS files by visiting "live" urls. Read more in gupfile.babel.js.
     gulp critical --url=https://yoursite.com/workspace/critical
     // Clear all critical CSS files
     gulp critical --clear
 
-    npm run dev // @TODO webpack commands
+    ##### Code linters #####
+   
+    You can configure your IDE, to lint your scss/js files on save.
+    Though manual commands are always available.
+    Those below are only "aliases", check "package.json" to see what they actually do.
+   
+    npm run eslint // Show potential js problems in "./resources/js" folder.
+    npm run eslint:fix // Lint and show potential js problems in "./resources/js" folder.
+    npm run stylelint // Show potential scss problems in "./resources/scss" folder.
+    npm run stylelint:fix // Lint and show potential scss problems in "./resources/scss" folder.
+    npm run prettier // Show list of file to lint using Prettier.
+    npm run prettier:fix // Lint files in "./resources/js" and "./resources/scss" using Prettier.
     ```
 
 ## Install Concrete CMS without Composer
@@ -350,8 +361,8 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
 
    Your site will be accessible through:
 
-   > https url: [https://localhost:8101](https://localhost:8101)
-   > phpMyAdmin: [http://localhost:8201](http://localhost:8201)
+   > https url: [https://localhost:8101](https://localhost:8101) \
+   > phpMyAdmin: [http://localhost:8201](http://localhost:8201) \
    > http url: [http://localhost:8301](http://localhost:8301)
 
    ⬅ [Go back to Installation](#multiple-docker-servers-link)
