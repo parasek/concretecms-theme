@@ -17,7 +17,7 @@ use Concrete\Core\View\View;
         src="/application/themes/theme/dist/js/<?php echo json_decode(file_get_contents($manifestPath))->{'app.min.js'}; ?>"></script>
 <?php endif; ?>
 
-<?php $view->inc('elements/footer/browser_sync.php'); ?>
+<?php //$view->inc('elements/footer/browser_sync.php'); ?>
 
 </body>
 </html>

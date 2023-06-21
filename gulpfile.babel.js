@@ -467,7 +467,8 @@ function watch() {
     gulp.watch(`${path.translation.src}/*.po`, { usePolling: true }, gulp.parallel('translation'));
 
     // Experimental/work in progress.
-    // Right off the bat, it works with https://localhost:8100 url.
+    // Uncomment "$view->inc('elements/footer/browser_sync.php')" in:
+    // "public/application/themes/theme/elements/footer/footer_bottom.php"
     // If you have changed port, then you should change it here and in:
     // "public/application/themes/theme/elements/footer/browser_sync.php"
     // Command: gulp watch --bs
