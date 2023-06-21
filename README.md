@@ -205,7 +205,8 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
     ```
     exit // Exit container.
 
-    php public/index.php c5:config -g set concrete.maintenance_mode true // Enter maintenance mode.
+    php public/index.php c5:config -g set concrete.maintenance_mode true // Enable maintenance mode.
+    php public/index.php c5:config -g set concrete.maintenance_mode false // Disable maintenance mode.
     php public/index.php c5:update // Update Concrete CMS.
 
     composer i -o // Install php packages listed in composer.json (with optimized flag).
@@ -213,7 +214,10 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
     npm i // Install packages listed in package.json.
     npm update // Update packages listed in package.json.
    
+    ######################
     ##### GULP tasks #####
+    ######################
+    
     Check "./resources" folder, where most sources files are being stored.
 
     gulp // Watch for changes in specified folders and perform related tasks.
@@ -238,9 +242,11 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
     // Clear all critical CSS files
     gulp critical --clear
 
+    ########################
     ##### Code linters #####
+    ########################
    
-    You can configure your IDE, to lint your scss/js files on save.
+    You should probably can configure your IDE, to lint your scss/js files on save.
     Though manual commands are always available.
     Those below are only "aliases", check "package.json" to see what they actually do.
    
