@@ -97,13 +97,13 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
     mv public/application/config/live.database.php public/application/config/temp.database.php
     ```
 
-    Install Concrete CMS
-    Remember to change fields below before you start installation:
-    --site - Site name
-    --language - Dashboard interface language
-    --site-locale - Main/first installed language on site
-    --timezone - Timezone, enter the same as APP_TZ in .env file
-    --admin-email - Main account email
+    Install Concrete CMS \
+    Remember to change fields below before you start installation: \
+    --site - Site name \
+    --language - Dashboard interface language \
+    --site-locale - Main/first installed language on site \
+    --timezone - Timezone, enter the same as APP_TZ in .env file \
+    --admin-email - Main account email \
     --admin-password - Main account password
 
     ```
@@ -150,13 +150,13 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
 
     > https url: [https://localhost:8100](https://localhost:8100) \
     > phpMyAdmin: [http://localhost:8200](http://localhost:8200) \
-    > http url: [http://localhost:8300](http://localhost:8300) \
+    > http url: [http://localhost:8300](http://localhost:8300)
 
     > Login credentials for phpMyAdmin/MySQL: \
     > Server: mariadb \
     > Username: root \
     > Password: root \
-    > Database: default \
+    > Database: default
 
 ## How to update Concrete CMS
 
