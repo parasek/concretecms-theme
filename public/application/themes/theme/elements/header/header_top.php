@@ -38,4 +38,4 @@ use Concrete\Core\View\View;
 
 <body>
 
-    <div class="<?php echo $c->getPageWrapperClass(); ?>"></div>
+    <div class="<?php echo $c->getPageWrapperClass(); ?>">
