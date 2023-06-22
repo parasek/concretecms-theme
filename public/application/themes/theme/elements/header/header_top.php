@@ -36,4 +36,6 @@ use Concrete\Core\View\View;
 
 </head>
 
-<body class="<?php echo $c->getPageWrapperClass(); ?>">
+<body>
+
+    <div class="<?php echo $c->getPageWrapperClass(); ?>"></div>

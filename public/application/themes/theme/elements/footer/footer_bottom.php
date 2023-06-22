@@ -5,6 +5,8 @@ use Concrete\Core\View\View;
 /** @var View $view */
 ?>
 
+</div><?php // .ccm-page ?>
+
 <?php $view->inc('elements/footer/structured_data.php'); ?>
 
 <?php $view->inc('elements/footer/svg_sprites.php'); ?>
