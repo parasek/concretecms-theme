@@ -1,17 +1,30 @@
-// Custom grid breakpoints
-// Added ps (Phone Small), pm (Phone medium), pl (Phone large), xxxl
+@use 'sass:map';
+
 $grid-breakpoints: (
     xs: 0,
-    ps: 360px,
-    pm: 414px,
-    pl: 480px,
     sm: 576px,
     md: 768px,
     lg: 992px,
     xl: 1200px,
-    xxl: 1440px,
-    xxxl: 1860px,
+    xxl: 1400px,
 );
+
+// Custom breakpoints
+// This will add additional breakpoints but bootstrap classes like "mt-ps-1" will not be generated.
+// Add $grid-custom-breakpoints as second argument in "media-breakpoint-xxx" mixins
+// Example usage:
+// @include media-breakpoint-up(xxxl, $grid-custom-breakpoints) {}
+$grid-custom-breakpoints: map-sort-by-values(
+    map.merge(
+        $grid-breakpoints,
+        (
+            ps: 360px,
+            pm: 414px,
+            pl: 480px,
+            xxxl: 1800px,
+        )
+    )
+) !default;
 
 // Maximum width of .container
 $container-max-widths: (
