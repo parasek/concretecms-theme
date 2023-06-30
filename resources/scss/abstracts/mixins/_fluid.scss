@@ -31,19 +31,3 @@
         }
     }
 }
-
-@mixin fluid-declaration($min-value, $max-value, $property: 'font-size', $min-vw: ps, $max-vw: xxxl, $force-px: false) {
-    $u1: unit(map-get($grid-custom-breakpoints, $min-vw));
-    $u2: unit(map-get($grid-custom-breakpoints, $max-vw));
-    $u3: unit($min-value);
-    $u4: unit($max-value);
-
-    @if $u1 == $u2 and $u1 == $u3 and $u3 == $u4 {
-        #{$property}: calc(
-            #{if($force-px, $min-value, rfs-value($min-value))} +
-            #{strip-unit($max-value - $min-value)} *
-            ((100vw - #{map-get($grid-custom-breakpoints, $min-vw)}) / #{strip-unit(map-get($grid-custom-breakpoints, $max-vw) - map-get($grid-custom-breakpoints, $min-vw))})
-        );
-    }
-}
-
