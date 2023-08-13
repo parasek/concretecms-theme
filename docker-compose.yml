@@ -12,8 +12,6 @@ services:
         ports:
             - ${APP_PORT}:80
             - ${APP_PORT_SSL}:443
-            - 3000:3000
-            - 3001:3001
         working_dir: /var/www/html
         environment:
             - TZ=${APP_TZ}
@@ -21,6 +19,26 @@ services:
             - ./:/var/www/html
             - ./docker/web/apache2/sites-available:/etc/apache2/sites-available
             - ./docker/web/apache2/ssl:/etc/apache2/ssl
+            - ./docker/web/php/php.ini:/usr/local/etc/php/conf.d/extra-php-config.ini
+        depends_on:
+            db:
+                condition: service_healthy
+
+    workspace:
+        build:
+            context: .
+            dockerfile: docker/workspace/Dockerfile
+            args:
+                - APP_PHP_VERSION=${APP_PHP_VERSION}
+        container_name: ${APP_NAME}-workspace
+        ports:
+            - '3000:3000'
+            - '3001:3001'
+        working_dir: /var/www/html
+        environment:
+            - TZ=${APP_TZ}
+        volumes:
+            - ./:/var/www/html
             - ./docker/web/php/php.ini:/usr/local/etc/php/conf.d/extra-php-config.ini
             - ./docker/web/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
         depends_on:

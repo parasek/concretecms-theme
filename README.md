@@ -79,10 +79,10 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
 
 11. Install Concrete CMS using Composer.
 
-    Enter web container
+    Enter workspace container
 
     ```
-    docker compose exec web bash
+    docker compose exec workspace bash
     ```
 
     Install Composer dependencies
@@ -140,7 +140,11 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
     gulp build --prod
     ```
     
-14. This probably good time to initialize git and make first commit if you are using GIT.
+14. This probably good time to exit container, initialize git and make first commit if you are using GIT.
+
+    ```
+    exit
+    ```
 
     ```
     git init
@@ -160,10 +164,10 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
 
 ## How to update Concrete CMS
 
-1. Enter web container and run composer update:
+1. Enter workspace container and run composer update:
 
     ```
-    docker-compose exec web bash
+    docker-compose exec workspace bash
     ```
 
     ```
@@ -178,7 +182,7 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
     APP_PHP_VERSION=8.2
     ```
 
-2. Rebuild web container
+2. Rebuild web/workspace container
 
     ```
     docker compose build
@@ -193,14 +197,16 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
 1. In Linux Terminal:
 
     ```
-    docker compose up -d // Start server containers
-    docker compose down // Stop and remove server containers
+    // You should be inside your project folder (where docker-compose.yml is)
+    docker compose up -d // Start containers
+    docker compose down // Stop and remove containers
     docker compose build // Rebuild containers (for example after changing php version)
-    docker compose exec web bash // Enter web container (where you will be able to run webpack/gulp tasks etc.)
-    docker exec -ti local-web bash // Alternative way to enter web container (from anywhere)
+    docker compose exec workspace bash // Enter workspace container (where you will be able to run webpack/gulp tasks etc.)
+    // Anywhere on your computer
+    docker exec -ti local-workspace bash // Alternative way to enter workspace container
     ```
 
-2. Inside web container:
+2. Inside workspace container:
 
     ```
     exit // Exit container.
@@ -246,7 +252,7 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
     ##### Code linters #####
     ########################
    
-    You should probably can configure your IDE, to lint your scss/js files on save.
+    You should probably configure your IDE, to lint your scss/js files on save.
     Though manual commands are always available.
     Those below are only "aliases", check "package.json" to see what they actually do.
    
@@ -263,7 +269,7 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
 1. Clear public folder.
 
     ```
-    docker compose exec web bash
+    docker compose exec workspace bash
     rm -R public
     mkdir public
     cd public
@@ -302,14 +308,14 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
     docker compose up -d
     ```
 
-2. Enter web container.
+2. Enter workspace container.
 
     ```
-    // From ~/dev/project_name folder (at the same level as docker compose.yml)
-    docker compose exec web bash
+    // From ~/dev/project_name folder (at the same level as docker-compose.yml)
+    docker compose exec workspace bash
 
     // From any folder
-    docker exec -ti local-web bash
+    docker exec -ti local-workspace bash
     ```
 
 3. Inside web container create ssl certificates for localhost domain
