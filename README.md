@@ -24,7 +24,7 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
 2. Download files from GitHub.
 
     ```
-    git clone https://github.com/parasek/c5-theme.git .
+    git clone https://github.com/parasek/concretecms-theme.git .
     ```
 
 3. Remove `.git` folder.
