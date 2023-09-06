@@ -31,8 +31,6 @@ class PageInfoService
      * $u = new \Concrete\Core\User\User();
      * $pageInfoService = $app->make(\Application\PageInfoService::class, [$c, $u]);
      * echo $pageInfoService->getHtmlClasses();
-     *
-     * @return PageInfoService
      */
     public static function getInstance(): PageInfoService
     {
@@ -50,8 +48,6 @@ class PageInfoService
      * Display different CSS classes when user is logged in.
      *
      * <html class="<?php echo h(\Application\PageInfoService::getInstance()->getHtmlClasses()); ?>">
-     *
-     * @return string
      */
     public function getHtmlClasses(): string
     {

@@ -1,16 +1,17 @@
 # Concrete CMS boilerplate theme - Work in progress
 
-A fully featured Concrete CMS project comprising framework skeleton, custom theme, local Docker server and other development tools.
+A fully featured Concrete CMS project comprising framework skeleton, custom theme, local Docker server and other
+development tools.
 
-Stack and technologies: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, 
+Stack and technologies: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin,
 Composer, NPM, Sass, Gulp, PHPUnit, Prettier, Stylelint, ESLint
 
 ## Requirements
 
--   WSL2 installed and enabled
--   Docker Desktop for Windows installed
--   Your project files should be located somewhere in WSL2 subsystem, for example in: `\\wsl$\Ubuntu\home\parasek\dev`
-    which, under Linux, is accessible by `~/dev` path
+- WSL2 installed and enabled
+- Docker Desktop for Windows installed
+- Your project files should be located somewhere in WSL2 subsystem, for example in: `\\wsl$\Ubuntu\home\parasek\dev`
+  which, under Linux, is accessible by `~/dev` path
 
 ## Installation
 
@@ -140,7 +141,7 @@ Composer, NPM, Sass, Gulp, PHPUnit, Prettier, Stylelint, ESLint
     ```
     gulp build --prod
     ```
-    
+
 14. This probably good time to exit container, initialize git and make first commit if you are using GIT.
 
     ```
@@ -196,77 +197,111 @@ Composer, NPM, Sass, Gulp, PHPUnit, Prettier, Stylelint, ESLint
 ## Most used commands
 
 1. In Linux Terminal:
-
-    ```
-    // You should be inside your project folder (where docker-compose.yml is)
-    docker compose up -d // Start containers
-    docker compose down // Stop and remove containers
-    docker compose build // Rebuild containers (for example after changing php version)
-    docker compose exec workspace bash // Enter workspace container (where you will be able to run webpack/gulp tasks etc.)
-    // Anywhere on your computer
-    docker exec -ti local-workspace bash // Alternative way to enter workspace container
-    ```
+   ```
+   // You should be inside your project folder (where docker-compose.yml is)
+   docker compose up -d // Start containers
+   docker compose down // Stop and remove containers
+   docker compose build // Rebuild containers (for example after changing php version)
+   docker compose exec workspace bash // Enter workspace container (where you will be able to run build tasks etc.)
+   
+   // Anywhere on your computer
+   docker exec -ti local-workspace bash // Alternative way to enter workspace container
+   ```
 
 2. Inside workspace container:
 
-    ```
-    exit // Exit container.
-
-    php public/index.php c5:config -g set concrete.maintenance_mode true // Enable maintenance mode.
-    php public/index.php c5:config -g set concrete.maintenance_mode false // Disable maintenance mode.
-    php public/index.php c5:update // Update Concrete CMS.
-
-    composer i -o // Install php packages listed in composer.json (with optimized flag).
-
-    npm i // Install packages listed in package.json.
-    npm update // Update packages listed in package.json.
+   ```
+   // Custom commands that starts with "npm run" or "composer" are just "aliases".
+   // You can find "real" commands inside "package.json" and "composer.json" files.
    
-    ######################
-    ##### GULP tasks #####
-    ######################
-    
-    Check "./resources" folder, where most sources files are being stored.
+   exit // Exit container.
+   
+   // These are interchangeable ways to access Concrete binary.
+   // Those will display a list of all available commands.
+   php public/index.php
+   ./vendor/bin/concrete5
+   ./public/concrete/bin/concrete
+   ./public/concrete/bin/concrete5
+   php public/concrete/bin/concrete
+   php public/concrete/bin/concrete5
+   
+   php public/index.php c5:config -g set concrete.maintenance_mode true // Enable maintenance mode.
+   php public/index.php c5:config -g set concrete.maintenance_mode false // Disable maintenance mode.
+   php public/index.php c5:ide-symbols // Generate helper files for IDE auto-completion.
+   
+   composer i -o // Install php packages listed in composer.json (with optimized flag).
+   
+   npm i // Install packages listed in package.json.
+   npm update // Update packages listed in package.json.
+   
+   ######################
+   # GULP tasks
+   ######################
+   
+   // Source files are being stored in "./resources" folder.
+   // Distribution file are being mostly stored in "./public/application/themes/theme/dist".
+   
+   gulp // Watch for changes in specified folders and perform related tasks.
+   gulp watch // Same as above.
+   gulp build // Conduct basic build tasks (scss, js, images, svg, favicons, translation).
+   gulp build --prod // Same as above for live site (so with minification, without maps etc.).
+   
+   gulp scss // Build main css file.
+   gulp js // Build main js file.
+   gulp images // Compress images, minify svg files and copy them to "dist" folder.
+   gulp svg // Build sprites from separate svg files, which then are loaded in "svg_sprites.php". 
+   gulp favicons // Copy favicons to "dist" folder.
+   gulp translation // Generate .mo files from .po files in ./public/application/languages/site.
+   
+   ########################
+   # Js/CSS linters
+   ########################
+   
+   You should probably configure your IDE, to lint your scss/js files on save.
+   Though manual commands are always available.
+   Those below are only "aliases", check "package.json" to see what they actually do.
+   
+   npm run eslint // Show potential js problems in "./resources/js" folder.
+   npm run eslint:fix // Lint and show potential js problems in "./resources/js" folder.
+   npm run stylelint // Show potential scss problems in "./resources/scss" folder.
+   npm run stylelint:fix // Lint and show potential scss problems in "./resources/scss" folder.
+   npm run prettier // Show list of file to lint using Prettier.
+   npm run prettier:fix // Lint files in "./resources/js" and "./resources/scss" using Prettier.
+   
+   ########################
+   # PHP-CS-Fixer
+   ########################
+   
+   composer fix // Run PHP-CS-Fixer on all locations specified in .php-cs-fixer.php
+   composer fix src // Run PHP-CS-Fixer on specific folder
+   composer fix src/Foo/Bar/FooBar.php // Run PHP-CS-Fixer on specific file
 
-    gulp // Watch for changes in specified folders and perform related tasks.
-    gulp watch // Same as above.
-    gulp build // Conduct basic build tasks (scss, js, images, svg, favicons, translation).
-    gulp build --prod // Same as above for live site (so with minification, without maps etc.).
+   #########################
+   # Testing
+   #########################
    
-    gulp scss // Build main css file.
-    gulp js // Build main js file.
-    gulp images // Compress images, minify svg files and copy them to "dist" folder.
-    gulp svg // Build sprites from single svg files, which then are loaded in "svg_sprites.php". 
-    gulp favicons // Copy favicons to "dist" folder.
-    gulp translation // Generate .mo files from .po files in ./public/application/languages/site.
+   composer test // Run all tests
+   composer test -- --filter testGetUserInfo // Run specific test
 
-    ########################
-    ##### Code linters #####
-    ########################
+   #########################
+   # Concrete settings
+   #########################
    
-    You should probably configure your IDE, to lint your scss/js files on save.
-    Though manual commands are always available.
-    Those below are only "aliases", check "package.json" to see what they actually do.
+   // Currently, I am using latest versions of PHP-CS-Fixer and PHPUnit
+   // To be able to use fixer/run tests using Concrete configurations, 
+   // you have to use those versions in composer.json:
    
-    npm run eslint // Show potential js problems in "./resources/js" folder.
-    npm run eslint:fix // Lint and show potential js problems in "./resources/js" folder.
-    npm run stylelint // Show potential scss problems in "./resources/scss" folder.
-    npm run stylelint:fix // Lint and show potential scss problems in "./resources/scss" folder.
-    npm run prettier // Show list of file to lint using Prettier.
-    npm run prettier:fix // Lint files in "./resources/js" and "./resources/scss" using Prettier.
+   "phpunit/phpunit": "~4.3|^8.0",
+   "mockery/mockery": "^0.9.9|^1.2",
+   "friendsofphp/php-cs-fixer": "2.19.2" 
    
-    ########################
-    ##### PHP-CS-Fixer #####
-    ########################
-    
-    composer fix path_to_file_or_folder // Run PHP-CS-Fixer
-
-    #########################
-    ######## Testing ########
-    #########################
-    
-    composer test // Run tests
-    composer test // Run specific test
-    ```
+   // Delete composer.lock and run "composer i"
+   // Copy phpunit.xml.dist from
+   // https://github.com/concretecms/composer/tree/master
+   
+   php public/index.php c5:phpcs fix src // Run PHP-CS-Fixer using Concrete CMS settings
+   composer test // Run tests using Concrete CMS version of PHPUnit
+   ```
 
 ## <a name="first-installation"></a>First installation
 

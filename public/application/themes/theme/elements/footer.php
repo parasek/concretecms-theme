@@ -1,6 +1,8 @@
-<?php defined('C5_EXECUTE') or die('Access Denied.');
+<?php defined('C5_EXECUTE') or exit('Access Denied.');
 
-/** @var Concrete\Core\View\View $view */
+/**
+ * @var Concrete\Core\Page\View\PageView $view
+ */
 ?>
 
 <footer class="footer">

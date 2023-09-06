@@ -1,4 +1,4 @@
-<?php defined('C5_EXECUTE') or die('Access Denied.'); ?>
+<?php defined('C5_EXECUTE') or exit('Access Denied.'); ?>
 
 <script type="application/ld+json">
     {

@@ -68,6 +68,6 @@
     },
     "scripts": {
         "test": "XDEBUG_MODE=coverage phpunit",
-        "fix": " ./vendor/bin/php-cs-fixer fix"
+        "fix": "./vendor/bin/php-cs-fixer fix"
     }
 }

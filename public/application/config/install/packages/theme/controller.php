@@ -6,7 +6,6 @@ use Concrete\Core\Package\StartingPointPackage;
 
 class Controller extends StartingPointPackage
 {
-
     protected $pkgHandle = 'theme';
     protected $pkgContentProvidesFileThumbnails = true;
 
@@ -19,5 +18,4 @@ class Controller extends StartingPointPackage
     {
         return t('Custom Concrete CMS theme.');
     }
-
 }

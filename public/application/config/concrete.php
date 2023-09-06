@@ -10,6 +10,6 @@ return [
             // Hide database password and hostname in whoops output if supported
             '_ENV' => ['DB_PASSWORD', 'DB_HOSTNAME'],
             '_SERVER' => ['DB_PASSWORD', 'DB_HOSTNAME'],
-        ]
-    ]
+        ],
+    ],
 ];

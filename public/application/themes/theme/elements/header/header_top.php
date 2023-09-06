@@ -1,23 +1,25 @@
-<?php defined('C5_EXECUTE') or die('Access Denied.');
+<?php defined('C5_EXECUTE') or exit('Access Denied.');
 
 use Application\PageInfoService;
 use Concrete\Core\Localization\Localization;
-use Concrete\Core\Page\Page;
-use Concrete\Core\View\View;
 
-/** @var Page $c */
-/** @var View $view */
+/**
+ * @var Concrete\Core\Page\Page $c
+ * @var Concrete\Core\Page\View\PageView $view
+ */
 ?>
 <!doctype html>
 
-<html class="<?php echo h(PageInfoService::getInstance()->getHtmlClasses()); ?>" lang="<?php echo h(Localization::activeLanguage()); ?>">
+<html class="<?= h(PageInfoService::getInstance()->getHtmlClasses()); ?>"
+      lang="<?= h(Localization::activeLanguage()); ?>"
+>
 
 <head>
     <?php
     View::element('header_required', [
         'pageTitle' => $pageTitle ?? '',
         'pageDescription' => $pageDescription ?? '',
-        'pageMetaKeywords' => $pageMetaKeywords ?? ''
+        'pageMetaKeywords' => $pageMetaKeywords ?? '',
     ]);
     ?>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,16 +28,10 @@ use Concrete\Core\View\View;
 
     <?php $view->inc('elements/header/favicons.php'); ?>
 
-    <?php /*
-    <?php if ($publisherLink = $app->make('site')->getSite()->getAttribute('rel_publisher')): ?>
-        <link rel="publisher" href="<?php echo h($publisherLink); ?>">
-    <?php endif; ?>
-    */ ?>
-
     <?php $view->inc('elements/header/open_graph.php'); ?>
 
 </head>
 
 <body>
 
-    <div class="<?php echo $c->getPageWrapperClass(); ?>">
+<div class="<?= $c->getPageWrapperClass(); ?>">

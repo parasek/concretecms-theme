@@ -1,5 +1,8 @@
-<?php defined('C5_EXECUTE') or die('Access Denied.');
+<?php
 
-/** @var Concrete\Core\View\View $view */
+defined('C5_EXECUTE') or exit('Access Denied.');
 
+/**
+ * @var Concrete\Core\Page\View\PageView $view
+ */
 $view->inc('default.php');

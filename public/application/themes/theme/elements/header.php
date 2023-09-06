@@ -1,9 +1,10 @@
-<?php defined('C5_EXECUTE') or die('Access Denied.');
+<?php defined('C5_EXECUTE') or exit('Access Denied.');
 
 use Concrete\Core\Area\GlobalArea;
 
-/** @var Concrete\Core\View\View $this */
-/** @var Concrete\Core\View\View $view */
+/**
+ * @var Concrete\Core\Page\View\PageView $view
+ */
 ?>
 
 <?php $view->inc('elements/header/header_top.php'); ?>
@@ -14,8 +15,8 @@ use Concrete\Core\Area\GlobalArea;
 
         <div class="logo-area">
             <div class="logo">
-                <a href="<?php echo h(BASE_URL); ?>" class="logo-link">
-                    <img src="<?php echo $this->getThemePath(); ?>/dist/images/logo.svg"
+                <a href="<?= h(BASE_URL); ?>" class="logo-link">
+                    <img src="<?= $view->getThemePath(); ?>/dist/images/logo.svg"
                          alt="Site logo"
                          width="210"
                          height="59"

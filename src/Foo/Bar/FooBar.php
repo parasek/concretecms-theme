@@ -4,32 +4,32 @@ declare(strict_types=1);
 
 namespace Application\Foo\Bar;
 
-use Symfony\Component\HttpFoundation\Response;
 use Concrete\Core\Http\ResponseFactoryInterface;
 use Concrete\Core\User\UserInfoRepository;
 use Concrete\Core\Validation\CSRF\Token;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Autoloading for the "\Application" namespace is managed in /composer.json
+ * Autoloading for the "\Application" namespace is managed in /composer.json.
  */
 class FooBar
 {
-
     /**
-     * The UserInfoRepository instance that demonstrates integration with c5 services
+     * The UserInfoRepository instance that demonstrates integration with c5 services.
      *
      * @var UserInfoRepository
      */
     protected $repository;
 
     /**
-     * A response factory for generating a response to output
+     * A response factory for generating a response to output.
+     *
      * @var ResponseFactoryInterface
      */
     protected $responseFactory;
 
     /**
-     * The validator we use to prevent XSRF
+     * The validator we use to prevent XSRF.
      *
      * @var Token
      */
@@ -43,12 +43,7 @@ class FooBar
     }
 
     /**
-     * Example controller style function to demonstrate testing
-     *
-     * @param int $userId
-     * @param string $token
-     *
-     * @return Response
+     * Example controller style function to demonstrate testing.
      */
     public function getUserInfo(int $userId, string $token): Response
     {

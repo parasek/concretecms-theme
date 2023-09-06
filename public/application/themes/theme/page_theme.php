@@ -3,12 +3,10 @@
 namespace Application\Theme\Theme;
 
 use Concrete\Core\Area\Layout\Preset\Provider\ThemeProviderInterface;
-use Concrete\Core\Feature\Features;
 use Concrete\Core\Page\Theme\Theme;
 
 class PageTheme extends Theme implements ThemeProviderInterface
 {
-
     public function getThemeName(): string
     {
         return t('Theme');
@@ -21,9 +19,7 @@ class PageTheme extends Theme implements ThemeProviderInterface
 
     public function getThemeSupportedFeatures(): array
     {
-        return [
-            Features::IMAGERY, // temporary, work on it later
-        ];
+        return [];
     }
 
     public function getThemeAreaLayoutPresets(): array
@@ -32,5 +28,4 @@ class PageTheme extends Theme implements ThemeProviderInterface
 
         return $presets;
     }
-
 }
