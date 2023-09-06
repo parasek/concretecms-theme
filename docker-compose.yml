@@ -59,3 +59,4 @@ services:
             - PMA_HOST=db
         volumes:
             - ./docker/pma/config.php:/etc/phpmyadmin/config.user.inc.php
+            - ./docker/pma/themes/boodark:/var/www/html/themes/boodark
