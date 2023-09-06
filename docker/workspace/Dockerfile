@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y \
 # https://github.com/mlocati/docker-php-extension-installer#usage
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 RUN chmod +x /usr/local/bin/install-php-extensions
-RUN install-php-extensions gd pdo_mysql zip bcmath intl
+RUN install-php-extensions gd pdo_mysql zip bcmath intl xdebug
 
 # Install Composer
 # https://getcomposer.org/doc/00-intro.md#docker-image

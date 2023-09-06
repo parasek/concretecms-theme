@@ -32,8 +32,8 @@
         "doctrine/orm": "2.13.*"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.3|^8.0",
-        "mockery/mockery": "^0.9.9|^1.2"
+        "phpunit/phpunit": "^10.0",
+        "mockery/mockery": "^0.9.9|^1.6.6"
     },
     "config": {
         "preferred-install": "dist",
@@ -65,6 +65,6 @@
         }
     },
     "scripts": {
-        "test": "phpunit"
+        "test": "XDEBUG_MODE=coverage phpunit"
     }
 }
