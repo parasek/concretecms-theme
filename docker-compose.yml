@@ -20,9 +20,6 @@ services:
             - ./docker/web/apache2/sites-available:/etc/apache2/sites-available
             - ./docker/web/apache2/ssl:/etc/apache2/ssl
             - ./docker/web/php/php.ini:/usr/local/etc/php/conf.d/extra-php-config.ini
-        depends_on:
-            db:
-                condition: service_healthy
 
     workspace:
         build:
@@ -31,19 +28,11 @@ services:
             args:
                 - APP_PHP_VERSION=${APP_PHP_VERSION}
         container_name: ${APP_NAME}-workspace
-        ports:
-            - '3000:3000'
-            - '3001:3001'
         working_dir: /var/www/html
         environment:
             - TZ=${APP_TZ}
         volumes:
             - ./:/var/www/html
-            - ./docker/web/php/php.ini:/usr/local/etc/php/conf.d/extra-php-config.ini
-            - ./docker/web/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-        depends_on:
-            db:
-                condition: service_healthy
 
     db:
         image: mariadb:10.5.9
@@ -59,10 +48,6 @@ services:
         volumes:
             - ./db/mariadb:/var/lib/mysql
             - ./docker/db/mariadb/my.cnf:/etc/mysql/conf.d/my.cnf
-        healthcheck:
-            test: mysqladmin ping -h 127.0.0.1 -u root --password=$$DB_PASSWORD
-            interval: 5s
-            retries: 5
 
     pma:
         image: phpmyadmin/phpmyadmin
@@ -72,8 +57,5 @@ services:
         environment:
             - PMA_ARBITRARY=1
             - PMA_HOST=db
-        depends_on:
-            db:
-                condition: service_healthy
         volumes:
             - ./docker/pma/config.php:/etc/phpmyadmin/config.user.inc.php
