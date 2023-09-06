@@ -21,6 +21,7 @@
 /build
 /.phpunit.*
 /public/hot
+/.php-cs-fixer.cache
 
 # Ignore custom folders
 /db

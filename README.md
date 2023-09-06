@@ -253,6 +253,19 @@ Composer, NPM, Sass, Gulp, PHPUnit, Prettier, Stylelint, ESLint
     npm run stylelint:fix // Lint and show potential scss problems in "./resources/scss" folder.
     npm run prettier // Show list of file to lint using Prettier.
     npm run prettier:fix // Lint files in "./resources/js" and "./resources/scss" using Prettier.
+   
+    ########################
+    ##### PHP-CS-Fixer #####
+    ########################
+    
+    composer fix path_to_file_or_folder // Run PHP-CS-Fixer
+
+    #########################
+    ######## Testing ########
+    #########################
+    
+    composer test // Run tests
+    composer test // Run specific test
     ```
 
 ## <a name="first-installation"></a>First installation
