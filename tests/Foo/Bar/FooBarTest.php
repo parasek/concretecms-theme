@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Application\Foo\Bar;
@@ -7,7 +8,7 @@ use Concrete\Core\Http\ResponseFactoryInterface;
 use Concrete\Core\User\UserInfo;
 use Concrete\Core\User\UserInfoRepository;
 use Concrete\Core\Validation\CSRF\Token;
-use ConcreteComposer\TestCase;
+use Application\TestCase;
 use Mockery as M;
 use Symfony\Component\HttpFoundation\Response;
 
