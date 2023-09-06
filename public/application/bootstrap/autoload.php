@@ -14,4 +14,3 @@ try {
 
 # Add the vendor directory to the include path
 ini_set('include_path', __DIR__ . "/../../../vendor" . PATH_SEPARATOR . get_include_path());
-

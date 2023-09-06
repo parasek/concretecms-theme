@@ -9,8 +9,6 @@
 /public/updates
 
 # Ignore build files
-/public/application/css/main.css
-/public/application/js/main.js
 /public/application/themes/theme/dist
 
 # Ignore developer stuff

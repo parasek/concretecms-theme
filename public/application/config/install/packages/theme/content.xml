@@ -20,14 +20,18 @@
             <composer>
                 <formlayout>
                     <set name="Basics" description="">
-                        <control custom-template="" required="1" custom-label="" description="" type="core_page_property" handle="name"/>
-                        <control custom-template="" custom-label="" description="" type="core_page_property" handle="description"/>
-                        <control custom-template="" custom-label="" description="" type="core_page_property" handle="publish_target"/>
+                        <control custom-template="" required="1" custom-label="" description=""
+                                 type="core_page_property" handle="name"/>
+                        <control custom-template="" custom-label="" description="" type="core_page_property"
+                                 handle="description"/>
+                        <control custom-template="" custom-label="" description="" type="core_page_property"
+                                 handle="publish_target"/>
                     </set>
                 </formlayout>
                 <output>
                     <pagetemplate handle="page">
-                        <page name="" path="" public-date="2022-03-15 16:16:17" filename="" pagetype="page" template="page" user="admin" description="" package="" root="true"/>
+                        <page name="" path="" public-date="2022-03-15 16:16:17" filename="" pagetype="page"
+                              template="page" user="admin" description="" package="" root="true"/>
                     </pagetemplate>
                 </output>
             </composer>
@@ -40,14 +44,18 @@
             <composer>
                 <formlayout>
                     <set name="Basics" description="">
-                        <control custom-template="" required="1" custom-label="" description="" type="core_page_property" handle="name"/>
-                        <control custom-template="" custom-label="" description="" type="core_page_property" handle="description"/>
-                        <control custom-template="" custom-label="" description="" type="core_page_property" handle="publish_target"/>
+                        <control custom-template="" required="1" custom-label="" description=""
+                                 type="core_page_property" handle="name"/>
+                        <control custom-template="" custom-label="" description="" type="core_page_property"
+                                 handle="description"/>
+                        <control custom-template="" custom-label="" description="" type="core_page_property"
+                                 handle="publish_target"/>
                     </set>
                 </formlayout>
                 <output>
                     <pagetemplate handle="home">
-                        <page name="" path="" public-date="2022-03-15 16:01:53" filename="" pagetype="home" template="home" user="admin" description="" package="" root="true"/>
+                        <page name="" path="" public-date="2022-03-15 16:01:53" filename="" pagetype="home"
+                              template="home" user="admin" description="" package="" root="true"/>
                     </pagetemplate>
                 </output>
             </composer>
@@ -60,14 +68,18 @@
             <composer>
                 <formlayout>
                     <set name="Basics" description="">
-                        <control custom-template="" required="1" custom-label="" description="" type="core_page_property" handle="name"/>
-                        <control custom-template="" custom-label="" description="" type="core_page_property" handle="description"/>
-                        <control custom-template="" custom-label="" description="" type="core_page_property" handle="publish_target"/>
+                        <control custom-template="" required="1" custom-label="" description=""
+                                 type="core_page_property" handle="name"/>
+                        <control custom-template="" custom-label="" description="" type="core_page_property"
+                                 handle="description"/>
+                        <control custom-template="" custom-label="" description="" type="core_page_property"
+                                 handle="publish_target"/>
                     </set>
                 </formlayout>
                 <output>
                     <pagetemplate handle="contact">
-                        <page name="" path="" public-date="2022-03-15 16:18:37" filename="" pagetype="contact" template="contact" user="admin" description="" package="" root="true"/>
+                        <page name="" path="" public-date="2022-03-15 16:18:37" filename="" pagetype="contact"
+                              template="contact" user="admin" description="" package="" root="true"/>
                     </pagetemplate>
                 </output>
             </composer>
@@ -110,9 +122,6 @@
         <attributekey handle="exclude_subpages_from_nav" name="Exclude Sub-Pages From Nav" package="" searchable="1"
                       indexed="1" type="boolean" category="collection">
             <type checked="0"/>
-        </attributekey>
-        <attributekey handle="disable_critical_css" name="Disable Critical CSS" package="" searchable="1" indexed="1" type="boolean" category="collection">
-            <type checked="" checkbox-label=""/>
         </attributekey>
     </attributekeys>
 

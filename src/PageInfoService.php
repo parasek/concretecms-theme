@@ -1,4 +1,6 @@
-<?php namespace Application;
+<?php
+
+namespace Application;
 
 use Concrete\Core\Page\Page;
 use Concrete\Core\Permission\Checker;

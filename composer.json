@@ -1,17 +1,22 @@
 {
     "name": "parasek/concretecms-theme",
-    "description": "A fully featured Concrete CMS solution comprising framework skeleton, Docker server and basic theme.",
+    "description": "A fully featured Concrete CMS project comprising framework skeleton, custom theme, local Docker server and other development tools.",
     "type": "project",
     "homepage": "https://github.com/parasek/concretecms-theme",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Sławek Radomski"
+        },
+        {
+            "name": "Jarosław Radomski"
+        }
+    ],
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Application\\": "./public/application/src"
-        },
-        "files": [
-            "./public/application/src/helpers.php"
-        ]
+            "Application\\": "./src"
+        }
     },
     "autoload-dev": {
         "psr-4": {
@@ -19,10 +24,12 @@
         }
     },
     "require": {
+        "php": "^8.2",
         "composer/installers": "^1.3",
         "concrete5/core": "^9.1",
         "concretecms/dependency-patches": "^1.4.0",
-        "vlucas/phpdotenv": "^2.4"
+        "vlucas/phpdotenv": "^2.4",
+        "doctrine/orm": "2.13.*"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.3|^8.0",

@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace ConcreteComposer\Foo\Bar;
+namespace Application\Foo\Bar;
 
 use Concrete\Core\Http\ResponseFactoryInterface;
 use Concrete\Core\User\UserInfo;

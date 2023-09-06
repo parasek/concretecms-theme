@@ -15,33 +15,10 @@ use Concrete\Core\Page\Page;
       href="<?php echo h($fontURL); ?>"
 >
 
-<?php // Load default CSS/purged CSS/critical CSS depending on which files were generated ?>
+<?php // Styles ?>
 <?php
-$cssPath = false;
-$distPath = 'application/themes/theme/dist';
-$manifestPath = $distPath . '/manifest.json';
-$criticalCssPath = $distPath . '/css/critical/' . $c->getCollectionID() . '-critical.html';
-$purgedCssPath = false;
-if (file_exists($manifestPath)) {
-    $purgedCssPath = $distPath . '/css/purged/' . $c->getCollectionID() . '-' . json_decode(file_get_contents($manifestPath))->{'app.min.css'} . '-purged.css';
-}
-if ($purgedCssPath and file_exists($purgedCssPath)) {
-    $cssPath = $purgedCssPath;
-} elseif (file_exists($manifestPath)) {
-    $cssPath = $distPath . '/css/' . json_decode(file_get_contents($manifestPath))->{'app.min.css'};
-}
+$manifestPath = 'application/themes/theme/dist/manifest.json';
 ?>
-<?php if ($cssPath): ?>
-    <?php if (file_exists($criticalCssPath)): ?>
-        <style><?php echo h(file_get_contents($criticalCssPath)); ?></style>
-    <?php endif; ?>
-    <link rel="stylesheet"
-          href="<?php echo h(BASE_URL . '/' . $cssPath); ?>"
-        <?php if (file_exists($criticalCssPath)): ?>
-            media="print"
-            onload="this.media='all'; this.onload=null;"
-        <?php else: ?>
-            media="all"
-        <?php endif; ?>
-    >
+<?php if (file_exists($manifestPath)): ?>
+    <style><?php echo h(file_get_contents($manifestPath)); ?></style>
 <?php endif; ?>

@@ -238,16 +238,6 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
     gulp favicons // Copy favicons to "dist" folder.
     gulp translation // Generate .mo files from .po files in ./public/application/languages/site.
 
-    // Generate purged CSS files by visiting "live" urls. Read more in gupfile.babel.js.
-    gulp purge --url=https://yoursite.com/workspace/purge
-    // Clear all purged CSS files (main CSS file will be used)
-    gulp purge --clear
-   
-    // Generate critical CSS files by visiting "live" urls. Read more in gupfile.babel.js.
-    gulp critical --url=https://yoursite.com/workspace/critical
-    // Clear all critical CSS files
-    gulp critical --clear
-
     ########################
     ##### Code linters #####
     ########################

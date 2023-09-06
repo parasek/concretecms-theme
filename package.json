@@ -1,10 +1,17 @@
 {
     "name": "parasek_concretecms_theme",
     "version": "1.0.0",
-    "description": "Concrete CMS boilerplate theme consisting of Docker server, Concrete CMS skeleton and custom theme.",
+    "description": "A fully featured Concrete CMS project comprising framework skeleton, custom theme, local Docker server and other development tools.",
     "keywords": [],
-    "author": "parasek",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Sławek Radomski"
+        },
+        {
+            "name": "Jarosław Radomski"
+        }
+    ],
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "eslint": "eslint resources/js",
@@ -15,22 +22,15 @@
         "prettier:fix": "prettier resources/js resources/scss --write"
     },
     "browserslist": [
-        "defaults",
-        "not IE 11"
+        "defaults"
     ],
-    "directories": {
-        "test": "tests"
-    },
     "devDependencies": {
         "@babel/core": "^7.22.5",
         "@babel/plugin-transform-runtime": "^7.22.5",
         "@babel/preset-env": "^7.22.5",
         "@babel/register": "^7.22.5",
-        "axios": "^1.4.0",
         "babel-loader": "^9.1.2",
-        "browser-sync": "^2.29.3",
         "chalk": "^4.1.2",
-        "csso": "^5.0.5",
         "del": "^6.0.0",
         "empty-dir": "^3.0.0",
         "eslint": "^8.43.0",
@@ -54,9 +54,7 @@
         "gulp-touch-fd": "^2.0.0",
         "imagemin-mozjpeg": "^9.0.0",
         "imagemin-pngquant": "^9.0.2",
-        "penthouse": "^2.3.3",
         "prettier": "^2.8.8",
-        "purgecss": "^5.0.0",
         "sass": "^1.63.5",
         "stylelint": "^15.8.0",
         "stylelint-config-recommended-scss": "^12.0.0",
