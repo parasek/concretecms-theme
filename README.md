@@ -1,8 +1,9 @@
 # Concrete CMS boilerplate theme - Work in progress
 
-Concrete CMS boilerplate theme consisting of Docker server, Concrete CMS skeleton and custom theme.
+A fully featured Concrete CMS project comprising framework skeleton, custom theme, local Docker server and other development tools.
 
-Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sass, Gulp
+Stack and technologies: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, 
+Composer, NPM, Sass, Gulp, PHPUnit, Prettier, Stylelint, ESLint
 
 ## Requirements
 
@@ -171,7 +172,7 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
     ```
 
     ```
-    composer update
+    composer update concrete5/core
     ```
 
 ## How to change PHP version
@@ -252,49 +253,7 @@ Stack: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin, Composer, NPM, Sa
     npm run stylelint:fix // Lint and show potential scss problems in "./resources/scss" folder.
     npm run prettier // Show list of file to lint using Prettier.
     npm run prettier:fix // Lint files in "./resources/js" and "./resources/scss" using Prettier.
-
-    ########################
-    ####### Testing ########
-    ########################
-   
-    composer test // Run tests
-    composer test --filter testGetUserInfo // Run specific test
     ```
-
-## Install Concrete CMS without Composer
-
-1. Clear public folder.
-
-    ```
-    docker compose exec workspace bash
-    rm -R public
-    mkdir public
-    cd public
-    ```
-
-2. Download the latest version from
-   https://www.concretecms.org/download
-   and unzip it in public directory.
-   You can use Linux commands below or do some/all operations under Windows
-   in `\\wsl$\Ubuntu\home\parasek\dev\project_name` folder.
-
-    ```
-    // Replace "concrete-cms-9.0.2" with current version name
-    // Temporarily include hidden files (.htaccess etc.) in mv command using "shopt"
-    unzip concrete-cms-9.0.2.zip
-    shopt -s dotglob
-    mv concrete-cms-9.0.2/* .
-    shopt -u dotglob
-    rmdir concrete-cms-9.0.2
-    rm concrete-cms-9.0.2.zip
-    ```
-
-3. Visit https://localhost:8100 in browser and install Concrete CMS.
-   MySQL credentials are the same as mentioned earlier for phpMyAdmin.
-
-4. When moving site to live server, you just want to upload whole public folder + export/import database.
-
-5. This way you can set up server for older version of Concrete CMS or applications that don't require Composer.
 
 ## <a name="first-installation"></a>First installation
 
