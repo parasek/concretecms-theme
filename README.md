@@ -151,18 +151,27 @@ Composer, NPM, Sass, Gulp, PHPUnit, Prettier, Stylelint, ESLint
     ```
     git init
     ```
+    
+15. MailHog [http://localhost:8025](http://localhost:8025) is enabled at start. \
+    It will catch emails send by your website and provide custom client. \
+    Remember to disable it in .env file when your site goes live.
+    ```
+    # MAILHOG SETTINGS
+    MAILHOG_ENABLED=0
+    ```
 
-15. Default links and login credentials:
+16. Default links and login credentials:
 
-    > https url: [https://localhost:8100](https://localhost:8100) \
-    > phpMyAdmin: [http://localhost:8200](http://localhost:8200) \
-    > http url: [http://localhost:8300](http://localhost:8300)
+    > Https url: [https://localhost:8100](https://localhost:8100) \
+    PhpMyAdmin: [http://localhost:8200](http://localhost:8200) \
+    Http url: [http://localhost:8300](http://localhost:8300) \
+    MailHog server: [http://localhost:8025](http://localhost:8025)
 
     > Login credentials for phpMyAdmin/MySQL: \
-    > Server: mariadb \
-    > Username: root \
-    > Password: root \
-    > Database: default
+    Server: mariadb \
+    Username: root \
+    Password: root \
+    Database: default
 
 ## How to update Concrete CMS
 
@@ -373,12 +382,15 @@ Composer, NPM, Sass, Gulp, PHPUnit, Prettier, Stylelint, ESLint
     APP_PMA_PORT=8201
     APP_PORT=8301
     APP_DB_PORT=3307
+    MAILHOG_HTTP_PORT=8026
+    MAILHOG_SMTP_PORT=1026
     ```
 
    Your site will be accessible through:
 
-   > https url: [https://localhost:8101](https://localhost:8101) \
-   > phpMyAdmin: [http://localhost:8201](http://localhost:8201) \
-   > http url: [http://localhost:8301](http://localhost:8301)
+   > Https url: [https://localhost:8101](https://localhost:8101) \
+   PhpMyAdmin: [http://localhost:8201](http://localhost:8201) \
+   Http url: [http://localhost:8301](http://localhost:8301) \
+   MailHog server: [http://localhost:8026](http://localhost:8026)
 
    ⬅ [Go back to Installation](#multiple-docker-servers-link)
