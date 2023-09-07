@@ -7,7 +7,7 @@ use Concrete\Core\View\View;
  */
 ?>
 
-</div><?php // .ccm-page?>
+</div><?php // .ccm-page ?>
 
 <?php $view->inc('elements/footer/structured_data.php'); ?>
 
@@ -15,9 +15,13 @@ use Concrete\Core\View\View;
 
 <?php View::element('footer_required'); ?>
 
-<?php $manifestPath = 'application/themes/theme/dist/manifest.json'; ?>
+<?php
+// Javascript
+$distPath = 'application/themes/theme/dist';
+$manifestPath = $distPath . '/manifest.json';
+?>
 <?php if (file_exists($manifestPath)): ?>
-    <script src="/application/themes/theme/dist/js/<?= json_decode(file_get_contents($manifestPath))->{'app.min.js'}; ?>"></script>
+    <script src="<?= h($distPath . '/js/' . json_decode(file_get_contents($manifestPath))->{'app.min.js'}); ?>"></script>
 <?php endif; ?>
 
 </body>
