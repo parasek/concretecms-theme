@@ -21,7 +21,7 @@ $distPath = 'application/themes/theme/dist';
 $manifestPath = $distPath . '/manifest.json';
 ?>
 <?php if (file_exists($manifestPath)): ?>
-    <script src="<?= h($distPath . '/js/' . json_decode(file_get_contents($manifestPath))->{'app.min.js'}); ?>"></script>
+    <script src="<?= h(BASE_URL . '/' . $distPath . '/js/' . json_decode(file_get_contents($manifestPath))->{'app.min.js'}); ?>"></script>
 <?php endif; ?>
 
 </body>
