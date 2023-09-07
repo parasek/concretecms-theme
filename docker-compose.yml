@@ -61,3 +61,13 @@ services:
         volumes:
             - ./docker/pma/config.php:/etc/phpmyadmin/config.user.inc.php
             - ./docker/pma/themes/boodark:/var/www/html/themes/boodark
+
+    mailhog:
+        image: mailhog/mailhog
+        container_name: ${APP_NAME}-mailhog
+        restart: always
+        logging:
+            driver: 'none'
+        ports:
+            - ${MAILHOG_HTTP_PORT}:8025
+            - ${MAILHOG_SMTP_PORT}:1025

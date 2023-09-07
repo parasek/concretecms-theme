@@ -12,4 +12,11 @@ return [
             '_SERVER' => ['DB_PASSWORD', 'DB_HOSTNAME'],
         ],
     ],
+    'email' => [
+        'enabled' => true,
+        'default' => [
+            'address' => !empty($_SERVER['SERVER_NAME']) ? 'noreply@'.$_SERVER['SERVER_NAME'] : null,
+            'name' => null,
+        ],
+    ],
 ];
