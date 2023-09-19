@@ -38,4 +38,13 @@ return [
             'name' => null,
         ],
     ],
+    'seo' => [
+        'exclude_words' => '',
+        'url_rewriting' => true,
+        'url_rewriting_all' => true,
+        'redirect_to_canonical_url' => true,
+        'trailing_slash' => false,
+        'title_format' => '%2$s :: %1$s',
+        'title_segment_separator' => ' :: ',
+    ],
 ];
