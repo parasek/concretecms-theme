@@ -16,7 +16,7 @@ use Concrete\Core\Area\GlobalArea;
         <div class="logo-area">
             <div class="logo">
                 <a href="<?= h(BASE_URL); ?>" class="logo-link">
-                    <img src="<?= $view->getThemePath(); ?>/dist/images/logo.svg"
+                    <img src="<?= h($view->getThemePath()); ?>/dist/images/logo.svg"
                          alt="Site logo"
                          width="210"
                          height="59"
