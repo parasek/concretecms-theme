@@ -1,9 +1,10 @@
-# Ignore composer stuff
+# Ignore Composer stuff
 /vendor
 
 # Ignore Concrete stuff
 /public/concrete
-/public/application/files
+/public/application/files/*
+!/public/application/files/index.html
 /public/application/config/generated_overrides
 /public/application/config/doctrine
 /public/updates
@@ -16,16 +17,15 @@
 /.vscode
 /node_modules
 /.env
-/public/mix-manifest.json
 /phpunit.xml
-/build
 /.phpunit.*
-/public/hot
+/tools/php-cs-fixer/vendor/
 /.php-cs-fixer.cache
 
 # Ignore custom folders
 /db
 /backups
+/logs
 
 # Ignore files
 *.env
