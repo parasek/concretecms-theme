@@ -49,6 +49,7 @@ services:
         volumes:
             - ./db/mariadb:/var/lib/mysql
             - ./docker/db/mariadb/my.cnf:/etc/mysql/conf.d/my.cnf
+            #- ./logs/mysql:/var/log/mysql # See "docker/db/mariadb/my.cnf"
 
     pma:
         image: phpmyadmin/phpmyadmin
