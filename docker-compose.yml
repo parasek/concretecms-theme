@@ -65,8 +65,6 @@ services:
         image: mailhog/mailhog
         container_name: ${APP_NAME}-mailhog
         restart: always
-        logging:
-            driver: 'none'
         ports:
             - ${MAILHOG_HTTP_PORT}:8025
             - ${MAILHOG_SMTP_PORT}:1025
