@@ -1,6 +1,7 @@
 services:
 
     web:
+        user: ${UID}:${GID} # Run processes as host user (ensures host user owns files created by container)
         build:
             context: .
             dockerfile: docker/web/Dockerfile
@@ -13,6 +14,8 @@ services:
         working_dir: /var/www/html
         environment:
             - TZ=${APP_TZ}
+            - UID=${UID}
+            - GID=${GID}
         volumes:
             - ./:/var/www/html
             - ./docker/web/apache2/sites-available:/etc/apache2/sites-available
@@ -21,7 +24,7 @@ services:
             - ./docker/web/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
     workspace:
-        user: ${UID}:${GID}
+        user: ${UID}:${GID} # Run processes as host user (ensures host user owns files created by container)
         build:
             context: .
             dockerfile: docker/workspace/Dockerfile
@@ -32,6 +35,8 @@ services:
         working_dir: /var/www/html
         environment:
             - TZ=${APP_TZ}
+            - UID=${UID}
+            - GID=${GID}
         volumes:
             - ./:/var/www/html
 
