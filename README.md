@@ -1,4 +1,6 @@
-# Concrete CMS boilerplate theme - Work in progress
+# Docker based skeleton for Concrete CMS sites
+
+Work in progress
 
 A fully featured Concrete CMS project comprising framework skeleton, custom theme, local Docker server and other
 development tools.
@@ -15,7 +17,7 @@ Composer, NPM, Sass, Gulp, PHPUnit, Prettier, Stylelint, ESLint
 
 ## Installation
 
-1. Open Windows Terminal, create and enter project folder in Linux home directory.
+1. Open Windows Terminal, create and enter the project folder somewhere in the Linux home directory.
 
     ```
     cd ~/dev
@@ -69,7 +71,7 @@ Composer, NPM, Sass, Gulp, PHPUnit, Prettier, Stylelint, ESLint
 9. Set php version and timezone in `.env` file.
 
     ```
-    APP_PHP_VERSION=8.3
+    APP_PHP_VERSION=8.4
     APP_TZ=Europe/Warsaw
     ```
 
@@ -123,12 +125,6 @@ Composer, NPM, Sass, Gulp, PHPUnit, Prettier, Stylelint, ESLint
 
     ```
     rm public/application/config/database.php
-    ```
-
-    Change required permissions (for localhost only)
-
-    ```
-    chmod -R 777 public/application/config public/application/files public/packages
     ```
 
 12. Install NPM

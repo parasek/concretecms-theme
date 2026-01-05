@@ -50,3 +50,9 @@ RUN apt-get install nodejs -y
 # Install Gulp
 # https://gulpjs.com/docs/en/getting-started/quick-start/#install-the-gulp-command-line-utility
 RUN npm install --global gulp-cli
+
+# Copy and run entrypoint
+COPY docker/workspace/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["apache2-foreground"]
