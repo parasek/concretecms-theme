@@ -4,6 +4,11 @@ FROM php:${APP_PHP_VERSION}-apache
 
 WORKDIR /var/www/html
 
+# Add "dev" user/group
+RUN groupadd -g ${GROUP_ID:-1000} dev || true \
+    && useradd -m -u ${USER_ID:-1000} -g ${GROUP_ID:-1000} -s /bin/bash dev || true \
+    && chown -R ${USER_ID:-1000}:${GROUP_ID:-1000} /var/www/html
+
 # Add "ll" alias
 RUN echo 'alias ll="ls -l"' >> ~/.bashrc
 

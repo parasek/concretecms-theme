@@ -21,12 +21,14 @@ services:
             - ./docker/web/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
     workspace:
+        user: ${UID}:${GID}
         build:
             context: .
             dockerfile: docker/workspace/Dockerfile
             args:
                 - APP_PHP_VERSION=${APP_PHP_VERSION}
         container_name: ${APP_NAME}-workspace
+        hostname: ${APP_NAME}-workspace
         working_dir: /var/www/html
         environment:
             - TZ=${APP_TZ}
