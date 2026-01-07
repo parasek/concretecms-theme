@@ -2,16 +2,16 @@
 
 Work in progress
 
-A fully featured Concrete CMS project comprising framework skeleton, custom theme, local Docker server and other
-development tools.
+A fully featured Concrete CMS project comprising framework skeleton, 
+custom theme, local Docker server and other development tools.
 
-Stack and technologies: WSL2, Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin,
-Composer, NPM, Sass, Gulp, PHPUnit, Prettier, Stylelint, ESLint
+Stack and technologies: Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin,
+Composer, NPM, Sass, Gulp, PHPUnit, Prettier, ESLint
 
 ## Requirements
 
-- WSL2 installed and enabled
-- Docker Desktop for Windows installed
+- Linux or Windows with WSL2 installed and enabled
+- Docker Desktop for Windows (Windows)
 - Your project files should be located somewhere in WSL2 subsystem, for example in: `\\wsl$\Ubuntu\home\parasek\dev`
   which, under Linux, is accessible by `~/dev` path
 
@@ -68,88 +68,22 @@ Composer, NPM, Sass, Gulp, PHPUnit, Prettier, Stylelint, ESLint
     docker/web/apache2/ssl/ssl_site.key
     ```
 
-9. Set php version and timezone in `.env` file.
+9. Open `.env` file and (optionally) change:
+   - APP_PHP_VERSION (PHP version)
+   - APP_TZ (Timezone)
+   - Concrete CMS Installation Settings
+
+10. Make install.sh executable and run it.
 
     ```
-    APP_PHP_VERSION=8.4
-    APP_TZ=Europe/Warsaw
-    ```
-
-10. Start Docker containers.
-
-    ```
-    docker compose up -d
-    ```
-
-11. Install Concrete CMS using Composer.
-
-    Enter workspace container
-
-    ```
-    docker compose exec workspace bash
-    ```
-
-    Install Composer dependencies
-
-    ```
-    composer install -o
-    ```
-
-    Temporarily change name of live.database.php (installation won't start otherwise)
-
-    ```
-    mv public/application/config/live.database.php public/application/config/temp.database.php
-    ```
-
-    Install Concrete CMS \
-    Remember to change fields below before you start installation: \
-    --site: Site name \
-    --language: Dashboard interface language \
-    --site-locale: Main/first installed language on site \
-    --timezone: Timezone, enter the same as APP_TZ in .env file \
-    --admin-email: Admin account email \
-    --admin-password: Admin account password \
-    --starting-point: Set one from: theme / atomik_blank / atomik_full / elemental_full 
-
-    ```
-    php public/index.php c5:install --allow-as-root -n --db-server=mariadb --db-username=root --db-password=root --db-database=default --starting-point=theme --site="Sitename" --language=en_US --site-locale=en_GB --timezone=Europe/Warsaw --admin-email=example@email.com --admin-password="password"
-    ```
-
-    Revert name change of live.database.php (from now Concrete will be using live.database.php)
-
-    ```
-    mv public/application/config/temp.database.php public/application/config/live.database.php
-    ```
-
-    Remove original database.php file
-
-    ```
-    rm public/application/config/database.php
-    ```
-
-12. Install NPM
-
-    ```
-    npm i
-    ```
-
-13. Generate css, js and other assets using Gulp tasks
-
-    ```
-    gulp build --prod
-    ```
-
-14. This probably good time to exit container, initialize git and make first commit if you are using GIT.
-
-    ```
-    exit
+    chmod +x install.sh
     ```
 
     ```
-    git init
+    sudo ./install.sh
     ```
     
-15. MailHog [http://localhost:8025](http://localhost:8025) is enabled at start. \
+11. MailHog [http://localhost:8025](http://localhost:8025) is enabled at start. \
     It will catch emails send by your website and provide custom client. \
     Remember to disable it in .env file when your site goes live.
     ```
@@ -157,7 +91,7 @@ Composer, NPM, Sass, Gulp, PHPUnit, Prettier, Stylelint, ESLint
     MAILHOG_ENABLED=0
     ```
 
-16. Default links and login credentials:
+12. Default links and login credentials:
 
     > Https url: [https://localhost:8100](https://localhost:8100) \
     PhpMyAdmin: [http://localhost:8200](http://localhost:8200) \

@@ -24,6 +24,8 @@ services:
             - ./docker/web/php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
     workspace:
+        depends_on:
+            - db
         user: ${UID}:${GID} # Run processes as host user (ensures host user owns files created by container)
         build:
             context: .
@@ -37,8 +39,24 @@ services:
             - TZ=${APP_TZ}
             - UID=${UID}
             - GID=${GID}
+            - DB_HOSTNAME=${DB_HOSTNAME}
+            - DB_DATABASE=${DB_DATABASE}
+            - DB_USERNAME=${DB_USERNAME}
+            - DB_PASSWORD=${DB_PASSWORD}
+            - INSTALL_STARTING_POINT=${INSTALL_STARTING_POINT}
+            - INSTALL_SITE_NAME=${INSTALL_SITE_NAME}
+            - INSTALL_LANGUAGE=${INSTALL_LANGUAGE}
+            - INSTALL_SITE_LOCALE=${INSTALL_SITE_LOCALE}
+            - APP_TZ=${APP_TZ}
+            - INSTALL_ADMIN_EMAIL=${INSTALL_ADMIN_EMAIL}
+            - INSTALL_ADMIN_PASSWORD=${INSTALL_ADMIN_PASSWORD}
+            - INSTALL_SCRIPT_EXECUTED=${INSTALL_SCRIPT_EXECUTED:-} # @see install.sh
+            - NO_CONCRETE=${NO_CONCRETE:-} # @see install.sh
+            - READY_MSG=${READY_MSG:-} # @see install.sh
         volumes:
             - ./:/var/www/html
+        stdin_open: true # Equivalent of docker run -i — it keeps the container’s STDIN open even if no one is attached
+        tty: true # Equivalent of docker run -t — it allocates a pseudo‑TTY for the container
 
     db:
         image: mariadb:10.5.9
@@ -57,6 +75,8 @@ services:
             #- ./logs/mysql:/var/log/mysql # See "docker/db/mariadb/my.cnf"
 
     pma:
+        depends_on:
+            - db
         image: phpmyadmin/phpmyadmin
         container_name: ${APP_NAME}-pma
         ports:
