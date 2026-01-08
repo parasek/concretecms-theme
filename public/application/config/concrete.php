@@ -34,7 +34,7 @@ return [
     'email' => [
         'enabled' => true,
         'default' => [
-            'address' => !empty($_SERVER['SERVER_NAME']) ? 'noreply@'.$_SERVER['SERVER_NAME'] : null,
+            'address' => !empty($_SERVER['SERVER_NAME']) ? 'noreply@' . $_SERVER['SERVER_NAME'] : null,
             'name' => null,
         ],
     ],
