@@ -15,13 +15,19 @@ return $config
     ])
     ->setFinder(
         PhpCsFixer\Finder::create()
-            ->exclude('vendor')
-            ->exclude('node_modules')
-            ->exclude('public/concrete')
-            ->exclude('public/application/files')
-            ->exclude('public/application/config/generated_overrides')
-            ->exclude('public/application/config/doctrine')
-            ->exclude('public/updates')
+            ->exclude('assets')
             ->exclude('backups')
+            ->exclude('db')
+            ->exclude('docker')
+            ->exclude('node_modules')
+            ->exclude('public/application/config/doctrine')
+            ->exclude('public/application/config/generated_overrides')
+            ->exclude('public/application/files')
+            ->exclude('public/concrete')
+            ->exclude('vendor')
+
+            ->notPath('public/application/bootstrap/autoload.php')
+            ->notPath('tests/bootstrap.php')
+
             ->in(__DIR__)
     );
