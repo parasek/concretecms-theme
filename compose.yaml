@@ -88,10 +88,10 @@ services:
             - ./docker/pma/config.php:/etc/phpmyadmin/config.user.inc.php
             - ./docker/pma/themes/boodark:/var/www/html/themes/boodark
 
-    mailhog:
-        image: mailhog/mailhog
-        container_name: ${APP_NAME}-mailhog
+    mailpit:
+        image: axllent/mailpit:latest
+        container_name: ${APP_NAME}-mailpit
         restart: always
         ports:
-            - ${MAILHOG_HTTP_PORT}:8025
-            - ${MAILHOG_SMTP_PORT}:1025
+            - ${MAIL_SERVER_HTTP_PORT}:8025
+            - ${MAIL_SERVER_SMTP_PORT}:1025

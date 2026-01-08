@@ -66,15 +66,17 @@
  * ----------------------------------------------------------------------------
  */
 
-// Enable/disable mail catching in main .env file
-if ((int) getenv('MAILHOG_ENABLED')) {
+// Local mail server
+$config = $this->app->make('config');
+$productionMode = $config->get('concrete.security.production.mode');
+if ($productionMode === \Concrete\Core\Production\Modes::MODE_DEVELOPMENT) {
     $this->app->make('config')->set('concrete.mail', [
         'method' => 'smtp',
         'methods' => [
             'smtp' => [
-                'server' => 'mailhog',
+                'server' => getenv('MAIL_SERVER_ADDRESS'),
                 'username' => '',
-                'port' => '1025',
+                'port' => getenv('MAIL_SERVER_SMTP_PORT'),
                 'encryption' => '',
                 'messages_per_connection' => null,
                 'helo_domain' => 'localhost',
