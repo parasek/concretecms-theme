@@ -51,6 +51,10 @@ RUN apt-get install nodejs -y
 # https://gulpjs.com/docs/en/getting-started/quick-start/#install-the-gulp-command-line-utility
 RUN npm install --global gulp-cli
 
+# Ensure Apache has a global ServerName to suppress the startup warning
+RUN printf '%s\n' 'ServerName localhost' > /etc/apache2/conf-available/servername.conf \
+    && a2enconf servername
+
 # Copy and run entrypoint
 COPY docker/workspace/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh

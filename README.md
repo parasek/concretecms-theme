@@ -1,4 +1,4 @@
-# Docker based skeleton for Concrete CMS sites
+# Docker-based skeleton for Concrete CMS
 
 Work in progress
 
@@ -53,50 +53,51 @@ Composer, NPM, Sass, Gulp, PHPUnit, Prettier, ESLint
 
    > 🔗 [Multiple Docker Servers](#multiple-docker-servers)
 
-7. Copy `000-default.conf.example` file to `000-default.conf`.
-
-    ```
-    cp docker/web/apache2/sites-available/000-default.conf.example docker/web/apache2/sites-available/000-default.conf
-    ```
-
-8. Manually copy saved ssl certificates, that you generated earlier (skip this step if you did
-   🔗 [First Installation](#first-installation) during this setup) to:
-
-    ```
-    docker/web/apache2/ssl/ssl_site.crt
-    docker/web/apache2/ssl/ssl_site.csr
-    docker/web/apache2/ssl/ssl_site.key
-    ```
-
-9. Open `.env` file and (optionally) change:
+7. Open `.env` file and change:
    - APP_PHP_VERSION (PHP version)
    - APP_TZ (Timezone)
+   - HOST_DEV_CERTS_PATH (Path to your local ssl certificates)
    - Concrete CMS Installation Settings
 
-10. Make install.sh executable and run it.
+8. Make the `install.sh` executable and run it.
 
-    ```
-    chmod +x install.sh
-    ```
+   ```
+   chmod +x install.sh
+   ```
 
-    ```
-    sudo ./install.sh
-    ```
+   ```
+   sudo ./install.sh
+   ```
+
+   Use `--purge` flag to install Concrete CMS from fresh again.
+   <br>It is usually used when installation failed, or you want to reinstall Concrete quickly.
+   <br>Warning: Among recoverable data, this will delete your database and the public/application/files folder.
+   ```
+   sudo ./install.sh --purge
+   ```
+
+   You can skip Concrete CMS installation by using `--no-concrete` flag.
+   <br>Use it when you only want to install the Docker server (for older Concrete projects, etc.).
+
+   ```
+   sudo ./install.sh --no-concrete
+   ```
     
-11. MailHog [http://localhost:8025](http://localhost:8025) is enabled at start. \
-    It will catch emails send by your website and provide custom client. \
-    Remember to disable it in .env file when your site goes live.
-    ```
-    # MAILHOG SETTINGS
-    MAILHOG_ENABLED=0
-    ```
+9. MailHog [http://localhost:8025](http://localhost:8025) is enabled at start. \
+   It will catch emails send by your website and provide custom client. \
+   Remember to disable it in .env file when your site goes live.
+   ```
+   # MAILHOG SETTINGS
+   MAILHOG_ENABLED=0
+   ```
 
-12. Default links and login credentials:
+10. Default links and login credentials:
+
+    You might need to reopen your browser after starting the server for the first time (to have working SSL certificates).
 
     > Https url: [https://localhost:8100](https://localhost:8100) \
     PhpMyAdmin: [http://localhost:8200](http://localhost:8200) \
-    Http url: [http://localhost:8300](http://localhost:8300) \
-    MailHog server: [http://localhost:8025](http://localhost:8025)
+    Mail server: [http://localhost:8025](http://localhost:8025)
 
     > Login credentials for phpMyAdmin/MySQL: \
     Server: mariadb \
@@ -245,60 +246,31 @@ Composer, NPM, Sass, Gulp, PHPUnit, Prettier, ESLint
 
 ## <a name="first-installation"></a>First installation
 
-1. Start Docker containers.
+1. Install [mkcert](https://github.com/FiloSottile/mkcert).
+   <br>Open PowerShell as Administrator:
 
     ```
-    cd ~/dev/project_name
-    docker compose up -d
+    winget install mkcert
     ```
 
-2. Enter workspace container.
+2. Reopen PowerShell as Administrator. 
+   <br>Install local CA and add it to the system trust store:
 
     ```
-    // From ~/dev/project_name folder (at the same level as docker-compose.yml)
-    docker compose exec workspace bash
-
-    // From any folder
-    docker exec -ti local-workspace bash
+    mkcert -install
     ```
+   
+   Confirm installation.
 
-3. Inside web container create ssl certificates for localhost domain
-   (in Terminal run every command one by one).
+3. In PowerShell, generate certificates for your local server:
 
     ```
-    openssl genrsa -out "/etc/apache2/ssl/ssl_site.key" 2048
-    openssl rand -out /root/.rnd -hex 256
-    openssl req -new -key "/etc/apache2/ssl/ssl_site.key" -out "/etc/apache2/ssl/ssl_site.csr" -subj "/CN=localhost/O=LocalServer/C=PL"
-    openssl x509 -req -days 7300 -extfile <(printf "subjectAltName=DNS:localhost,DNS:*.localhost") -in "/etc/apache2/ssl/ssl_site.csr" -signkey "/etc/apache2/ssl/ssl_site.key" -out "/etc/apache2/ssl/ssl_site.crt"
-    chmod 644 /etc/apache2/ssl/ssl_site.key
-    exit
-    docker compose down
+    mkcert -key-file "localhost.key" -cert-file "localhost.crt" localhost 127.0.0.1 ::1
     ```
+   
+   This certificate lasts 2 years, so after that you will have to repeat this and the next step.
 
-4. Add generated `ssl_site.crt` to Trusted Certificates on Windows 10:
-
-    - Press Windows button and run `cmd`
-    - In cmd.exe window type `mmc` and press enter to open Microsoft Management Console, allow it to make changes
-    - Select `File -> Add/Remove Snap-in`
-    - Select `Certificates` in a left window and click `Add`
-    - Click `Finish`
-    - Click `OK`
-    - Expand tree on the left and go
-      to `Console Root/Certificates - Current User/Trusted Root Certification Authorities/Certificates`
-    - Right click `Certificates` and select `All Tasks -> Import...`
-    - `Next`
-    - Select generated `ssl_site.crt` (from `\\wsl$\Ubuntu\home\parasek\dev\project_name\docker\web\apache2\ssl` path)
-    - `Next`, `Next`, `Finish`, `Yes`
-    - You can close window without saving<br/><br/>
-
-    ```
-    IMPORTANT!
-    Copy/save generated files somewhere on your computer.
-    You will be using them everytime you create new project.
-    - docker/web/apache2/ssl/ssl_site.crt
-    - docker/web/apache2/ssl/ssl_site.csr
-    - docker/web/apache2/ssl/ssl_site.key
-    ```
+4. Move `localhost.key` and `localhost.crt` files to WSL2/Linux home folder `~/dev-certs` (or path you have set in .env file for HOST_DEV_CERTS_PATH).
 
 ⬅ [Go back to Installation](#first-installation-link)
 
