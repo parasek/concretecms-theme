@@ -36,7 +36,7 @@
     "require-dev": {
         "mockery/mockery": "^0.9.9|^1.6.6",
         "pestphp/pest": "^1.23",
-        "friendsofphp/php-cs-fixer": "^2.0",
+        "friendsofphp/php-cs-fixer": "^2.0"
     },
     "replace": {
         "laminas/laminas-mail": "*"
