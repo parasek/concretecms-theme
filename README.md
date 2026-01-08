@@ -82,16 +82,50 @@ Composer, NPM, Sass, Webpack Encore, PHPUnit, Prettier, ESLint
    ```
    sudo ./install.sh --no-concrete
    ```
-    
-9. MailHog [http://localhost:8025](http://localhost:8025) is enabled at start. \
-   It will catch emails send by your website and provide custom client. \
-   Remember to disable it in .env file when your site goes live.
-   ```
-   # MAILHOG SETTINGS
-   MAILHOG_ENABLED=0
-   ```
+   
+9. PhpStorm tips
 
-10. Default links and login credentials:
+   Open Settings window (CTRL+ALT+S).
+
+    ```
+    Search for "ESLint".
+    Be sure "Automatic ESLint configurion" is selected.
+    Check "Run eslint --fix on save".
+    ```
+
+    ```
+    Search for "Prettier".
+    Be sure "Automatic Prettier configurion" is selected.
+    In "Run for files", add ",css,scss" before closing "}".
+    Check "Run on save" and "Prefer Prettier configuration to IDE code style".
+    ```
+
+    ```
+    Search for "code style scheme" (Editor/CodeStyle/PHP).
+    Select "Scheme" if you have custom one (skip it otherwise).
+    ```
+
+    ```
+    Search for "node runtime" (Languages & Frameworks/JavaScript Runtime).
+    Node runtime: "Ubuntu /usr/bin/node"
+    ```
+
+    Mark directories as excluded
+
+    ```
+    /backups
+    /public/application/files
+    /public/application/themes/theme/dist    
+    ```
+       
+10. Local mail server [http://localhost:8025](http://localhost:8025) is enabled in development mode only. \
+    It will catch emails send by your website and provide custom browser client. \
+    Remember to change "Production Mode" to "Production Site" when your site goes live.
+    ```
+    https://localhost:8100/dashboard/system/basics/production_mode
+    ```
+
+11. Default links and login credentials:
 
     You might need to reopen your browser after starting the server for the first time (to have working SSL certificates).
 
@@ -289,15 +323,14 @@ Composer, NPM, Sass, Webpack Encore, PHPUnit, Prettier, ESLint
     APP_PMA_PORT=8201
     APP_PORT=8301
     APP_DB_PORT=3307
-    MAILHOG_HTTP_PORT=8026
-    MAILHOG_SMTP_PORT=1026
+    MAIL_SERVER_HTTP_PORT=8026
+    MAIL_SERVER_SMTP_PORT=1026
     ```
 
    Your site will be accessible through:
 
    > Https url: [https://localhost:8101](https://localhost:8101) \
    PhpMyAdmin: [http://localhost:8201](http://localhost:8201) \
-   Http url: [http://localhost:8301](http://localhost:8301) \
-   MailHog server: [http://localhost:8026](http://localhost:8026)
+   Mail server: [http://localhost:8026](http://localhost:8026)
 
    ⬅ [Go back to Installation](#multiple-docker-servers-link)
