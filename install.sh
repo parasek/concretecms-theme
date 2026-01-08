@@ -7,19 +7,19 @@ set -e
 NO_CONCRETE=false
 PURGE=false
 for arg in "$@"; do
-  case $arg in
-    --no-concrete)
-      NO_CONCRETE=true
-      shift
-      ;;
-    --purge)
-      PURGE=true
-      shift
-      ;;
-    *)
-      # Pass through other args
-      ;;
-  esac
+    case $arg in
+        --no-concrete)
+            NO_CONCRETE=true
+            shift
+            ;;
+        --purge)
+            PURGE=true
+            shift
+            ;;
+        *)
+            # Pass through other args
+            ;;
+    esac
 done
 export NO_CONCRETE
 export PURGE
@@ -91,9 +91,10 @@ if [ "${PURGE}" = "true" ] && [ "${NO_CONCRETE}" != "true" ]; then
     sudo rm -rf public/application/config/doctrine/*
     sudo rm -rf public/application/config/generated_overrides/*
     sudo rm -f public/application/config/database.php
-    sudo rm -f public/application/config/live.database.php
-    sudo rm -f public/application/config/temp.database.php
     find public/application/files -mindepth 1 -maxdepth 1 ! -name 'index.html' -exec rm -rf {} \;
+
+    # If installation was interrupted before reverting the rename, force restore it
+    mv -f public/application/config/temp.database.php public/application/config/live.database.php 2>/dev/null || true
 
 fi
 
@@ -104,10 +105,7 @@ echo "▶️ Starting Docker services in the background (docker compose up -d)..
 docker compose up -d
 
 echo "🔍 Following workspace logs until installation finishes (will exit automatically)..."
-docker compose logs -f workspace 2>&1 | awk -v pat="$READY_MSG" '
-    { print }
-    index($0, pat) { fflush(); exit }
-'
+docker compose logs -f workspace 2>&1 | awk -v pat="$READY_MSG" '{ print; if (index($0, pat)) { fflush(); exit } }'
 
 echo "📦 Installing packages from package-lock.json (npm ci)..."
 docker compose exec -T workspace bash -lc "cd /var/www/html && npm ci"

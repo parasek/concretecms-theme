@@ -45,6 +45,9 @@ if [ "${INSTALL_SCRIPT_EXECUTED:-}" = "true" ] && [ "${NO_CONCRETE:-false}" != "
         echo "❌ Composer install failed"; exit 1;
     }
 
+    # Temporarily rename live.database.php (installation won't start otherwise)
+    mv public/application/config/live.database.php public/application/config/temp.database.php
+
     echo "🛠️ Installing Concrete CMS..."
     php ./vendor/bin/concrete5 c5:install \
     --db-server="${DB_HOSTNAME}" \
@@ -60,6 +63,12 @@ if [ "${INSTALL_SCRIPT_EXECUTED:-}" = "true" ] && [ "${NO_CONCRETE:-false}" != "
     --admin-password="${INSTALL_ADMIN_PASSWORD}" || {
         echo "❌ Concrete CMS installation failed."; exit 1;
     }
+
+    # Revert rename of live.database.php (Concrete will use live.database.php again)
+    mv public/application/config/temp.database.php public/application/config/live.database.php
+
+    # Remove the original database.php file
+    rm public/application/config/database.php
 
     echo "📄 Generating IDE support files..."
     php ./vendor/bin/concrete5 c5:ide-symbols
