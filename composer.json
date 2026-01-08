@@ -30,12 +30,13 @@
         "concretecms/dependency-patches": "^1.7",
         "symfony/dotenv": "^5|^6|^7",
         "parasek/block_builder": "^2.4",
+        "parasek/concretecms_utility": "^4.0",
         "plesk/laminas-mail": "^2.25"
     },
     "require-dev": {
         "mockery/mockery": "^0.9.9|^1.6.6",
         "pestphp/pest": "^1.23",
-        "friendsofphp/php-cs-fixer": "^2.0"
+        "friendsofphp/php-cs-fixer": "^3.92.4"
     },
     "replace": {
         "laminas/laminas-mail": "*"
@@ -53,10 +54,22 @@
             "concretecms/dependency-patches"
         ],
         "installer-paths": {
-            "public/concrete": ["type:concrete5-core"],
-            "public/application/themes/{$name}": ["type:concrete5-theme"],
-            "public/packages/{$name}": ["type:concrete5-package"],
-            "public/application/blocks/{$name}": ["type:concrete5-block"]
+            "public/concrete": [
+                "type:concretecms-core",
+                "type:concrete5-core"
+            ],
+            "public/application/themes/{$name}": [
+                "type:concretecms-theme",
+                "type:concrete5-theme"
+            ],
+            "public/packages/{$name}": [
+                "type:concretecms-package",
+                "type:concrete5-package"
+            ],
+            "public/application/blocks/{$name}": [
+                "type:concretecms-block",
+                "type:concrete5-block"
+            ]
         }
     },
     "scripts": {

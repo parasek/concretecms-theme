@@ -5,8 +5,8 @@ Work in progress
 A fully featured Concrete CMS project comprising framework skeleton, 
 custom theme, local Docker server and other development tools.
 
-Stack and technologies: Concrete CMS, PHP8, MariaDB, Apache2, phpMyAdmin,
-Composer, NPM, Sass, Gulp, PHPUnit, Prettier, ESLint
+Stack and technologies: Concrete CMS, Docker, PHP8, MariaDB, Apache2, phpMyAdmin,
+Composer, NPM, Sass, Webpack Encore, PHPUnit, Prettier, ESLint
 
 ## Requirements
 
@@ -176,23 +176,16 @@ Composer, NPM, Sass, Gulp, PHPUnit, Prettier, ESLint
    npm update // Update packages listed in package.json.
    
    ######################
-   # GULP tasks
+   # Tasks
    ######################
    
-   // Source files are being stored in "./resources" folder.
+   // Source files are being stored in "./assets" folder.
    // Distribution file are being mostly stored in "./public/application/themes/theme/dist".
    
-   gulp // Watch for changes in specified folders and perform related tasks.
-   gulp watch // Same as above.
-   gulp build // Conduct basic build tasks (scss, js, images, svg, favicons, translation).
-   gulp build --prod // Same as above for live site (so with minification, without maps etc.).
-   
-   gulp scss // Build main css file.
-   gulp js // Build main js file.
-   gulp images // Compress images, minify svg files and copy them to "dist" folder.
-   gulp svg // Build sprites from separate svg files, which then are loaded in "svg_sprites.php". 
-   gulp favicons // Copy favicons to "dist" folder.
-   gulp translation // Generate .mo files from .po files in ./public/application/languages/site.
+   npm run watch // Watch for changes in specified folders and perform related tasks.
+   npm run dev // Conduct tasks for dev environemnt (faster).
+   npm run dev:assets // Conduct tasks for dev environemnt and images/videos/fonts.
+   npm run build // Conduct tasks for production (so with minification, without maps etc.).
    
    ########################
    # Js/CSS linters
@@ -202,12 +195,10 @@ Composer, NPM, Sass, Gulp, PHPUnit, Prettier, ESLint
    Though manual commands are always available.
    Those below are only "aliases", check "package.json" to see what they actually do.
    
-   npm run eslint // Show potential js problems in "./resources/js" folder.
-   npm run eslint:fix // Lint and show potential js problems in "./resources/js" folder.
-   npm run stylelint // Show potential scss problems in "./resources/scss" folder.
-   npm run stylelint:fix // Lint and show potential scss problems in "./resources/scss" folder.
+   npm run eslint // Show potential js problems in "./assets/js" folder.
+   npm run eslint:fix // Lint and show potential js problems in "./assets/js" folder.
    npm run prettier // Show list of file to lint using Prettier.
-   npm run prettier:fix // Lint files in "./resources/js" and "./resources/scss" using Prettier.
+   npm run prettier:fix // Lint files in "./assets/js" and "./assets/scss" using Prettier.
    
    ########################
    # PHP-CS-Fixer
@@ -242,6 +233,19 @@ Composer, NPM, Sass, Gulp, PHPUnit, Prettier, ESLint
    
    php public/index.php c5:phpcs fix src // Run PHP-CS-Fixer using Concrete CMS settings
    composer test // Run tests using Concrete CMS version of PHPUnit
+
+   #########################
+   # Command for updating packages
+   #########################
+   
+   // Show only direct (top-level) dependencies:
+   composer outdated --direct
+    
+   // Show what would be upgraded for root package.json (no changes)
+   npx npm-check-updates --packageFile ./package.json
+    
+   // Update package.json in-place to latest (majors, minors, patches)
+   npx npm-check-updates --packageFile ./package.json -u
    ```
 
 ## <a name="first-installation"></a>First installation

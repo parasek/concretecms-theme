@@ -5,6 +5,7 @@ $config = new PhpCsFixer\Config();
 return $config
     ->setRules([
         '@Symfony' => true,
+        '@PSR12' => true,
         'echo_tag_syntax' => ['format' => 'short'],
         'yoda_style' => false,
         'no_alternative_syntax' => ['fix_non_monolithic_code' => false],

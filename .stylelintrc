@@ -1,9 +1,0 @@
-{
-    "extends": [
-        "stylelint-config-sass-guidelines"
-    ],
-    "rules": {
-        "indentation": null,
-        "order/properties-alphabetical-order": null
-    }
-}
