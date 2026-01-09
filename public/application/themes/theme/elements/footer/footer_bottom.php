@@ -1,5 +1,6 @@
 <?php defined('C5_EXECUTE') or exit('Access Denied.');
 
+use Application\EncoreHelper;
 use Concrete\Core\View\View;
 
 /**
@@ -15,14 +16,7 @@ use Concrete\Core\View\View;
 
 <?php View::element('footer_required'); ?>
 
-<?php
-// Javascript
-$distPath = 'application/themes/theme/dist';
-$manifestPath = $distPath . '/manifest.json';
-?>
-<?php if (file_exists($manifestPath)): ?>
-    <script src="<?= h(BASE_URL . '/' . $distPath . '/js/' . json_decode(file_get_contents($manifestPath))->{'app.min.js'}); ?>"></script>
-<?php endif; ?>
+<?= EncoreHelper::getEntryTags('app', 'js'); ?>
 
 </body>
 </html>

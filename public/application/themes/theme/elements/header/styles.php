@@ -1,5 +1,7 @@
 <?php defined('C5_EXECUTE') or exit('Access Denied.');
 
+use Application\EncoreHelper;
+
 /**
  * @var Concrete\Core\Page\Page $c
  */
@@ -17,13 +19,4 @@ $fontUrl = 'https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&
       href="<?= h($fontUrl); ?>"
 >
 
-<?php
-// Styles
-$distPath = 'application/themes/theme/dist';
-$manifestPath = $distPath . '/manifest.json';
-?>
-<?php if (file_exists($manifestPath)): ?>
-    <link rel="stylesheet"
-          href="<?= h(BASE_URL . '/' . $distPath . '/css/' . json_decode(file_get_contents($manifestPath))->{'app.min.css'}); ?>"
-    >
-<?php endif; ?>
+<?= EncoreHelper::getEntryTags('app', 'css'); ?>
