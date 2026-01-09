@@ -110,8 +110,8 @@ docker compose logs -f workspace 2>&1 | awk -v pat="$READY_MSG" '{ print; if (in
 echo "📦 Installing packages from package-lock.json (npm ci)..."
 docker compose exec -T workspace bash -lc "cd /var/www/html && npm ci"
 
-echo "📦 Generating CSS and JS files..."
-docker compose exec -T workspace bash -lc "cd /var/www/html && gulp build --prod"
+echo "📦 Building frontend assets (CSS, JS, image minification, etc.)..."
+docker compose exec -T workspace bash -lc "cd /var/www/html && npm run build"
 
 echo "🧾 Initializing Git repository and making the initial commit..."
 sudo -u "$SUDO_USER" git init
