@@ -6,12 +6,12 @@ A fully featured Concrete CMS project comprising framework skeleton,
 custom theme, local Docker server and other development tools.
 
 Stack and technologies: Concrete CMS, Docker, PHP8, MariaDB, Apache2, phpMyAdmin,
-Composer, NPM, Sass, Webpack Encore, PHPUnit, Prettier, ESLint
+Composer, Node, NPM, Sass, Webpack Encore, PHPUnit, Prettier, ESLint, PHP-CS-Fixer
 
 ## Requirements
 
-- Linux or Windows with WSL2 installed and enabled
-- Docker Desktop for Windows (Windows)
+- Linux or Windows with WSL2 installed and enabled (this guide is based on WSL2, but most of the steps should be similar for Linux)
+- Docker Desktop for Windows (Windows only)
 - Your project files should be located somewhere in WSL2 subsystem, for example in: `\\wsl$\Ubuntu\home\parasek\dev`
   which, under Linux, is accessible by `~/dev` path
 
@@ -222,7 +222,7 @@ Composer, NPM, Sass, Webpack Encore, PHPUnit, Prettier, ESLint
    npm run build // Conduct tasks for production (so with minification, without maps etc.).
    
    ########################
-   # Js/CSS linters
+   # JavaScript/CSS linters
    ########################
    
    You should probably configure your IDE, to lint your scss/js files on save.
@@ -233,11 +233,31 @@ Composer, NPM, Sass, Webpack Encore, PHPUnit, Prettier, ESLint
    npm run eslint:fix // Lint and show potential js problems in "./assets/js" folder.
    npm run prettier // Show list of file to lint using Prettier.
    npm run prettier:fix // Lint files in "./assets/js" and "./assets/scss" using Prettier.
+
+   ####################################################################################################
+   # Command for updating packages
+   ####################################################################################################
+   
+   // Show only direct (top-level) dependencies:
+   composer outdated --direct
+    
+   // Show what would be upgraded for root package.json (no changes)
+   npx npm-check-updates --packageFile ./package.json
+    
+   // Update package.json in-place to latest (majors, minors, patches)
+   npx npm-check-updates --packageFile ./package.json -u
+   
+   ####################################################################################################
+   # TODO: REPLACE fix and test comands below
+   # PHP-CS-Fixer and PHPUnit will be updated in 9.5
+   # 
+   # Currently you can run:
+   # php public/index.php c5:phpcs fix src
+   ###################################################################################################
    
    ########################
    # PHP-CS-Fixer
    ########################
-   
    composer fix // Run PHP-CS-Fixer on all locations specified in .php-cs-fixer.php
    composer fix src // Run PHP-CS-Fixer on specific folder
    composer fix src/Foo/Bar/FooBar.php // Run PHP-CS-Fixer on specific file
@@ -267,19 +287,6 @@ Composer, NPM, Sass, Webpack Encore, PHPUnit, Prettier, ESLint
    
    php public/index.php c5:phpcs fix src // Run PHP-CS-Fixer using Concrete CMS settings
    composer test // Run tests using Concrete CMS version of PHPUnit
-
-   #########################
-   # Command for updating packages
-   #########################
-   
-   // Show only direct (top-level) dependencies:
-   composer outdated --direct
-    
-   // Show what would be upgraded for root package.json (no changes)
-   npx npm-check-updates --packageFile ./package.json
-    
-   // Update package.json in-place to latest (majors, minors, patches)
-   npx npm-check-updates --packageFile ./package.json -u
    ```
 
 ## <a name="first-installation"></a>First installation
