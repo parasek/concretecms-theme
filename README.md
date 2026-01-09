@@ -109,6 +109,12 @@ Composer, Node, NPM, Sass, Webpack Encore, PHPUnit, Prettier, ESLint, PHP-CS-Fix
     Search for "node runtime" (Languages & Frameworks/JavaScript Runtime).
     Node runtime: "Ubuntu /usr/bin/node"
     ```
+   
+    ```
+    Search for "php analysis" (PHP/Analysis).
+    Add to "Unchecked Exceptions":
+    \Illuminate\Contracts\Container\BindingResolutionException
+    ```
 
     Mark directories as excluded
 
