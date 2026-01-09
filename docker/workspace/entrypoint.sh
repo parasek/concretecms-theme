@@ -41,7 +41,7 @@ echo "✅ Database is ready"
 if [ "${INSTALL_SCRIPT_EXECUTED:-}" = "true" ] && [ "${NO_CONCRETE:-false}" != "true" ]; then
 
     echo "📦 Running Composer install (composer install --no-interaction --prefer-dist)..."
-    composer install --no-interaction --prefer-dist || {
+    composer install --no-interaction --prefer-dist --optimize-autoloader || {
         echo "❌ Composer install failed"; exit 1;
     }
 
