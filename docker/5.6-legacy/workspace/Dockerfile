@@ -7,6 +7,10 @@ RUN groupadd -g ${GROUP_ID:-1000} dev || true \
     && useradd -m -u ${USER_ID:-1000} -g ${GROUP_ID:-1000} -s /bin/bash dev || true \
     && chown -R ${USER_ID:-1000}:${GROUP_ID:-1000} /var/www/html
 
+# Add "ll" alias
+RUN echo 'alias ll="ls -l"' >> /home/dev/.bashrc \
+ && chown ${USER_ID:-1000}:${GROUP_ID:-1000} /home/dev/.bashrc
+
 # Fix for apt-get update not working:
 # https://unix.stackexchange.com/questions/743839/apt-get-update-failed-to-fetch-debian-amd64-packages-while-building-dockerfile-f
 RUN echo "deb http://archive.debian.org/debian stretch main" > /etc/apt/sources.list
@@ -32,9 +36,6 @@ RUN install-php-extensions gd pdo_mysql bcmath zip intl opcache
 
 # Install legacy MySQL for old Concrete versions
 RUN docker-php-ext-install mysql
-
-# Add "ll" alias
-RUN echo 'alias ll="ls -l"' >> ~/.bashrc
 
 # Install Composer
 COPY --from=composer:2.0 /usr/bin/composer /usr/local/bin/composer
