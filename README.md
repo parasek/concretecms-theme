@@ -95,19 +95,19 @@ Composer, Node, NPM, Sass, Webpack Encore, PHPUnit, Prettier, ESLint, PHP-CS-Fix
 
     ```
     Search for "Prettier".
-    Be sure "Automatic Prettier configurion" is selected.
+    Be sure "Automatic Prettier configuration" is selected.
     In "Run for files", add ",css,scss" before closing "}".
-    Check "Run on save" and "Prefer Prettier configuration to IDE code style".
+    Check "Run on save", "Run on paste" and "Prefer Prettier configuration to IDE code style".
     ```
 
     ```
-    Search for "code style scheme" (Editor/CodeStyle/PHP).
-    Select "Scheme" if you have custom one (skip it otherwise).
-    ```
-
-    ```
-    Search for "node runtime" (Languages & Frameworks/JavaScript Runtime).
+    Search for "JavaScript runtime" (Languages & Frameworks/JavaScript Runtime).
     Node runtime: "Ubuntu /usr/bin/node"
+    ```
+
+    ```
+    Search for "Code Style" (Editor/CodeStyle/PHP).
+    Select "Scheme" if you have custom one (skip it otherwise).
     ```
    
     ```
