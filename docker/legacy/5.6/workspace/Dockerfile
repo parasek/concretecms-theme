@@ -38,29 +38,16 @@ RUN install-php-extensions gd pdo_mysql bcmath zip intl opcache
 RUN docker-php-ext-install mysql
 
 # Install Composer
-COPY --from=composer:2.0 /usr/bin/composer /usr/local/bin/composer
+COPY --from=composer:2.2 /usr/bin/composer /usr/local/bin/composer
 
-# Install Node.js
-# https://github.com/nodesource/distributions#installation-instructions
-ARG NODE_MAJOR=16
-
+# Install Node.js 16, the newest Node.js line compatible with this legacy image.
 RUN apt-get update
 RUN apt-get install -y apt-transport-https ca-certificates curl gnupg
 RUN mkdir -p /etc/apt/keyrings
 RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-
-RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_${NODE_MAJOR}.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
-
+RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_16.x nodistro main" > /etc/apt/sources.list.d/nodesource.list
 RUN apt-get update
-RUN apt-get install nodejs -y
-
-# Install Sass
-RUN npm i -D sass-loader
-RUN npm i -D node-sass
-
-# Install Gulp globally
-# You will be able to run "gulp watch" etc. in web container.
-RUN npm install -g gulp
+RUN apt-get install -y nodejs
 
 # Ensure Apache has a global ServerName to suppress the startup warning
 RUN printf '%s\n' 'ServerName localhost' > /etc/apache2/conf-available/servername.conf \

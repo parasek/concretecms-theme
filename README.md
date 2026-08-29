@@ -1,12 +1,19 @@
 # Docker-based skeleton for Concrete CMS
 
-Work in progress
-
 A fully featured Concrete CMS project comprising framework skeleton, 
 custom theme, local Docker server and other development tools.
 
 Stack and technologies: Concrete CMS, Docker, PHP8, MariaDB, Apache2, phpMyAdmin,
 Composer, Node, NPM, Sass, Webpack Encore, PHPUnit, Prettier, ESLint, PHP-CS-Fixer
+
+> [!IMPORTANT]
+> Work in progress.
+>
+> This project installs the latest supported Concrete CMS version and targets the latest supported PHP version and development libraries. It is intended for new, current-version projects—not for installing or maintaining older Concrete CMS releases.
+>
+> Legacy PHP images are provided on a best-effort basis for empty, non-Concrete projects. Because their upstream PHP images, operating systems, repositories, and libraries are no longer supported, they may stop building or working at any time.
+>
+> Running `sudo ./install.sh --empty` installs the local Docker development server without Concrete CMS. It replaces the Concrete starter project with a minimal PHP project and installs its Composer and npm development tools.
 
 ## Requirements
 
@@ -76,12 +83,15 @@ Composer, Node, NPM, Sass, Webpack Encore, PHPUnit, Prettier, ESLint, PHP-CS-Fix
    sudo ./install.sh --purge
    ```
 
-   You can skip Concrete CMS installation by using `--no-concrete` flag.
-   <br>Use it when you only want to install the Docker server (for older Concrete projects, etc.).
+   Use the `--empty` flag to create an empty project without Concrete CMS or the bundled theme and Webpack application.
+   <br>Warning: This permanently removes many skeleton source files and is irreversible. 
 
    ```
-   sudo ./install.sh --no-concrete
+   sudo ./install.sh --empty
    ```
+
+   Empty projects support PHP 5.6, PHP 7.0–7.4, and PHP 8.x through the latest available release. The installer selects the required legacy Dockerfiles automatically.
+   PHP 5.6 and PHP 7.x workspaces contain Node.js 16; PHP 8.x workspaces contain Node.js 24.
    
 9. PhpStorm tips
 
@@ -159,11 +169,13 @@ Composer, Node, NPM, Sass, Webpack Encore, PHPUnit, Prettier, ESLint, PHP-CS-Fix
 
 ## How to change PHP version
 
-1. Open .env and change php version (for example: 5.6, 7.4, 8.2 etc.).
+1. Open `.env` and change the PHP version.
 
     ```
-    APP_PHP_VERSION=8.2
+    APP_PHP_VERSION=8.5
     ```
+
+   PHP 5.6, PHP 7.x, and PHP 8.0–8.3 are supported only by empty projects created with `sudo ./install.sh --empty`. Current Concrete CMS projects require PHP 8.4 or newer.
 
 2. Rebuild web/workspace container
 

@@ -1,0 +1,9 @@
+services:
+
+    web:
+        build:
+            dockerfile: docker/legacy/5.6/web/Dockerfile
+
+    workspace:
+        build:
+            dockerfile: docker/legacy/5.6/workspace/Dockerfile

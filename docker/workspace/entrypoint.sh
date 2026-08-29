@@ -29,52 +29,55 @@ done
 echo "✅ Database is ready"
 
 # ─────────────────────────────────────
-# 🛠️ Concrete CMS installation
+# 📦 Dependency and Concrete CMS installation
 # ─────────────────────────────────────
 
 # Set INSTALL_SCRIPT_EXECUTED to "false" if unset or empty
 : "${INSTALL_SCRIPT_EXECUTED:=false}"
 
-# Run installation only when:
-# a) triggered by "./install.sh"
-# b) the "--no-concrete" option was not provided to "./install.sh"
-if [ "${INSTALL_SCRIPT_EXECUTED:-}" = "true" ] && [ "${NO_CONCRETE:-false}" != "true" ]; then
+# Install Composer dependencies only when triggered by "./install.sh".
+if [ "${INSTALL_SCRIPT_EXECUTED:-}" = "true" ]; then
 
     echo "📦 Running Composer install (composer install --no-interaction --prefer-dist)..."
     composer install --no-interaction --prefer-dist --optimize-autoloader || {
         echo "❌ Composer install failed"; exit 1;
     }
 
-    # Temporarily rename live.database.php (installation won't start otherwise)
-    mv public/application/config/live.database.php public/application/config/temp.database.php
+    # Concrete CMS installation is not part of an empty project.
+    if [ "${EMPTY_PROJECT:-false}" != "true" ]; then
 
-    echo "🛠️ Installing Concrete CMS..."
-    php ./vendor/bin/concrete5 c5:install \
-    --db-server="${DB_HOSTNAME}" \
-    --db-username="${DB_USERNAME}" \
-    --db-password="${DB_PASSWORD}" \
-    --db-database="${DB_DATABASE}" \
-    --starting-point="${INSTALL_STARTING_POINT}" \
-    --site="${INSTALL_SITE_NAME}" \
-    --language="${INSTALL_LANGUAGE}" \
-    --site-locale="${INSTALL_SITE_LOCALE}" \
-    --timezone="${APP_TZ}" \
-    --admin-email="${INSTALL_ADMIN_EMAIL}" \
-    --admin-password="${INSTALL_ADMIN_PASSWORD}" || {
-        echo "❌ Concrete CMS installation failed."; exit 1;
-    }
+        # Temporarily rename live.database.php (installation won't start otherwise)
+        mv public/application/config/live.database.php public/application/config/temp.database.php
 
-    # Revert rename of live.database.php (Concrete will use live.database.php again)
-    mv public/application/config/temp.database.php public/application/config/live.database.php
+        echo "🛠️ Installing Concrete CMS..."
+        php ./vendor/bin/concrete5 c5:install \
+        --db-server="${DB_HOSTNAME}" \
+        --db-username="${DB_USERNAME}" \
+        --db-password="${DB_PASSWORD}" \
+        --db-database="${DB_DATABASE}" \
+        --starting-point="${INSTALL_STARTING_POINT}" \
+        --site="${INSTALL_SITE_NAME}" \
+        --language="${INSTALL_LANGUAGE}" \
+        --site-locale="${INSTALL_SITE_LOCALE}" \
+        --timezone="${APP_TZ}" \
+        --admin-email="${INSTALL_ADMIN_EMAIL}" \
+        --admin-password="${INSTALL_ADMIN_PASSWORD}" || {
+            echo "❌ Concrete CMS installation failed."; exit 1;
+        }
 
-    # Remove the original database.php file
-    rm public/application/config/database.php
+        # Revert rename of live.database.php (Concrete will use live.database.php again)
+        mv public/application/config/temp.database.php public/application/config/live.database.php
 
-    echo "📄 Generating IDE support files..."
-    php ./vendor/bin/concrete5 c5:ide-symbols
+        # Remove the original database.php file
+        rm public/application/config/database.php
 
-    echo "🧹 Clearing cache..."
-    rm -rf public/application/files/cache/*
+        echo "📄 Generating IDE support files..."
+        php ./vendor/bin/concrete5 c5:ide-symbols
+
+        echo "🧹 Clearing cache..."
+        rm -rf public/application/files/cache/*
+
+    fi
 
 fi
 
