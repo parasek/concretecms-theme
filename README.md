@@ -71,20 +71,22 @@ Composer, Node, NPM, Sass, Webpack Encore, PHPUnit, Prettier, ESLint, PHP-CS-Fix
    ```
    chmod +x install.sh
    ```
+   
+   A. Install fresh Concrete CMS website.
 
    ```
    sudo ./install.sh
    ```
 
-   Use `--purge` flag to install Concrete CMS from fresh again.
+   B. Re-install Concrete CMS with `--purge` flag.
    <br>It is usually used when installation failed, or you want to reinstall Concrete quickly.
    <br>Warning: Among recoverable data, this will delete your database and the public/application/files folder.
    ```
    sudo ./install.sh --purge
    ```
 
-   Use the `--empty` flag to create an empty project without Concrete CMS or the bundled theme and Webpack application.
-   <br>Warning: This permanently removes many skeleton source files and is partially irreversible. 
+   C. Create an empty project with `--empty` flag (without Concrete CMS, the bundled theme and libraries).
+   <br>Warning: This permanently removes many skeleton files and is partially irreversible. 
 
    ```
    sudo ./install.sh --empty
