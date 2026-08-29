@@ -84,14 +84,11 @@ Composer, Node, NPM, Sass, Webpack Encore, PHPUnit, Prettier, ESLint, PHP-CS-Fix
    ```
 
    Use the `--empty` flag to create an empty project without Concrete CMS or the bundled theme and Webpack application.
-   <br>Warning: This permanently removes many skeleton source files and is irreversible. 
+   <br>Warning: This permanently removes many skeleton source files and is partially irreversible. 
 
    ```
    sudo ./install.sh --empty
    ```
-
-   Empty projects support PHP 5.6, PHP 7.0–7.4, and PHP 8.x through the latest available release. The installer selects the required legacy Dockerfiles automatically.
-   PHP 5.6 and PHP 7.x workspaces contain Node.js 16; PHP 8.x workspaces contain Node.js 24.
    
 9. PhpStorm tips
 
