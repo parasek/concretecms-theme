@@ -24,22 +24,18 @@
         }
     },
     "require": {
-        "php": "^8.4",
+        "php": "^8.5",
         "composer/installers": "^2.2",
         "concrete5/core": "^9.5.7",
         "concretecms/dependency-patches": "^1.9.0",
         "symfony/dotenv": "^5|^6|^7",
         "parasek/block_builder": "^2.4",
-        "parasek/concretecms_utility": "^4.0",
-        "plesk/laminas-mail": "^2.25"
+        "parasek/concretecms_utility": "^4.0"
     },
     "require-dev": {
-        "mockery/mockery": "^0.9.9|^1.6.6",
+        "mockery/mockery": "^1",
         "pestphp/pest": "^1.23",
-        "friendsofphp/php-cs-fixer": "^2.0"
-    },
-    "replace": {
-        "laminas/laminas-mail": "*"
+        "friendsofphp/php-cs-fixer": "^3.91"
     },
     "config": {
         "audit": {
